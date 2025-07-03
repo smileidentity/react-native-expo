@@ -76,6 +76,7 @@ android {
 }
 
 /**
+ * our android sdk will always use a newer kotlin version, but we can override it to use the version
  * that is used by the expo version we are using to ensure maximum compatibility ):
  */
 allprojects {
