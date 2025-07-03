@@ -1,12 +1,13 @@
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import SmileIDExpo from 'react-native-expo';
 
-const documentCapture = 'documentCapture';
+const documentVerification = 'documentVerification';
 const smartSelfieEnrollment = 'smartSelfieEnrollment';
 
 const products = [
   {
-    title: 'Document Capture',
-    product: documentCapture,
+    title: 'Document Verification',
+    product: documentVerification,
     isAsync: false,
   },
   {
@@ -17,8 +18,24 @@ const products = [
 ];
 
 export default function HomeScreen() {
-  const handleProductPress = (product) => {
+  const handleProductPress = async (product) => {
     console.log('Product pressed:', product.title);
+    
+    try {
+      switch (product.product) {
+        case documentVerification:
+          await SmileIDExpo.presentDocumentVerification();
+          break;
+        case smartSelfieEnrollment:
+          await SmileIDExpo.presentSmartSelfieEnrollment();
+          break;
+        default:
+          console.log('Unknown product:', product.product);
+      }
+    } catch (error) {
+      console.error('Error presenting product:', error);
+      Alert.alert('Error', 'Failed to present product screen');
+    }
   };
 
   return (

@@ -1,7 +1,10 @@
 import ExpoModulesCore
 import SmileID
+import SwiftUI
+import UIKit
 
 public class SmileIDExpoModule: Module {
+
     // Each module class must implement the definition function. The definition consists of components
     // that describes the module's functionality and behavior.
     // See https://docs.expo.dev/modules/module-api for more details about available components.
@@ -13,28 +16,56 @@ public class SmileIDExpoModule: Module {
 
         // Defines a JavaScript function that always returns a Promise and whose native code
         // is by default dispatched on the different thread than the JavaScript runtime runs on.
-        AsyncFunction("initalize") { (
-            useSandBox: Bool,
-            enableCrashReporting: Bool,
-            apiKey: String?
-        ) -> Void in
+        AsyncFunction("initalize") {
+            (
+                useSandBox: Bool,
+                enableCrashReporting: Bool,
+                apiKey: String?
+            ) -> Void in
             SmileID.initialize(
                 apiKey: apiKey,
                 useSandbox: useSandBox
             )
         }
 
-        // Enables the module to be used as a native view. Definition components that are accepted as part of the
-        // view definition: Prop, Events.
-        View(SmileIDExpoView.self) {
-            // Defines a setter for the `url` prop.
-            Prop("url") { (view: SmileIDExpoView, url: URL) in
-                if view.webView.url != url {
-                    view.webView.load(URLRequest(url: url))
-                }
+        // Function to present Document Verification view
+        AsyncFunction("presentDocumentVerification") { () -> Void in
+            let documentVerificationView = SmileIDDocumentVerificationView()
+            self.presentView(documentVerificationView)
+        }
+
+        // Function to present SmartSelfie Enrollment view
+        AsyncFunction("presentSmartSelfieEnrollment") { () -> Void in
+            let smartSelfieView = SmileIDSmartSelfieEnrollmentView()
+            self.presentView(smartSelfieView)
+        }
+
+        // Document Verification View
+        View(SmileIDDocumentVerificationView.self) {
+            Events("onResult", "onError")
+        }
+
+        // SmartSelfie Enrollment View
+        View(SmileIDSmartSelfieEnrollmentView.self) {
+            Events("onResult", "onError")
+        }
+    }
+}
+
+// MARK: - Helper Methods
+extension SmileIDExpoModule {
+    /// Presents a view modally using a full screen presentation style
+    private func presentView<T: UIView>(_ view: T) {
+        DispatchQueue.main.async {
+            guard let rootViewController = UIApplication.shared.windows.first?.rootViewController else {
+                return
             }
 
-            Events("onLoad")
+            let viewController = UIViewController()
+            viewController.modalPresentationStyle = .fullScreen
+            viewController.view.addSubview(view)
+            view.fillSuperview()
+            rootViewController.present(viewController, animated: true)
         }
     }
 }
