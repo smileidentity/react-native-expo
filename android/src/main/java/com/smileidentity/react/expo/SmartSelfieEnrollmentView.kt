@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.smileidentity.SmileID
-import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.compose.SmartSelfieEnrollment
 import timber.log.Timber
 
