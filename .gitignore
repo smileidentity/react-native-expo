@@ -31,7 +31,7 @@ project.xcworkspace
 .classpath
 .cxx
 .gradle
-.idea
+.idea/*
 .project
 .settings
 local.properties

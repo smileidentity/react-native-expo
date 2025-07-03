@@ -1,7 +1,7 @@
 {
   "name": "react-native-expo",
   "version": "0.1.0",
-  "description": "react-native-expo",
+  "description": "Official Smile ID SDK for Expo",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
