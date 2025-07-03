@@ -1,5 +1,8 @@
 import ExpoModulesCore
+import SwiftUI
+import UIKit
 import WebKit
+import SmileID
 
 // This view will be used as a native component. Make sure to inherit from `ExpoView`
 // to apply the proper styling (e.g. border radius and shadows).
@@ -7,15 +10,13 @@ class SmileIDExpoView: ExpoView {
   let webView = WKWebView()
   let onLoad = EventDispatcher()
   var delegate: WebViewDelegate?
+  private let contentView: UIHostingController<DocV>
 
   required init(appContext: AppContext? = nil) {
+    contentView = UIHostingController(rootView: DocV())
     super.init(appContext: appContext)
     clipsToBounds = true
-    delegate = WebViewDelegate { url in
-      self.onLoad(["url": url])
-    }
-    webView.navigationDelegate = delegate
-    addSubview(webView)
+    addSubview(contentView.view)
   }
 
   override func layoutSubviews() {
@@ -35,4 +36,20 @@ class WebViewDelegate: NSObject, WKNavigationDelegate {
       onUrlChange(url.absoluteString)
     }
   }
+}
+
+struct DocV : View {
+    var body: some View {
+        SmileID.documentVerificationScreen(countryCode: "KE", delegate: SmileIDDocumentVerificationView())
+    }
+}
+
+class SmileIDDocumentVerificationView: DocumentVerificationResultDelegate {
+    func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitDocumentVerificationJob: Bool) {
+
+    }
+    
+    func didError(error: any Error) {
+
+    }
 }

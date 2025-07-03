@@ -9,23 +9,6 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Module API Example</Text>
-        <Group name="Constants">
-          <Text>{SmileIDExpo.PI}</Text>
-        </Group>
-        <Group name="Functions">
-          <Text>{SmileIDExpo.hello()}</Text>
-        </Group>
-        <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await SmileIDExpo.setValueAsync('Hello from JS!');
-            }}
-          />
-        </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
-        </Group>
         <Group name="Views">
           <SmileIDExpoView
             url="https://www.example.com"
