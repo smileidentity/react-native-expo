@@ -14,30 +14,45 @@ useExpoPublishing()
 // Most of the time, you may like to manage the Android SDK versions yourself.
 def useManagedAndroidSdkVersions = false
 if (useManagedAndroidSdkVersions) {
-  useDefaultAndroidSdkVersions()
+    useDefaultAndroidSdkVersions()
 } else {
-  buildscript {
-    // Simple helper that allows the root project to override versions declared by this library.
-    ext.safeExtGet = { prop, fallback ->
-      rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    buildscript {
+        // Simple helper that allows the root project to override versions declared by this library.
+        ext.safeExtGet = { prop, fallback ->
+            rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+        }
     }
-  }
-  project.android {
-    compileSdkVersion safeExtGet("compileSdkVersion", 34)
-    defaultConfig {
-      minSdkVersion safeExtGet("minSdkVersion", 21)
-      targetSdkVersion safeExtGet("targetSdkVersion", 34)
+    project.android {
+        compileSdkVersion safeExtGet("compileSdkVersion", 34)
+        defaultConfig {
+            minSdkVersion safeExtGet("minSdkVersion", 21)
+            targetSdkVersion safeExtGet("targetSdkVersion", 34)
+        }
     }
-  }
 }
 
 android {
-  namespace "com.smileidentity.react.expo"
-  defaultConfig {
-    versionCode 1
-    versionName "0.1.0"
-  }
-  lintOptions {
-    abortOnError false
-  }
+    namespace "com.smileidentity.react.expo"
+    defaultConfig {
+        versionCode 1
+        versionName "0.1.0"
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+        freeCompilerArgs += ['-Xskip-metadata-version-check']
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation("com.smileidentity:android-sdk:10.0.3")
 }
