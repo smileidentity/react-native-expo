@@ -13,11 +13,13 @@ Pod::Spec.new do |s|
   s.platforms      = {
     :ios => '15.1'
   }
-  s.swift_version  = '5.4'
+  s.swift_version  = '5.7'
   s.source         = { git: 'https://github.com/smileidentity/react-native-expo.git' }
   s.static_framework = true
 
   s.dependency 'ExpoModulesCore'
+
+  s.dependency 'SmileID', '11.0.1'
 
   # Swift/Objective-C compatibility
   s.pod_target_xcconfig = {
