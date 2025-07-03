@@ -30,14 +30,18 @@ public class SmileIDExpoModule: Module {
 
         // Function to present Document Verification view
         AsyncFunction("presentDocumentVerification") { () -> Void in
-            let documentVerificationView = SmileIDDocumentVerificationView()
-            self.presentView(documentVerificationView)
+            DispatchQueue.main.async {
+                let documentVerificationView = SmileIDDocumentVerificationView()
+                self.presentView(documentVerificationView)
+            }
         }
 
         // Function to present SmartSelfie Enrollment view
         AsyncFunction("presentSmartSelfieEnrollment") { () -> Void in
-            let smartSelfieView = SmileIDSmartSelfieEnrollmentView()
-            self.presentView(smartSelfieView)
+            DispatchQueue.main.async {
+                let smartSelfieView = SmileIDSmartSelfieEnrollmentView()
+                self.presentView(smartSelfieView)
+            }
         }
 
         // Document Verification View
@@ -56,16 +60,21 @@ public class SmileIDExpoModule: Module {
 extension SmileIDExpoModule {
     /// Presents a view modally using a full screen presentation style
     private func presentView<T: UIView>(_ view: T) {
-        DispatchQueue.main.async {
-            guard let rootViewController = UIApplication.shared.windows.first?.rootViewController else {
-                return
-            }
-
-            let viewController = UIViewController()
-            viewController.modalPresentationStyle = .fullScreen
-            viewController.view.addSubview(view)
-            view.fillSuperview()
-            rootViewController.present(viewController, animated: true)
+        guard
+            let windowScene = UIApplication.shared.connectedScenes
+                .compactMap({ $0 as? UIWindowScene })
+                .first(where: { $0.activationState == .foregroundActive }),
+            let rootViewController = windowScene.windows.first(where: { $0.isKeyWindow })?.rootViewController
+        else {
+            return
         }
+
+        let viewController = UIViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.view.backgroundColor = .systemBackground
+        viewController.view.addSubview(view)
+        view.fillSuperview()
+
+        rootViewController.present(viewController, animated: true)
     }
 }
