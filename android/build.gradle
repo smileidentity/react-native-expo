@@ -1,7 +1,29 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
 
 group = 'com.smileidentity.react.expo'
 version = '0.1.0'
+
+buildscript {
+    ext.kotlin_version = '2.0.21'
+
+    // Simple helper that allows the root project to override versions declared by this library.
+    ext.safeExtGet = { prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+    }
+}
 
 def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
 apply from: expoModulesCorePlugin
@@ -14,30 +36,87 @@ useExpoPublishing()
 // Most of the time, you may like to manage the Android SDK versions yourself.
 def useManagedAndroidSdkVersions = false
 if (useManagedAndroidSdkVersions) {
-  useDefaultAndroidSdkVersions()
+    useDefaultAndroidSdkVersions()
 } else {
-  buildscript {
-    // Simple helper that allows the root project to override versions declared by this library.
-    ext.safeExtGet = { prop, fallback ->
-      rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    project.android {
+        compileSdkVersion safeExtGet("compileSdkVersion", 34)
+        defaultConfig {
+            minSdkVersion safeExtGet("minSdkVersion", 21)
+            targetSdkVersion safeExtGet("targetSdkVersion", 34)
+        }
     }
-  }
-  project.android {
-    compileSdkVersion safeExtGet("compileSdkVersion", 34)
-    defaultConfig {
-      minSdkVersion safeExtGet("minSdkVersion", 21)
-      targetSdkVersion safeExtGet("targetSdkVersion", 34)
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
     }
-  }
 }
 
 android {
-  namespace "com.smileidentity.react.expo"
-  defaultConfig {
-    versionCode 1
-    versionName "0.1.0"
-  }
-  lintOptions {
-    abortOnError false
-  }
+    namespace "com.smileidentity.react.expo"
+    defaultConfig {
+        versionCode 1
+        versionName "0.1.0"
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+        freeCompilerArgs += ['-Xskip-metadata-version-check']
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+/**
+ * our android sdk will always use a newer kotlin version, but we can override it to use the version
+ * that is used by the expo version we are using to ensure maximum compatibility ):
+ */
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            force(
+                    "org.jetbrains.kotlin:kotlin-stdlib:2.0.21",
+                    "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21",
+                    "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21",
+                    "org.jetbrains.kotlin:kotlin-stdlib-common:2.0.21",
+                    "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0",
+                    "org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.0"
+            )
+
+            eachDependency { details ->
+                if (details.requested.group == "org.jetbrains.kotlin") {
+                    details.useVersion("2.0.21")
+                    details.because("Force Kotlin 2.0.21 to override SmileID SDK's Kotlin 2.2.0")
+                }
+                if (details.requested.group == "org.jetbrains.kotlinx" &&
+                        details.requested.name.startsWith("kotlinx-serialization")) {
+                    details.useVersion("1.7.0")
+                    details.because("Force kotlinx-serialization 1.7.0 for compatibility with Kotlin 2.0.21")
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation("com.smileidentity:android-sdk:11.0.5") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-common'
+        exclude group: 'org.jetbrains.kotlinx', module: 'kotlinx-serialization-core'
+        exclude group: 'org.jetbrains.kotlinx', module: 'kotlinx-serialization-json'
+    }
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0")
 }
