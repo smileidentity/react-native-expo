@@ -6,7 +6,7 @@ import { ViewProps } from "react-native";
 interface SmileIDDocumentVerificationViewProps extends ViewProps {}
 
 const NativeView: React.ComponentType<SmileIDDocumentVerificationViewProps> =
-    requireNativeViewManager('SmileIDExpo');
+    requireNativeViewManager('SmileIDExpo', 'SmileIDDocumentVerificationView');
 
 export default function SmileIDDocumentVerificationView(props: SmileIDDocumentVerificationViewProps) {
     return <NativeView {...props} />;

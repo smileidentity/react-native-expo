@@ -5,8 +5,7 @@
   },
   "android": {
     "modules": [
-      "com.smileidentity.react.expo.SmileIDExpoModule",
-      "com.smileidentity.react.expo.SmileIDSmartSelfieEnrollmentModule"
+      "com.smileidentity.react.expo.SmileIDExpoModule"
     ]
   }
 }
