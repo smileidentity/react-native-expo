@@ -17,13 +17,6 @@ class SmileIDExpoModule : Module() {
 
         }
 
-
-        AsyncFunction("presentDocumentVerification") {
-        }
-
-        AsyncFunction("presentSmartSelfieEnrollment") {
-        }
-
         View(SmileIDDocumentVerificationView::class) {
 
         }

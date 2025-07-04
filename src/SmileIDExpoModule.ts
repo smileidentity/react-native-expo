@@ -9,9 +9,6 @@ declare class SmileIDExpoModule extends NativeModule<SmileIDExpoModuleEvents> {
     config?: Config,
     apiKey?: string
   ): Promise<void>
-  
-  presentDocumentVerification(): Promise<void>
-  presentSmartSelfieEnrollment(): Promise<void>
 }
 
 // This call loads the native module object from the JSI.
