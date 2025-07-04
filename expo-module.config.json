@@ -4,6 +4,8 @@
     "modules": ["SmileIDExpoModule"]
   },
   "android": {
-    "modules": ["com.smileidentity.react.expo.SmileIDExpoModule"]
+    "modules": [
+      "com.smileidentity.react.expo.SmileIDExpoModule"
+    ]
   }
 }
