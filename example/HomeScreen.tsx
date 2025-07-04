@@ -2,34 +2,34 @@ import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, StyleSheet } fr
 import React, { useState } from 'react';
 import { SmileIDDocumentVerificationView, SmileIDSmartSelfieEnrollmentView } from 'react-native-expo';
 
-const documentVerification = 'documentVerification';
-const smartSelfieEnrollment = 'smartSelfieEnrollment';
-
-const products = [
-  { title: 'Document Verification', product: documentVerification },
-  { title: 'SmartSelfie Enrollment', product: smartSelfieEnrollment },
+const PRODUCTS = [
+  { title: 'Document Verification', key: 'documentVerification' },
+  { title: 'SmartSelfie Enrollment', key: 'smartSelfieEnrollment' },
 ];
 
 export default function HomeScreen() {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
-  const handleProductPress = (product) => {
-    console.log('Product pressed:', product.title);
-    setSelectedProduct(product.product);
+  const handleProductPress = (productKey: string) => {
+    setSelectedProduct(productKey);
   };
 
   const renderSelectedProductView = () => {
+    if (!selectedProduct) return null;
+
+    const containerStyle = [styles.flexContainer, styles.productContainer];
+
     switch (selectedProduct) {
-      case documentVerification:
+      case 'documentVerification':
         return (
-            <View style={styles.productContainer}>
-              <SmileIDDocumentVerificationView style={{ flex: 1, width: "100%" }} />
+            <View style={containerStyle}>
+              <SmileIDDocumentVerificationView style={styles.nativeView} />
             </View>
         );
-      case smartSelfieEnrollment:
+      case 'smartSelfieEnrollment':
         return (
-            <View style={styles.productContainer}>
-              <SmileIDSmartSelfieEnrollmentView style={{ flex: 1, width: "100%" }} />
+            <View style={containerStyle}>
+              <SmileIDSmartSelfieEnrollmentView style={styles.nativeView} />
             </View>
         );
       default:
@@ -38,18 +38,18 @@ export default function HomeScreen() {
   };
 
   return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.flexContainer}>
         {selectedProduct ? (
             renderSelectedProductView()
         ) : (
-            <ScrollView style={styles.scrollView}>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
               <Text style={styles.header}>Identity Verification</Text>
               <View style={styles.buttonContainer}>
-                {products.map((product, index) => (
+                {PRODUCTS.map((product) => (
                     <TouchableOpacity
-                        key={index}
+                        key={product.key}
                         style={styles.productButton}
-                        onPress={() => handleProductPress(product)}
+                        onPress={() => handleProductPress(product.key)}
                     >
                       <Text style={styles.buttonText}>{product.title}</Text>
                     </TouchableOpacity>
@@ -62,10 +62,23 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f5f5f5' },
-  scrollView: { flex: 1 },
-  header: { fontSize: 28, fontWeight: 'bold', textAlign: 'center', margin: 20, color: '#333' },
-  buttonContainer: { paddingHorizontal: 20, paddingVertical: 10 },
+  flexContainer: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  scrollContainer: {
+    paddingVertical: 20,
+  },
+  header: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#333',
+  },
+  buttonContainer: {
+    paddingHorizontal: 20,
+  },
   productButton: {
     backgroundColor: '#007AFF',
     borderRadius: 12,
@@ -78,6 +91,17 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-  buttonText: { color: '#fff', fontSize: 18, fontWeight: '600', textAlign: 'center' },
-  productContainer: { flex: 1, padding: 10 },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  productContainer: {
+    padding: 10, // Optional: you can remove this if you want edge-to-edge native view
+  },
+  nativeView: {
+    flex: 1,
+    width: '100%',
+  },
 });
