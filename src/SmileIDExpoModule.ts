@@ -1,14 +1,20 @@
 import { NativeModule, requireNativeModule } from 'expo';
 
-import { SmileIDExpoModuleEvents, Config } from './SmileIDExpo.types';
+import { SmileIDExpoModuleEvents } from './SmileIDExpo.types';
 
 declare class SmileIDExpoModule extends NativeModule<SmileIDExpoModuleEvents> {
-  initalize(
-    useSandBox: boolean,
-    enableCrashReporting: boolean,
-    config?: Config,
-    apiKey?: string
-  ): Promise<void>
+  /**
+   * Initialize SmileID SDK with configuration
+   * @param useSandBox - Configuration object for the SDK
+   * @param apiKey - api key specific to the partner and also environment
+   * @param config - Configuration object for the SDK
+   * @param enableCrashReporting - Whether to enable crash reporting
+   */
+  initialize(
+      useSandBox: boolean,
+      enableCrashReporting: boolean,
+      apiKey?: string
+  ): Promise<void>;
 }
 
 // This call loads the native module object from the JSI.

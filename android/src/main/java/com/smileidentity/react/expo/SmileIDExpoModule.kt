@@ -1,5 +1,7 @@
 package com.smileidentity.react.expo
 
+import com.smileidentity.SmileID
+import expo.modules.core.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -13,8 +15,15 @@ class SmileIDExpoModule : Module() {
         // The module will be accessible from `requireNativeModule('SmileIDExpo')` in JavaScript.
         Name("SmileIDExpo")
 
-        AsyncFunction("initalize") { value: String ->
+        Function("initialize") { useSandBox: Boolean, enableCrashReporting: Boolean, apiKey: String?, promise: Promise ->
 
+            try {
+                val context = appContext.reactContext?.applicationContext!!
+                SmileID.initialize(context)
+                promise.resolve(null) // Resolving with void
+            } catch (e: Exception) {
+                promise.reject("INITIALIZATION_ERROR", e.localizedMessage, e)
+            }
         }
 
         View(SmileIDDocumentVerificationView::class) {
