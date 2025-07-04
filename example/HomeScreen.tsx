@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   productContainer: {
-    padding: 10, // Optional: adjust or remove depending on native view sizing
+    padding: 10,
   },
   nativeView: {
     flex: 1,

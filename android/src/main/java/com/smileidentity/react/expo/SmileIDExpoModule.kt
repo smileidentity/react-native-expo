@@ -22,14 +22,11 @@ class SmileIDExpoModule : Module() {
             val context = appContext.reactContext
                 ?: throw IllegalStateException("Context is not available")
 
-            val sdkConfig = /* build your Config object here */
-
-                // Return async result (Promise in JS)
-                withContext(Dispatchers.IO) {
-                    SmileID.initialize(
-                        context
-                    ).await()
-                }
+            withContext(Dispatchers.IO) {
+                SmileID.initialize(
+                    context
+                ).await()
+            }
         }
 
         View(SmileIDDocumentVerificationView::class) {
