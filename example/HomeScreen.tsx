@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { SmileIDDocumentVerificationView, SmileIDSmartSelfieEnrollmentView } from 'react-native-expo';
 

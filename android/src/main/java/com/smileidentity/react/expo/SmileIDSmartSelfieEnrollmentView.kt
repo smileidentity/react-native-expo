@@ -1,6 +1,7 @@
 package com.smileidentity.react.expo
 
 import android.content.Context
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.compose.ui.platform.ComposeView
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.views.ExpoView
@@ -10,16 +11,16 @@ import expo.modules.kotlin.views.ExpoView
  **/
 class SmileIDSmartSelfieEnrollmentView(context: Context, appContext: AppContext) :
     ExpoView(context, appContext) {
-    internal val composeView = ComposeView(context).also {
+    private var composeView: ComposeView? = null
 
-        it.layoutParams = LayoutParams(
-            LayoutParams.WRAP_CONTENT,
-            LayoutParams.WRAP_CONTENT
-        )
-        it.setContent {
-            SmartSelfieEnrollmentView()
+    init {
+        ComposeView(context).also {
+            it.layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+            it.setContent {
+                SmartSelfieEnrollmentView()
+            }
+            addView(it)
+            composeView = it
         }
-
-        addView(it)
     }
 }
