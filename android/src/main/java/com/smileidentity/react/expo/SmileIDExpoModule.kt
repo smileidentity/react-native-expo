@@ -13,11 +13,21 @@ class SmileIDExpoModule : Module() {
         // The module will be accessible from `requireNativeModule('SmileIDExpo')` in JavaScript.
         Name("SmileIDExpo")
 
-        // Enables the module to be used as a native view. Definition components that are accepted as part of
-        // the view definition: Prop, Events.
-        View(SmileIDDocumentVerificationView::class) {
+        AsyncFunction("initalize") { value: String ->
+
         }
+
+
+        AsyncFunction("presentDocumentVerification") {
+        }
+
+        AsyncFunction("presentSmartSelfieEnrollment") {
+        }
+
         View(SmileIDDocumentVerificationView::class) {
+
+        }
+        View(SmileIDSmartSelfieEnrollmentView::class) {
         }
     }
 }
