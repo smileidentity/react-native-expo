@@ -26,7 +26,7 @@ class AppDelegate: ExpoAppDelegate {
     window = UIWindow(frame: UIScreen.main.bounds)
 
     factory.startReactNative(
-      withModuleName: "weather",
+      withModuleName: "main",
       in: window,
       launchOptions: launchOptions
     )
