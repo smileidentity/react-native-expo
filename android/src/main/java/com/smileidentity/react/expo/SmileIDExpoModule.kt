@@ -1,7 +1,12 @@
 package com.smileidentity.react.expo
 
+import com.smileidentity.SmileID
+import expo.modules.kotlin.Promise
+import expo.modules.kotlin.functions.Coroutine
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class SmileIDExpoModule : Module() {
     // Each module class must implement the definition function. The definition consists of components
@@ -13,8 +18,15 @@ class SmileIDExpoModule : Module() {
         // The module will be accessible from `requireNativeModule('SmileIDExpo')` in JavaScript.
         Name("SmileIDExpo")
 
-        AsyncFunction("initalize") { value: String ->
+        AsyncFunction("initialize") Coroutine { useSandBox: Boolean, enableCrashReporting: Boolean, apiKey: String? ->
+            val context = appContext.reactContext
+                ?: throw IllegalStateException("Context is not available")
 
+            withContext(Dispatchers.IO) {
+                SmileID.initialize(
+                    context
+                ).await()
+            }
         }
 
         View(SmileIDDocumentVerificationView::class) {

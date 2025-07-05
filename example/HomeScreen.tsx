@@ -1,6 +1,18 @@
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
-import { SmileIDDocumentVerificationView, SmileIDSmartSelfieEnrollmentView } from 'react-native-expo';
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Alert
+} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  initialize,
+  SmileIDDocumentVerificationView,
+  SmileIDSmartSelfieEnrollmentView
+} from 'react-native-expo';
 
 const PRODUCTS = [
   { title: 'Document Verification', key: 'documentVerification' },
@@ -9,6 +21,21 @@ const PRODUCTS = [
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+
+  // Initialize SmileID SDK once when the component mounts
+  useEffect(() => {
+    const initSmileID = async () => {
+      try {
+        await initialize(true, true, 'my-api-key');
+        console.log('SmileID SDK initialized successfully');
+      } catch (error) {
+        console.error('SmileID SDK initialization failed:', error);
+        Alert.alert('Initialization Error', 'Failed to initialize SmileID SDK');
+      }
+    };
+
+    initSmileID();
+  }, []);
 
   const handleProductPress = (productKey: string) => {
     setSelectedProduct(productKey);
@@ -98,7 +125,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   productContainer: {
-    padding: 10, // Optional: you can remove this if you want edge-to-edge native view
+    padding: 10,
   },
   nativeView: {
     flex: 1,
