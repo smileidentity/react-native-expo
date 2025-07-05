@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "react-native-expo": "file:../../",
     "@react-native/new-app-screen": "0.80.1",
     "expo": "~53.0.0",
     "react": "19.1.0",
