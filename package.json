@@ -12,8 +12,10 @@
     "prepare": "expo-module prepare",
     "prepublishOnly": "expo-module prepublishOnly",
     "expo-module": "expo-module",
-    "open:ios": "xed example/ios",
-    "open:android": "open -a \"Android Studio\" example/android"
+    "open:ios-expo": "xed samples/sample-expo/ios",
+    "open:android-expo": "open -a \"Android Studio\" samples/sample-expo/android",
+    "open:ios-react-native": "xed samples/sample-react-native/ios",
+    "open:android-react-native": "open -a \"Android Studio\" samples/sample-react-native/android"
   },
   "keywords": [
     "react-native",
@@ -25,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/smileidentity/react-native-expo.git/issues"
   },
-  "author": "Harun Wangereka <harunwangereka@gmail.com> (https://github.com/wangerekaharun)",
+  "author": "Harun Wangereka <harun@usesmileid.com> (https://github.com/wangerekaharun)",
   "license": "MIT",
   "homepage": "https://github.com/smileidentity/react-native-expo.git#readme",
   "dependencies": {},
