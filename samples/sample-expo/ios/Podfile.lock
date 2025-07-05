@@ -65,11 +65,17 @@ PODS:
     - Yoga
   - fast_float (6.1.4)
   - FBLazyVector (0.79.5)
+  - FingerprintJS (1.6.0):
+    - FingerprintJS/Core (= 1.6.0)
+  - FingerprintJS/Core (1.6.0):
+    - FingerprintJS/SystemControl
+  - FingerprintJS/SystemControl (1.6.0)
   - fmt (11.0.2)
   - glog (0.3.5)
   - hermes-engine (0.79.5):
     - hermes-engine/Pre-built (= 0.79.5)
   - hermes-engine/Pre-built (0.79.5)
+  - lottie-ios (4.5.2)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -1716,8 +1722,18 @@ PODS:
     - React-logger (= 0.79.5)
     - React-perflogger (= 0.79.5)
     - React-utils (= 0.79.5)
+  - SmileID (11.0.1):
+    - FingerprintJS
+    - lottie-ios (~> 4.5.0)
+    - SmileIDSecurity (~> 1.0.2)
+    - ZIPFoundation (~> 0.9)
+  - SmileIDExpo (0.1.0):
+    - ExpoModulesCore
+    - SmileID (= 11.0.1)
+  - SmileIDSecurity (1.0.2)
   - SocketRocket (0.7.1)
   - Yoga (0.0.0)
+  - ZIPFoundation (0.9.19)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
@@ -1798,11 +1814,17 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - SmileIDExpo (from `../node_modules/react-native-expo/ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - FingerprintJS
+    - lottie-ios
+    - SmileID
+    - SmileIDSecurity
     - SocketRocket
+    - ZIPFoundation
 
 EXTERNAL SOURCES:
   boost:
@@ -1958,6 +1980,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  SmileIDExpo:
+    :path: "../node_modules/react-native-expo/ios"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1973,9 +1997,11 @@ SPEC CHECKSUMS:
   ExpoModulesCore: 33476f0f608d791bbaf263af22a00d3b8877f6bc
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: d2a9cd223302b6c9aa4aa34c1a775e9db609eb52
+  FingerprintJS: 3a0c3e7f5035ecae199e5e5836200d9b20f1266a
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: f03b0e06d3882d71e67e45b073bb827da1a21aae
+  lottie-ios: 96784afc26ea031d3e2b6cae342a4b8915072489
   RCT-Folly: 36fe2295e44b10d831836cc0d1daec5f8abcf809
   RCTDeprecation: 5f638f65935e273753b1f31a365db6a8d6dc53b5
   RCTRequired: 8b46a520ea9071e2bc47d474aa9ca31b4a935bd8
@@ -2038,8 +2064,12 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: c42e7abdd2228ae583bdabc3dcd8e5cda6bef944
   ReactCodegen: 4d001cd4fa72b876bbff500bbb3811e458bb3c72
   ReactCommon: 41137f7e87cf7fd1c041a7124dfa3d0d48aa43f3
+  SmileID: 3096d4ca8ddb3efb72bb5d2ed0823d1979863b20
+  SmileIDExpo: 86a93e78fd3c77c4c03a07baccdf0cf19de58eff
+  SmileIDSecurity: 10f866b5880413783368b434323717de4dfb4dc3
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: adb397651e1c00672c12e9495babca70777e411e
+  ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
 PODFILE CHECKSUM: b389bb72b787659e565ede8cd66c31d5b533b9b6
 
