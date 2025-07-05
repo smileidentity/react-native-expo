@@ -31,7 +31,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
 }
 expoAutolinking.useExpoModules()
 
-rootProject.name = 'react-native-expo-example'
+rootProject.name = 'react-native-expo-sample-expo'
 
 expoAutolinking.useExpoVersionCatalog()
 

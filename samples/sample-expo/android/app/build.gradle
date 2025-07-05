@@ -71,7 +71,7 @@ def enableProguardInReleaseBuilds = (findProperty('android.enableProguardInRelea
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
  *
- * For example, to use the international variant, you can use:
+ * For sample-expo, to use the international variant, you can use:
  * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
  *
  * The international variant includes ICU i18n library and necessary data
@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.smileidentity.react.expo.example'
+    namespace 'com.smileidentity.react.expo.sample-expo'
     defaultConfig {
-        applicationId 'com.smileidentity.react.expo.example'
+        applicationId 'com.smileidentity.react.expo.sample-expo'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -142,7 +142,7 @@ android {
 }
 
 // Apply static values from `gradle.properties` to the `android.packagingOptions`
-// Accepts values in comma delimited lists, example:
+// Accepts values in comma delimited lists, sample-expo:
 // android.packagingOptions.pickFirsts=/LICENSE,**/picasa.ini
 ["pickFirsts", "excludes", "merges", "doNotStrip"].each { prop ->
     // Split option: 'foo,bar' -> ['foo', 'bar']
