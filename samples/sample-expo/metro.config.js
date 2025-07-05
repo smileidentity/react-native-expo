@@ -19,7 +19,7 @@ config.resolver.nodeModulesPaths = [
 ];
 
 config.resolver.extraNodeModules = {
-  'react-native-expo': '..',
+  'react-native-expo': path.resolve(__dirname, '../../'),
 };
 
 config.watchFolders = [path.resolve(__dirname, '..')];
