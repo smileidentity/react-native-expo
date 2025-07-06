@@ -1,4 +1,4 @@
-package com.smileidentity.react.expo.example
+package com.smileidentity.react.sample.expo
 
 import android.os.Build
 import android.os.Bundle
@@ -7,6 +7,8 @@ import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import expo.modules.ReactActivityDelegateWrapper
+import com.smileidentity.react.sample.expo.R
+import com.smileidentity.react.sample.expo.BuildConfig
 
 class MainActivity : ReactActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
