@@ -12,6 +12,7 @@ import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.soloader.OpenSourceMergedSoMapping
 import com.facebook.soloader.SoLoader
 import expo.modules.ApplicationLifecycleDispatcher
+import com.smileidentity.react.sample.BuildConfig
 
 class MainApplication : Application(), ReactApplication {
     override val reactNativeHost: ReactNativeHost =
