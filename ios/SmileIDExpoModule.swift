@@ -3,7 +3,25 @@ import SmileID
 import SwiftUI
 import UIKit
 
+// Native ExpoConfig struct to match TypeScript ExpoConfig
+struct ExpoConfig: Record {
+    @Field var partnerId: String
+    @Field var authToken: String
+    @Field var prodLambdaUrl: String
+    @Field var testLambdaUrl: String
+}
+
 public class SmileIDExpoModule: Module {
+    
+    // Helper function to convert ExpoConfig to SmileID.Config
+    private func convertToSmileIDConfig(_ expoConfig: ExpoConfig) -> SmileID.Config {
+        return SmileID.Config(
+            partnerId: expoConfig.partnerId,
+            authToken: expoConfig.authToken,
+            prodLambdaUrl: expoConfig.prodLambdaUrl,
+            testLambdaUrl: expoConfig.testLambdaUrl
+        )
+    }
 
     // Each module class must implement the definition function. The definition consists of components
     // that describes the module's functionality and behavior.
@@ -16,14 +34,19 @@ public class SmileIDExpoModule: Module {
 
         // Defines a JavaScript function that always returns a Promise and whose native code
         // is by default dispatched on the different thread than the JavaScript runtime runs on.
-        AsyncFunction("initalize") {
+        AsyncFunction("initialize") {
             (
+                config: ExpoConfig,
                 useSandBox: Bool,
                 enableCrashReporting: Bool,
                 apiKey: String?
             ) -> Void in
+            
+            // Convert ExpoConfig to SmileID.Config
+            let smileConfig = self.convertToSmileIDConfig(config)
+            
             SmileID.initialize(
-                apiKey: apiKey,
+                config: smileConfig,
                 useSandbox: useSandBox
             )
         }
