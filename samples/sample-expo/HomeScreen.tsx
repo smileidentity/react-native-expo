@@ -50,7 +50,12 @@ export default function HomeScreen() {
       case 'documentVerification':
         return (
             <View style={containerStyle}>
-              <SmileIDDocumentVerificationView style={styles.nativeView} />
+              <SmileIDDocumentVerificationView
+                  style={styles.nativeView}
+                  countryCode="US"
+                  userId="user123"
+                  jobId="job456"
+              />
             </View>
         );
       case 'smartSelfieEnrollment':

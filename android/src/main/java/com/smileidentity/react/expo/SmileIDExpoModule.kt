@@ -81,7 +81,17 @@ class SmileIDExpoModule : Module() {
         }
 
         View(SmileIDDocumentVerificationView::class) {
+            Prop("countryCode") { view: SmileIDDocumentVerificationView, countryCode: String ->
+                view.setCountryCode(countryCode)
+            }
 
+            Prop("userId") { view: SmileIDDocumentVerificationView, userId: String ->
+                view.setUserId(userId)
+            }
+
+            Prop("jobId") { view: SmileIDDocumentVerificationView, jobId: String ->
+                view.setJobId(jobId)
+            }
         }
         View(SmileIDSmartSelfieEnrollmentView::class) {
         }
