@@ -10,7 +10,7 @@ import SmileIDDocumentVerificationView from './SmileIDDocumentVerificationView';
 export { SmileIDDocumentVerificationView };
 
 export * from  './SmileIDExpo.types';
-import { ExpoConfig } from './SmileIDExpo.types';
+import type { ExpoConfig } from './SmileIDExpo.types';
 
 export function initialize(
     config: ExpoConfig,

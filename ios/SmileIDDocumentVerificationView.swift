@@ -41,7 +41,7 @@ struct DocumentVerificationView: View {
 
 // Delegate class for document verification
 class DocumentVerificationDelegate: DocumentVerificationResultDelegate {
-    var onResult: ((String) -> Void)?
+    var onResult: (([String: Any]) -> Void)?
     var onError: ((Error) -> Void)?
 
     func didSucceed(
@@ -59,13 +59,7 @@ class DocumentVerificationDelegate: DocumentVerificationResultDelegate {
             params["documentBackFile"] = documentBackImage.absoluteString
         }
 
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: result, options: [])
-            let jsonString = String(data: jsonData, encoding: .utf8) ?? "{}"
-            onResult?(jsonString)
-        } catch {
-            onError?(error)
-        }
+        onResult?(params)
     }
 
     func didError(error: Error) {

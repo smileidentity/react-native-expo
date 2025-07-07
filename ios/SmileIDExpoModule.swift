@@ -14,8 +14,8 @@ struct ExpoConfig: Record {
 public class SmileIDExpoModule: Module {
     
     // Helper function to convert ExpoConfig to SmileID.Config
-    private func convertToSmileIDConfig(_ expoConfig: ExpoConfig) -> SmileID.Config {
-        return SmileID.Config(
+    private func convertToSmileIDConfig(_ expoConfig: ExpoConfig) -> Config {
+        return Config(
             partnerId: expoConfig.partnerId,
             authToken: expoConfig.authToken,
             prodLambdaUrl: expoConfig.prodLambdaUrl,
