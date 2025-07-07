@@ -9,6 +9,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class SmileIDExpoModule : Module() {
+    
+    // Helper function to convert SmileIDConfig to SmileID.Config
+    private fun convertToSmileIDConfig(config: SmileIDConfig): com.smileidentity.Config {
+        return com.smileidentity.Config(
+            partnerId = config.partnerId,
+            authToken = config.authToken,
+            prodLambdaUrl = config.prodLambdaUrl,
+            testLambdaUrl = config.testLambdaUrl
+        )
+    }
     // Each module class must implement the definition function. The definition consists of components
     // that describes the module's functionality and behavior.
     // See https://docs.expo.dev/modules/module-api for more details about available components.
@@ -18,13 +28,18 @@ class SmileIDExpoModule : Module() {
         // The module will be accessible from `requireNativeModule('SmileIDExpo')` in JavaScript.
         Name("SmileIDExpo")
 
-        AsyncFunction("initialize") Coroutine { useSandBox: Boolean, enableCrashReporting: Boolean, apiKey: String? ->
+        AsyncFunction("initialize") Coroutine { config: SmileIDConfig, useSandBox: Boolean, enableCrashReporting: Boolean, apiKey: String? ->
             val context = appContext.reactContext
                 ?: throw IllegalStateException("Context is not available")
 
             withContext(Dispatchers.IO) {
+                // Convert SmileIDConfig to com.smileidentity.Config
+                val smileConfig = convertToSmileIDConfig(config)
+                
                 SmileID.initialize(
-                    context
+                    context,
+                    smileConfig,
+                    useSandBox
                 ).await()
             }
         }
