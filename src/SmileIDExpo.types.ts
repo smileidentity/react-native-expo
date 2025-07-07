@@ -1,7 +1,7 @@
 /**
  * Config class used to pass the smile config to initialize method
  */
-export class Config {
+export class ExpoConfig {
   partnerId: string;
   authToken: string;
   prodLambdaUrl: string;
@@ -20,6 +20,7 @@ export class Config {
   }
 }
 
+
 export type SmileIDExpoModuleEvents = {
   onChange: (params: ChangeEventPayload) => void;
 };
@@ -27,3 +28,22 @@ export type SmileIDExpoModuleEvents = {
 export type ChangeEventPayload = {
   value: string;
 };
+
+/**
+ * Request class used to pass the document verification request parameters
+ */
+export class ExpoDocumentVerificationRequest {
+  countryCode: string;
+  userId: string;
+  jobId: string;
+
+  constructor(
+    countryCode: string,
+    userId: string,
+    jobId: string
+  ) {
+    this.countryCode = countryCode;
+    this.userId = userId;
+    this.jobId = jobId;
+  }
+}
