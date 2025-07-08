@@ -54,6 +54,17 @@ export default function HomeScreen() {
     setSelectedProduct(productKey);
   };
 
+  const handleDocumentVerificationResult = (result: any) => {
+    console.log('Document verification result:', result);
+    setSelectedProduct(null);
+  };
+
+  const handleDocumentVerificationError = (error: any) => {
+    console.log('Document verification error:', error);
+    Alert.alert('Document Verification Error', error.error || 'An error occurred');
+    setSelectedProduct(null);
+  };
+
   const renderSelectedProductView = () => {
     if (!selectedProduct) return null;
 
@@ -66,6 +77,8 @@ export default function HomeScreen() {
               <SmileIDDocumentVerificationView 
                 style={styles.nativeView} 
                 config={documentVerificationConfig}
+                onResult={handleDocumentVerificationResult}
+                onError={handleDocumentVerificationError}
               />
             </View>
         );

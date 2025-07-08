@@ -5,6 +5,8 @@ import { ExpoDocumentVerificationRequest } from './SmileIDExpo.types';
 
 interface SmileIDDocumentVerificationViewProps extends ViewProps {
   config: ExpoDocumentVerificationRequest;
+  onResult?: (result: any) => void;
+  onError?: (error: any) => void;
 }
 
 const NativeView: React.ComponentType<SmileIDDocumentVerificationViewProps> =
