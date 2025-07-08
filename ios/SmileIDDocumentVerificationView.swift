@@ -87,13 +87,15 @@ class DocumentVerificationDelegate: DocumentVerificationResultDelegate {
         documentBackImage: URL?,
         didSubmitDocumentVerificationJob: Bool
     ) {
-        let result: [String: Any] = [
+        var params: [String: Any] = [
             "selfie": selfie.absoluteString,
-            "documentFrontImage": documentFrontImage.absoluteString,
-            "documentBackImage": documentBackImage?.absoluteString ?? NSNull(),
+            "documentFrontFile": documentFrontImage.absoluteString,
             "didSubmitDocumentVerificationJob": didSubmitDocumentVerificationJob,
         ]
-        onResult?(result)
+        if let documentBackImage {
+            params["documentBackFile"] = documentBackImage.absoluteString
+        }
+        onResult?(params)
     }
 
     func didError(error: Error) {
