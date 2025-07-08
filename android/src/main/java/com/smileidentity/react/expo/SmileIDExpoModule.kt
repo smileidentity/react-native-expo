@@ -7,6 +7,26 @@ import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import expo.modules.kotlin.records.Record
+import expo.modules.kotlin.records.Field
+import com.smileidentity.models.Config
+
+/**
+ * Type‑safe bridge for the JS `ExpoConfig` object coming from JavaScript.
+ */
+class SmileConfigRecord : Record {
+    @Field
+    var partnerId: String = ""
+
+    @Field
+    var authToken: String = ""
+
+    @Field
+    var prodLambdaUrl: String = ""
+
+    @Field
+    var testLambdaUrl: String = ""
+}
 
 class SmileIDExpoModule : Module() {
     // Each module class must implement the definition function. The definition consists of components
@@ -18,13 +38,25 @@ class SmileIDExpoModule : Module() {
         // The module will be accessible from `requireNativeModule('SmileIDExpo')` in JavaScript.
         Name("SmileIDExpo")
 
-        AsyncFunction("initialize") Coroutine { useSandBox: Boolean, enableCrashReporting: Boolean, apiKey: String? ->
+        AsyncFunction("initialize") Coroutine { config: SmileConfigRecord, useSandBox: Boolean, enableCrashReporting: Boolean, apiKey: String ->
             val context = appContext.reactContext
                 ?: throw IllegalStateException("Context is not available")
 
+            // Map the record to the SDK's expected Config data class
+            val smileConfig = Config(
+                partnerId      = config.partnerId,
+                authToken      = config.authToken,
+                prodLambdaUrl  = config.prodLambdaUrl,
+                testLambdaUrl  = config.testLambdaUrl
+            )
+
             withContext(Dispatchers.IO) {
                 SmileID.initialize(
-                    context
+                    context               = context,
+                    config                = smileConfig,
+                    useSandbox            = useSandBox,
+                    enableCrashReporting  = enableCrashReporting,
+                    apiKey                = apiKey
                 ).await()
             }
         }

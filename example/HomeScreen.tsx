@@ -34,7 +34,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const initSmileID = async () => {
       try {
-        await initialize(config, true, true, undefined);
+        await initialize(config, true, true, "");
         console.log('SmileID SDK initialized successfully');
       } catch (error) {
         console.error('SmileID SDK initialization failed:', error);
