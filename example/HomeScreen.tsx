@@ -12,7 +12,8 @@ import {
   initialize,
   SmileIDDocumentVerificationView,
   SmileIDSmartSelfieEnrollmentView,
-  ExpoConfig
+  ExpoConfig,
+  ExpoDocumentVerificationRequest
 } from 'react-native-expo';
 
 const PRODUCTS = [
@@ -26,6 +27,11 @@ const config = new ExpoConfig(
   'https://prod-lambda-url.com', // prodLambdaUrl
   'https://test-lambda-url.com' // testLambdaUrl
 );
+
+const documentVerificationConfig: ExpoDocumentVerificationRequest = {
+  countryCode: 'NG',
+  captureBothSides: false,
+};
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
@@ -49,6 +55,19 @@ export default function HomeScreen() {
     setSelectedProduct(productKey);
   };
 
+  const handleDocumentVerificationResult = (event: any) => {
+    const result = event.nativeEvent;
+    console.log('Document verification result:', result);
+    setSelectedProduct(null);
+  };
+
+  const handleDocumentVerificationError = (event: any) => {
+    const error = event.nativeEvent;
+    console.log('Document verification error:', error);
+    Alert.alert('Document Verification Error', error.error || 'An error occurred');
+    setSelectedProduct(null);
+  };
+
   const renderSelectedProductView = () => {
     if (!selectedProduct) return null;
 
@@ -58,21 +77,11 @@ export default function HomeScreen() {
       case 'documentVerification':
         return (
             <View style={containerStyle}>
-              <SmileIDDocumentVerificationView
-                  style={styles.nativeView}
-                  countryCode="KE"
-                  jobId="1345c68"
-                  userId="user-123-456"
-                  onSuccess={(event) => {
-                    console.log('Document Verification Success:', event.nativeEvent);
-                    Alert.alert('Success', 'Document verification completed successfully');
-                    setSelectedProduct(null)
-                    }}
-                  onError={(event) => {
-                    console.error('Document Verification Error:', event.nativeEvent);
-                    Alert.alert('Error', 'An error occurred during document verification');
-                    setSelectedProduct(null);
-                    }}
+              <SmileIDDocumentVerificationView 
+                style={styles.nativeView} 
+                config={documentVerificationConfig}
+                onResult={handleDocumentVerificationResult}
+                onError={handleDocumentVerificationError}
               />
             </View>
         );

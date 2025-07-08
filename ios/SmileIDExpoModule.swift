@@ -3,14 +3,6 @@ import SmileID
 import SwiftUI
 import UIKit
 
-/// Type‑safe bridge for the JS `ExpoConfig` object
-struct SmileConfigRecord: Record {
-    @Field var partnerId: String
-    @Field var authToken: String
-    @Field var prodLambdaUrl: String
-    @Field var testLambdaUrl: String
-}
-
 public class SmileIDExpoModule: Module {
 
     // Each module class must implement the definition function. The definition consists of components
@@ -46,6 +38,13 @@ public class SmileIDExpoModule: Module {
         // Document Verification View
         View(SmileIDDocumentVerificationView.self) {
             Events("onResult", "onError")
+            
+            Prop("config") { (
+                view: SmileIDDocumentVerificationView,
+                config: DocumentVerificationRequest
+            ) in
+                view.updateConfig(config)
+            }
         }
 
         // SmartSelfie Enrollment View

@@ -1,16 +1,16 @@
 import { requireNativeViewManager } from 'expo-modules-core';
 import * as React from 'react';
 import { ViewProps } from "react-native";
+import { ExpoDocumentVerificationRequest } from './SmileIDExpo.types';
 
 interface SmileIDDocumentVerificationViewProps extends ViewProps {
-    countryCode?: string;
-    userId?: string;
-    jobId?: string;
-    onSuccess: (event: { nativeEvent: {  } }) => void;
-    onError: (event: { nativeEvent: {  } }) => void;
+  config: ExpoDocumentVerificationRequest;
+  onResult?: (result: any) => void;
+  onError?: (error: any) => void;
 }
 
-const NativeView = requireNativeViewManager('SmileIDExpo', 'SmileIDDocumentVerificationView') as React.ComponentType<SmileIDDocumentVerificationViewProps>;
+const NativeView: React.ComponentType<SmileIDDocumentVerificationViewProps> =
+    requireNativeViewManager('SmileIDExpo', 'SmileIDDocumentVerificationView');
 
 export default function SmileIDDocumentVerificationView(props: SmileIDDocumentVerificationViewProps) {
     return <NativeView {...props} />;
