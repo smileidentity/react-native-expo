@@ -30,20 +30,23 @@ export type ChangeEventPayload = {
 };
 
 /**
- * Request class used to pass the document verification request parameters
+ * Interface for document verification request parameters
  */
-export class ExpoDocumentVerificationRequest {
-  countryCode: string;
+export interface ExpoDocumentVerificationRequest {
   userId: string;
   jobId: string;
-
-  constructor(
-    countryCode: string,
-    userId: string,
-    jobId: string
-  ) {
-    this.countryCode = countryCode;
-    this.userId = userId;
-    this.jobId = jobId;
-  }
+  countryCode: string;
+  allowNewEnroll?: boolean;
+  documentType?: string;
+  idAspectRatio?: number;
+  bypassSelfieCaptureWithFile?: string;
+  enableAutoCapture?: boolean;
+  captureBothSides?: boolean;
+  allowAgentMode?: boolean;
+  allowGalleryUpload?: boolean;
+  showInstructions?: boolean;
+  showAttribution?: boolean;
+  skipApiSubmission?: boolean;
+  useStrictMode?: boolean;
+  extraPartnerParams?: Record<string, string>;
 }

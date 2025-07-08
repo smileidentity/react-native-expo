@@ -12,7 +12,8 @@ import {
   initialize,
   SmileIDDocumentVerificationView,
   SmileIDSmartSelfieEnrollmentView,
-  ExpoConfig
+  ExpoConfig,
+  ExpoDocumentVerificationRequest
 } from 'react-native-expo';
 
 const PRODUCTS = [
@@ -26,6 +27,21 @@ const config = new ExpoConfig(
   'https://prod-lambda-url.com', // prodLambdaUrl
   'https://test-lambda-url.com' // testLambdaUrl
 );
+
+const documentVerificationConfig: ExpoDocumentVerificationRequest = {
+  userId: '',
+  jobId: '',
+  countryCode: 'NG',
+  allowNewEnroll: true,
+  enableAutoCapture: true,
+  captureBothSides: true,
+  allowAgentMode: false,
+  allowGalleryUpload: true,
+  showInstructions: true,
+  showAttribution: true,
+  skipApiSubmission: false,
+  useStrictMode: false,
+};
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
@@ -58,7 +74,10 @@ export default function HomeScreen() {
       case 'documentVerification':
         return (
             <View style={containerStyle}>
-              <SmileIDDocumentVerificationView style={styles.nativeView} />
+              <SmileIDDocumentVerificationView 
+                style={styles.nativeView} 
+                config={documentVerificationConfig}
+              />
             </View>
         );
       case 'smartSelfieEnrollment':

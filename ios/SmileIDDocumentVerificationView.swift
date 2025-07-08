@@ -8,10 +8,11 @@ final class SmileIDDocumentVerificationView: ExpoView {
     let onError = EventDispatcher()
     private let delegate: DocumentVerificationDelegate
     private let hostingController: UIHostingController<DocumentVerificationView>
+    private var config: DocumentVerificationRequest?
 
     required init(appContext: AppContext? = nil) {
         delegate = DocumentVerificationDelegate()
-        hostingController = UIHostingController(rootView: DocumentVerificationView(delegate: delegate))
+        hostingController = UIHostingController(rootView: DocumentVerificationView(delegate: delegate, config: nil))
         super.init(appContext: appContext)
         
         // Set up delegate callbacks
@@ -27,14 +28,43 @@ final class SmileIDDocumentVerificationView: ExpoView {
         addSubview(hostingController.view)
         hostingController.view.fillSuperview()
     }
+    
+    func updateConfig(_ config: DocumentVerificationRequest) {
+        self.config = config
+        hostingController.rootView = DocumentVerificationView(delegate: delegate, config: config)
+    }
 }
 
 // SwiftUI view that wraps the SmileID document verification screen
 struct DocumentVerificationView: View {
     let delegate: DocumentVerificationDelegate
+    let config: DocumentVerificationRequest?
     
     var body: some View {
-        SmileID.documentVerificationScreen(countryCode: "KE", delegate: delegate)
+        if let config = config {
+            SmileID.documentVerificationScreen(
+                userId: config.userId,
+                jobId: config.jobId,
+                allowNewEnroll: config.allowNewEnroll,
+                countryCode: config.countryCode,
+                documentType: config.documentType,
+                idAspectRatio: config.idAspectRatio,
+                bypassSelfieCaptureWithFile: config.bypassSelfieCaptureWithFile.flatMap(URL.init),
+                enableAutoCapture: config.enableAutoCapture,
+                captureBothSides: config.captureBothSides,
+                allowAgentMode: config.allowAgentMode,
+                allowGalleryUpload: config.allowGalleryUpload,
+                showInstructions: config.showInstructions,
+                showAttribution: config.showAttribution,
+                skipApiSubmission: config.skipApiSubmission,
+                useStrictMode: config.useStrictMode,
+                extraPartnerParams: config.extraPartnerParams,
+                delegate: delegate
+            )
+        } else {
+            Text("Configuration not provided")
+                .foregroundColor(.red)
+        }
     }
 }
 
