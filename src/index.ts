@@ -10,11 +10,13 @@ import SmileIDDocumentVerificationView from './SmileIDDocumentVerificationView';
 export { SmileIDDocumentVerificationView };
 
 export * from  './SmileIDExpo.types';
+import type { ExpoConfig } from './SmileIDExpo.types';
 
 export function initialize(
     useSandBox: boolean,
     enableCrashReporting: boolean,
+    config?: ExpoConfig,
     apiKey?: string
 ): Promise<void> {
-    return SmileIDExpoModule.initialize(useSandBox, enableCrashReporting, apiKey);
+    return SmileIDExpoModule.initialize(useSandBox, enableCrashReporting, config, apiKey);
 }
