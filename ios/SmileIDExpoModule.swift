@@ -33,14 +33,13 @@ public class SmileIDExpoModule: Module {
             ) -> Void in
             SmileID.initialize(
                 apiKey: apiKey,
-                useSandbox: useSandBox,
-                config: SmileIDConfig(
+                config: Config(
                     partnerId: config.partnerId,
                     authToken: config.authToken,
                     prodLambdaUrl: config.prodLambdaUrl,
                     testLambdaUrl: config.testLambdaUrl
                 ),
-                enableCrashReporting: enableCrashReporting
+                useSandbox: useSandBox
             )
         }
 
