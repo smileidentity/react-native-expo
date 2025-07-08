@@ -30,6 +30,7 @@ const config = new ExpoConfig(
 
 const documentVerificationConfig: ExpoDocumentVerificationRequest = {
   countryCode: 'NG',
+  captureBothSides: false,
 };
 
 export default function HomeScreen() {
@@ -54,12 +55,14 @@ export default function HomeScreen() {
     setSelectedProduct(productKey);
   };
 
-  const handleDocumentVerificationResult = (result: any) => {
+  const handleDocumentVerificationResult = (event: any) => {
+    const result = event.nativeEvent;
     console.log('Document verification result:', result);
     setSelectedProduct(null);
   };
 
-  const handleDocumentVerificationError = (error: any) => {
+  const handleDocumentVerificationError = (event: any) => {
+    const error = event.nativeEvent;
     console.log('Document verification error:', error);
     Alert.alert('Document Verification Error', error.error || 'An error occurred');
     setSelectedProduct(null);
