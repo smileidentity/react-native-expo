@@ -77,14 +77,8 @@ export default function HomeScreen() {
       case 'documentVerification':
         return (
             <View style={containerStyle}>
-              <SmileIDDocumentVerificationView
-                style={styles.nativeView}
-                config={documentVerificationConfig}
-                onResult={handleDocumentVerificationResult}
-                onError={handleDocumentVerificationError}
-              />
-              <SmileIDDocumentVerificationView
-                style={styles.nativeView}
+              <SmileIDDocumentVerificationView 
+                style={styles.nativeView} 
                 config={documentVerificationConfig}
                 onResult={handleDocumentVerificationResult}
                 onError={handleDocumentVerificationError}
