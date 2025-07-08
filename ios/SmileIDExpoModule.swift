@@ -4,7 +4,7 @@ import SwiftUI
 import UIKit
 
 /// Type‑safe bridge for the JS `ExpoConfig` object
-struct ExpoConfigRecord: Record {
+struct SmileConfigRecord: Record {
     @Field var partnerId: String
     @Field var authToken: String
     @Field var prodLambdaUrl: String
@@ -26,7 +26,7 @@ public class SmileIDExpoModule: Module {
         // is by default dispatched on the different thread than the JavaScript runtime runs on.
         AsyncFunction("initialize") {
             (
-                config: ExpoConfigRecord,
+                config: SmileConfigRecord,
                 useSandBox: Bool,
                 enableCrashReporting: Bool,
                 apiKey: String?
