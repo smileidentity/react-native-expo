@@ -13,10 +13,10 @@ export * from  './SmileIDExpo.types';
 import type { ExpoConfig } from './SmileIDExpo.types';
 
 export function initialize(
-    config: ExpoConfig,
     useSandBox: boolean,
     enableCrashReporting: boolean,
+    config?: ExpoConfig,
     apiKey?: string
 ): Promise<void> {
-    return SmileIDExpoModule.initialize(config, useSandBox, enableCrashReporting, apiKey);
+    return SmileIDExpoModule.initialize(useSandBox, enableCrashReporting, config, apiKey);
 }
