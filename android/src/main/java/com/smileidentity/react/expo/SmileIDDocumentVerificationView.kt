@@ -12,11 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
+import com.smileidentity.results.DocumentVerificationResult
 import com.smileidentity.results.SmileIDResult
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
-import timber.log.Timber
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 /**
  * SmartSelfie Enrollment View using ExpoView
@@ -34,17 +36,17 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
             it.setContent {
                 DocumentVerificationView(
                     props = props.value,
-                    onSuccess = {
+                    onSuccess = { result ->
                         onSuccess(
                             mapOf(
-                                "success" to "Document verification complete"
+                                "result" to Json.encodeToString(result)
                             )
                         )
                     },
-                    onError = {
+                    onError = { error ->
                         onError(
                             mapOf(
-                                "error" to "Document verification error"
+                                "error" to error.localizedMessage.toString()
                             )
                         )
                     }
@@ -55,16 +57,12 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
         }
     }
 
-    fun setCountryCode(countryCode: String) {
-        props.value = props.value.copy(countryCode = countryCode)
-    }
-
-    fun setJobId(jobId: String) {
-        props.value = props.value.copy(jobId = jobId)
-    }
-
-    fun setUserId(userId: String) {
-        props.value = props.value.copy(userId = userId)
+    fun updateConfig(config: SmileDocumentVerificationRequestRecord) {
+        props.value = props.value.copy(
+            countryCode = config.countryCode,
+            jobId = config.jobId,
+            userId = config.userId
+        )
     }
 }
 
@@ -75,8 +73,8 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
 @Composable
 fun DocumentVerificationView(
     props: DocumentVerificationProps,
-    onSuccess: () -> Unit,
-    onError: () -> Unit
+    onSuccess: (DocumentVerificationResult) -> Unit,
+    onError: (Throwable) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -91,11 +89,11 @@ fun DocumentVerificationView(
         ) { result ->
             when (result) {
                 is SmileIDResult.Success -> {
-                    onSuccess()
+                    onSuccess(result.data)
                 }
 
                 is SmileIDResult.Error -> {
-                    onError()
+                    onError(result.throwable)
                 }
             }
         }
