@@ -26,9 +26,9 @@ public class SmileIDExpoModule: Module {
         // is by default dispatched on the different thread than the JavaScript runtime runs on.
         AsyncFunction("initialize") {
             (
-                config: SmileConfigRecord,
                 useSandBox: Bool,
                 enableCrashReporting: Bool,
+                config: SmileConfigRecord,
                 apiKey: String?
             ) -> Void in
             SmileID.initialize(

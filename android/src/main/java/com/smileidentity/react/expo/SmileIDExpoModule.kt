@@ -38,26 +38,45 @@ class SmileIDExpoModule : Module() {
         // The module will be accessible from `requireNativeModule('SmileIDExpo')` in JavaScript.
         Name("SmileIDExpo")
 
-        AsyncFunction("initialize") Coroutine { config: SmileConfigRecord, useSandBox: Boolean, enableCrashReporting: Boolean, apiKey: String ->
+        AsyncFunction("initialize") Coroutine { useSandBox: Boolean, enableCrashReporting: Boolean, config: SmileConfigRecord?, apiKey: String? ->
             val context = appContext.reactContext
                 ?: throw IllegalStateException("Context is not available")
 
-            // Map the record to the SDK's expected Config data class
-            val smileConfig = Config(
-                partnerId      = config.partnerId,
-                authToken      = config.authToken,
-                prodLambdaUrl  = config.prodLambdaUrl,
-                testLambdaUrl  = config.testLambdaUrl
-            )
-
             withContext(Dispatchers.IO) {
-                SmileID.initialize(
-                    context               = context,
-                    config                = smileConfig,
-                    useSandbox            = useSandBox,
-                    enableCrashReporting  = enableCrashReporting,
-                    apiKey                = apiKey
-                ).await()
+                when {
+                    // Case 1: Initialize with API key and config
+                    apiKey != null && config != null -> {
+
+                        val result = SmileID.initialize(
+                            context = context,
+                            config = config.toConfig(),
+                            useSandbox = useSandBox,
+                            enableCrashReporting = enableCrashReporting,
+                            apiKey = apiKey
+                        ).await()
+
+                        result.getOrThrow()
+                    }
+                    // Case 2: Initialize with just config
+                    config != null -> {
+                        val result = SmileID.initialize(
+                            context = context,
+                            config = config.toConfig(),
+                            useSandbox = useSandBox,
+                            enableCrashReporting = enableCrashReporting,
+                        ).await()
+
+                        result.getOrThrow()
+                    }
+                    // Case 3: Basic initialization
+                    else -> {
+                        val result = SmileID.initialize(
+                            context = context,
+                            useSandbox = useSandBox,
+                        ).await()
+                        result.getOrThrow()
+                    }
+                }
             }
         }
 
@@ -66,5 +85,17 @@ class SmileIDExpoModule : Module() {
         }
         View(SmileIDSmartSelfieEnrollmentView::class) {
         }
+    }
+
+    /*
+    *  Map the record to the SDK's expected Config data class
+     */
+    private fun SmileConfigRecord.toConfig(): Config {
+        return Config(
+            partnerId = this.partnerId,
+            authToken = this.authToken,
+            prodLambdaUrl = this.prodLambdaUrl,
+            testLambdaUrl = this.testLambdaUrl
+        )
     }
 }
