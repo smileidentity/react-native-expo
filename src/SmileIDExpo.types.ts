@@ -33,8 +33,8 @@ export type ChangeEventPayload = {
  * Interface for document verification request parameters
  */
 export interface ExpoDocumentVerificationRequest {
-  userId: string;
-  jobId: string;
+  userId?: string;
+  jobId?: string;
   countryCode: string;
   allowNewEnroll?: boolean;
   documentType?: string;

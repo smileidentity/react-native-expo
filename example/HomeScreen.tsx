@@ -29,18 +29,7 @@ const config = new ExpoConfig(
 );
 
 const documentVerificationConfig: ExpoDocumentVerificationRequest = {
-  userId: '',
-  jobId: '',
   countryCode: 'NG',
-  allowNewEnroll: true,
-  enableAutoCapture: true,
-  captureBothSides: true,
-  allowAgentMode: false,
-  allowGalleryUpload: true,
-  showInstructions: true,
-  showAttribution: true,
-  skipApiSubmission: false,
-  useStrictMode: false,
 };
 
 export default function HomeScreen() {

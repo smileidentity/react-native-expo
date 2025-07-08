@@ -10,8 +10,8 @@ struct SmileConfigRecord: Record {
 
 /// Type‑safe bridge for the JS `ExpoDocumentVerificationRequest` object
 struct DocumentVerificationRequest: Record {
-    @Field public var userId: String
-    @Field public var jobId: String
+    @Field public var userId: String?
+    @Field public var jobId: String?
     @Field public var countryCode: String
     @Field public var allowNewEnroll: Bool = true
     @Field public var documentType: String?

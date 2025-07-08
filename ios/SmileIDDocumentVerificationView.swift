@@ -1,6 +1,6 @@
 import ExpoModulesCore
-import SwiftUI
 import SmileID
+import SwiftUI
 
 // Document Verification View using ExpoView
 final class SmileIDDocumentVerificationView: ExpoView {
@@ -12,26 +12,34 @@ final class SmileIDDocumentVerificationView: ExpoView {
 
     required init(appContext: AppContext? = nil) {
         delegate = DocumentVerificationDelegate()
-        hostingController = UIHostingController(rootView: DocumentVerificationView(delegate: delegate, config: nil))
+        hostingController = UIHostingController(
+            rootView: DocumentVerificationView(
+                delegate: delegate,
+                config: nil
+            )
+        )
         super.init(appContext: appContext)
-        
+
         // Set up delegate callbacks
         delegate.onResult = { [weak self] result in
             self?.onResult(result)
         }
-        
+
         delegate.onError = { [weak self] error in
             self?.onError(["error": error.localizedDescription])
         }
-        
+
         // Add the hosting controller's view
         addSubview(hostingController.view)
         hostingController.view.fillSuperview()
     }
-    
+
     func updateConfig(_ config: DocumentVerificationRequest) {
         self.config = config
-        hostingController.rootView = DocumentVerificationView(delegate: delegate, config: config)
+        hostingController.rootView = DocumentVerificationView(
+            delegate: delegate,
+            config: config
+        )
     }
 }
 
@@ -39,12 +47,12 @@ final class SmileIDDocumentVerificationView: ExpoView {
 struct DocumentVerificationView: View {
     let delegate: DocumentVerificationDelegate
     let config: DocumentVerificationRequest?
-    
+
     var body: some View {
         if let config = config {
             SmileID.documentVerificationScreen(
-                userId: config.userId,
-                jobId: config.jobId,
+                userId: config.userId ?? generateUserId(),
+                jobId: config.jobId ?? generateJobId(),
                 allowNewEnroll: config.allowNewEnroll,
                 countryCode: config.countryCode,
                 documentType: config.documentType,
@@ -72,7 +80,7 @@ struct DocumentVerificationView: View {
 class DocumentVerificationDelegate: DocumentVerificationResultDelegate {
     var onResult: (([String: Any]) -> Void)?
     var onError: ((Error) -> Void)?
-    
+
     func didSucceed(
         selfie: URL,
         documentFrontImage: URL,
@@ -83,11 +91,11 @@ class DocumentVerificationDelegate: DocumentVerificationResultDelegate {
             "selfie": selfie.absoluteString,
             "documentFrontImage": documentFrontImage.absoluteString,
             "documentBackImage": documentBackImage?.absoluteString ?? NSNull(),
-            "didSubmitDocumentVerificationJob": didSubmitDocumentVerificationJob
+            "didSubmitDocumentVerificationJob": didSubmitDocumentVerificationJob,
         ]
         onResult?(result)
     }
-    
+
     func didError(error: Error) {
         onError?(error)
     }
