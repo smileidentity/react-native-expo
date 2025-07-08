@@ -17,8 +17,11 @@ import com.smileidentity.results.SmileIDResult
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.io.File
 
 /**
  * SmartSelfie Enrollment View using ExpoView
@@ -60,12 +63,7 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
     }
 
     fun updateConfig(config: SmileDocumentVerificationRequestRecord) {
-        props.value = props.value.copy(
-            countryCode = config.countryCode,
-            jobId = config.jobId,
-            userId = config.userId,
-            captureBothSides = config.captureBothSides
-        )
+        props.value = config.toDocumentVerificationProps()
     }
 }
 
@@ -86,8 +84,19 @@ fun DocumentVerificationView(
             .systemBarsPadding()
     ) {
         SmileID.DocumentVerification(
+            allowNewEnroll = props.allowNewEnroll,
             countryCode = props.countryCode,
-            captureBothSides = props.captureBothSides
+            documentType = props.documentType,
+            idAspectRatio = props.idAspectRatio,
+            bypassSelfieCaptureWithFile = props.bypassSelfieCaptureWithFile,
+            enableAutoCapture = props.enableAutoCapture,
+            captureBothSides = props.captureBothSides,
+            allowAgentMode = props.allowAgentMode,
+            allowGalleryUpload = props.allowGalleryUpload,
+            showInstructions = props.showInstructions,
+            showAttribution = props.showAttribution,
+            useStrictMode = props.useStrictMode,
+            extraPartnerParams = props.extraParams
         ) { result ->
             when (result) {
                 is SmileIDResult.Success -> {
@@ -104,8 +113,20 @@ fun DocumentVerificationView(
 
 
 data class DocumentVerificationProps(
+    val userId: String? = null,
+    val jobId: String? = null,
     val countryCode: String = "",
-    val userId: String = "",
-    val jobId: String = "",
-    val captureBothSides: Boolean = true
+    val allowNewEnroll: Boolean = true,
+    val documentType: String = "",
+    val idAspectRatio: Float? = null,
+    val bypassSelfieCaptureWithFile: File? = null,
+    val enableAutoCapture: Boolean = true,
+    val captureBothSides: Boolean = true,
+    val allowAgentMode: Boolean = false,
+    val allowGalleryUpload: Boolean = false,
+    val showInstructions: Boolean = true,
+    val showAttribution: Boolean = true,
+    val skipApiSubmission: Boolean = false,
+    val useStrictMode: Boolean = false,
+    val extraParams: ImmutableMap<String, String> = persistentMapOf()
 )

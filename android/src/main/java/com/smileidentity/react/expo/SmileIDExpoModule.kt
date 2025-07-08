@@ -73,16 +73,4 @@ class SmileIDExpoModule : Module() {
         View(SmileIDSmartSelfieEnrollmentView::class) {
         }
     }
-
-    /*
-    *  Map the record to the SDK's expected Config data class
-     */
-    private fun SmileConfigRecord.toConfig(): Config {
-        return Config(
-            partnerId = this.partnerId,
-            authToken = this.authToken,
-            prodLambdaUrl = this.prodLambdaUrl,
-            testLambdaUrl = this.testLambdaUrl
-        )
-    }
 }

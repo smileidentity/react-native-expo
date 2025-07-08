@@ -1,7 +1,11 @@
 package com.smileidentity.react.expo
 
+import com.smileidentity.models.Config
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Field
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentMapOf
+import java.io.File
 
 /**
  * Type‑safe bridge for the JS `ExpoConfig` object coming from JavaScript.
@@ -25,25 +29,25 @@ class SmileConfigRecord : Record {
  */
 class SmileDocumentVerificationRequestRecord : Record {
     @Field
-    var userId: String = ""
+    var userId: String? = null
 
     @Field
-    var jobId: String = ""
+    var jobId: String? = null
 
     @Field
     var countryCode: String = ""
 
     @Field
-    var allowNewEnrollment: Boolean = true
+    var allowNewEnroll: Boolean = true
 
     @Field
     var documentType: String = ""
 
     @Field
-    var idAspectRatio: Double? = null
+    var idAspectRatio: Float? = null
 
     @Field
-    var bypassSelfieCaptureWithFile: String? = null
+    var bypassSelfieCaptureWithFile: File? = null
 
     @Field
     var enableAutoCapture: Boolean = true
@@ -70,5 +74,41 @@ class SmileDocumentVerificationRequestRecord : Record {
     var useStrictMode: Boolean = false
 
     @Field
-    var extraParams: Map<String, String>? = mapOf()
+    var extraParams: ImmutableMap<String, String> = persistentMapOf()
+}
+
+/*
+* Map the record to the SDK's expected Config data class
+* */
+internal fun SmileConfigRecord.toConfig(): Config {
+    return Config(
+        partnerId = this.partnerId,
+        authToken = this.authToken,
+        prodLambdaUrl = this.prodLambdaUrl,
+        testLambdaUrl = this.testLambdaUrl
+    )
+}
+
+/*
+* Map DocumentVerificationProps to SmileDocumentVerificationRequestRecord
+ */
+internal fun SmileDocumentVerificationRequestRecord.toDocumentVerificationProps(): DocumentVerificationProps {
+    return DocumentVerificationProps(
+        userId = this.userId,
+        jobId = this.jobId,
+        countryCode = this.countryCode,
+        allowNewEnroll = this.allowNewEnroll,
+        documentType = this.documentType,
+        idAspectRatio = this.idAspectRatio,
+        bypassSelfieCaptureWithFile = this.bypassSelfieCaptureWithFile,
+        enableAutoCapture = this.enableAutoCapture,
+        captureBothSides = this.captureBothSides,
+        allowAgentMode = this.allowAgentMode,
+        allowGalleryUpload = this.allowGalleryUpload,
+        showInstructions = this.showInstructions,
+        showAttribution = this.showAttribution,
+        skipApiSubmission = this.skipApiSubmission,
+        useStrictMode = this.useStrictMode,
+        extraParams = this.extraParams
+    )
 }
