@@ -92,6 +92,7 @@ class SmileIDExpoModule : Module() {
             Prop("jobId") { view: SmileIDDocumentVerificationView, jobId: String ->
                 view.setJobId(jobId)
             }
+             Events("onResult", "onError")
         }
         View(SmileIDSmartSelfieEnrollmentView::class) {
         }

@@ -12,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
+import com.smileidentity.results.SmileIDResult
 import expo.modules.kotlin.AppContext
+import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
 import timber.log.Timber
 
@@ -23,13 +25,21 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
     ExpoView(context, appContext) {
     private var composeView: ComposeView? = null
     private var props = mutableStateOf(DocumentVerificationProps())
+    private val onSuccess by EventDispatcher()
+    private val onError by EventDispatcher()
 
     init {
         ComposeView(context).also {
             it.layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
             it.setContent {
                 DocumentVerificationView(
-                    props = props.value
+                    props = props.value,
+                    onSuccess = {
+                        onSuccess
+                    },
+                    onError = {
+                        onError
+                    }
                 )
             }
             addView(it)
@@ -56,9 +66,10 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
  **/
 @Composable
 fun DocumentVerificationView(
-    props: DocumentVerificationProps
+    props: DocumentVerificationProps,
+    onSuccess: () -> Unit,
+    onError: () -> Unit
 ) {
-    Timber.d("Here with props: ${props.countryCode}")
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +81,15 @@ fun DocumentVerificationView(
             userId = props.userId,
             jobId = props.jobId
         ) { result ->
-            Timber.d("DocumentVerification result: $result")
+            when (result) {
+                is SmileIDResult.Success -> {
+                    onSuccess()
+                }
+
+                is SmileIDResult.Error -> {
+                    onError()
+                }
+            }
         }
     }
 }
