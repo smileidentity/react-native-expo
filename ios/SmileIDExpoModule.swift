@@ -3,6 +3,14 @@ import SmileID
 import SwiftUI
 import UIKit
 
+/// Type‑safe bridge for the JS `ExpoConfig` object
+struct ExpoConfigRecord: Record {
+    @Field var partnerId: String
+    @Field var authToken: String
+    @Field var prodLambdaUrl: String
+    @Field var testLambdaUrl: String
+}
+
 public class SmileIDExpoModule: Module {
 
     // Each module class must implement the definition function. The definition consists of components
@@ -16,15 +24,23 @@ public class SmileIDExpoModule: Module {
 
         // Defines a JavaScript function that always returns a Promise and whose native code
         // is by default dispatched on the different thread than the JavaScript runtime runs on.
-        AsyncFunction("initalize") {
+        AsyncFunction("initialize") {
             (
+                config: ExpoConfigRecord,
                 useSandBox: Bool,
                 enableCrashReporting: Bool,
                 apiKey: String?
             ) -> Void in
             SmileID.initialize(
                 apiKey: apiKey,
-                useSandbox: useSandBox
+                useSandbox: useSandBox,
+                config: SmileIDConfig(
+                    partnerId: config.partnerId,
+                    authToken: config.authToken,
+                    prodLambdaUrl: config.prodLambdaUrl,
+                    testLambdaUrl: config.testLambdaUrl
+                ),
+                enableCrashReporting: enableCrashReporting
             )
         }
 

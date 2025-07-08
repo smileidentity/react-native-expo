@@ -11,13 +11,21 @@ import React, { useState, useEffect } from 'react';
 import {
   initialize,
   SmileIDDocumentVerificationView,
-  SmileIDSmartSelfieEnrollmentView
+  SmileIDSmartSelfieEnrollmentView,
+  ExpoConfig
 } from 'react-native-expo';
 
 const PRODUCTS = [
   { title: 'Document Verification', key: 'documentVerification' },
   { title: 'SmartSelfie Enrollment', key: 'smartSelfieEnrollment' },
 ];
+
+const config = new ExpoConfig(
+  'your_partner_id', // partnerId
+  'your_auth_token', // authToken
+  'https://prod-lambda-url.com', // prodLambdaUrl
+  'https://test-lambda-url.com' // testLambdaUrl
+);
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
@@ -26,7 +34,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const initSmileID = async () => {
       try {
-        await initialize(true, true, 'my-api-key');
+        await initialize(config, true, true, undefined);
         console.log('SmileID SDK initialized successfully');
       } catch (error) {
         console.error('SmileID SDK initialization failed:', error);
