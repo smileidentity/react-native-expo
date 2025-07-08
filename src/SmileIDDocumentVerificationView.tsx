@@ -6,6 +6,8 @@ interface SmileIDDocumentVerificationViewProps extends ViewProps {
     countryCode?: string;
     userId?: string;
     jobId?: string;
+    onSuccess: (event: { nativeEvent: {  } }) => void;
+    onError: (event: { nativeEvent: {  } }) => void;
 }
 
 const NativeView = requireNativeViewManager('SmileIDExpo', 'SmileIDDocumentVerificationView') as React.ComponentType<SmileIDDocumentVerificationViewProps>;

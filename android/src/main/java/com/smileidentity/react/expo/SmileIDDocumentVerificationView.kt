@@ -35,10 +35,18 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
                 DocumentVerificationView(
                     props = props.value,
                     onSuccess = {
-                        onSuccess
+                        onSuccess(
+                            mapOf(
+                                "success" to "Document verification complete"
+                            )
+                        )
                     },
                     onError = {
-                        onError
+                        onError(
+                            mapOf(
+                                "error" to "Document verification error"
+                            )
+                        )
                     }
                 )
             }

@@ -61,8 +61,18 @@ export default function HomeScreen() {
               <SmileIDDocumentVerificationView
                   style={styles.nativeView}
                   countryCode="KE"
-                  jobId="12345"
-                  userId="user-123"
+                  jobId="1345c68"
+                  userId="user-123-456"
+                  onSuccess={(event) => {
+                    console.log('Document Verification Success:', event.nativeEvent);
+                    Alert.alert('Success', 'Document verification completed successfully');
+                    setSelectedProduct(null)
+                    }}
+                  onError={(event) => {
+                    console.error('Document Verification Error:', event.nativeEvent);
+                    Alert.alert('Error', 'An error occurred during document verification');
+                    setSelectedProduct(null);
+                    }}
               />
             </View>
         );
