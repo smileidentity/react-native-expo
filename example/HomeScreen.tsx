@@ -83,6 +83,12 @@ export default function HomeScreen() {
                 onResult={handleDocumentVerificationResult}
                 onError={handleDocumentVerificationError}
               />
+              <SmileIDDocumentVerificationView
+                style={styles.nativeView}
+                config={documentVerificationConfig}
+                onResult={handleDocumentVerificationResult}
+                onError={handleDocumentVerificationError}
+              />
             </View>
         );
       case 'smartSelfieEnrollment':
