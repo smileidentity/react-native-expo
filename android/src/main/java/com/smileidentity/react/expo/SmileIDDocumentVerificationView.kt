@@ -27,7 +27,7 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
     ExpoView(context, appContext) {
     private var composeView: ComposeView? = null
     private var props = mutableStateOf(DocumentVerificationProps())
-    private val onSuccess by EventDispatcher()
+    private val onResult by EventDispatcher()
     private val onError by EventDispatcher()
 
     init {
@@ -36,10 +36,12 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
             it.setContent {
                 DocumentVerificationView(
                     props = props.value,
-                    onSuccess = { result ->
-                        onSuccess(
+                    onResult = { result ->
+                        onResult(
                             mapOf(
-                                "result" to Json.encodeToString(result)
+                                "documentFrontFile" to result.documentFrontFile.toString(),
+                                "documentBackFile" to result.documentBackFile.toString(),
+                                "selfieFile" to result.selfieFile.toString(),
                             )
                         )
                     },
@@ -61,7 +63,8 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
         props.value = props.value.copy(
             countryCode = config.countryCode,
             jobId = config.jobId,
-            userId = config.userId
+            userId = config.userId,
+            captureBothSides = config.captureBothSides
         )
     }
 }
@@ -73,7 +76,7 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
 @Composable
 fun DocumentVerificationView(
     props: DocumentVerificationProps,
-    onSuccess: (DocumentVerificationResult) -> Unit,
+    onResult: (DocumentVerificationResult) -> Unit,
     onError: (Throwable) -> Unit
 ) {
     Column(
@@ -84,12 +87,11 @@ fun DocumentVerificationView(
     ) {
         SmileID.DocumentVerification(
             countryCode = props.countryCode,
-            userId = props.userId,
-            jobId = props.jobId
+            captureBothSides = props.captureBothSides
         ) { result ->
             when (result) {
                 is SmileIDResult.Success -> {
-                    onSuccess(result.data)
+                    onResult(result.data)
                 }
 
                 is SmileIDResult.Error -> {
@@ -104,5 +106,6 @@ fun DocumentVerificationView(
 data class DocumentVerificationProps(
     val countryCode: String = "",
     val userId: String = "",
-    val jobId: String = ""
+    val jobId: String = "",
+    val captureBothSides: Boolean = true
 )
