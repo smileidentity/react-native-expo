@@ -8,7 +8,7 @@ Please see [CHANGELOG.md](CHANGELOG.md) or [Releases](https://github.com/smileid
 
 ## Getting Started
 
-Full documentation is available at [Smile ID Documentation]((https://docs.usesmileid.com/integration-options/mobile/getting-started))
+Full documentation is available at [Smile ID Documentation](https://docs.usesmileid.com/integration-options/mobile/getting-started)
 
 ### 0. Requirements
 
