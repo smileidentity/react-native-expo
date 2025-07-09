@@ -38,10 +38,10 @@ class SmileDocumentVerificationRequestRecord : Record {
     var countryCode: String = ""
 
     @Field
-    var allowNewEnroll: Boolean = true
+    var allowNewEnroll: Boolean = false
 
     @Field
-    var documentType: String = ""
+    var documentType: String? = null
 
     @Field
     var idAspectRatio: Float? = null

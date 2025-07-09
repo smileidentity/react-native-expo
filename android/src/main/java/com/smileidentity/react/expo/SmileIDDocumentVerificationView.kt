@@ -14,6 +14,8 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.results.DocumentVerificationResult
 import com.smileidentity.results.SmileIDResult
+import com.smileidentity.util.randomJobId
+import com.smileidentity.util.randomUserId
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
@@ -84,6 +86,8 @@ fun DocumentVerificationView(
             .systemBarsPadding()
     ) {
         SmileID.DocumentVerification(
+            userId = props.userId ?: randomUserId(),
+            jobId = props.jobId ?: randomJobId(),
             allowNewEnroll = props.allowNewEnroll,
             countryCode = props.countryCode,
             documentType = props.documentType,
@@ -116,8 +120,8 @@ data class DocumentVerificationProps(
     val userId: String? = null,
     val jobId: String? = null,
     val countryCode: String = "",
-    val allowNewEnroll: Boolean = true,
-    val documentType: String = "",
+    val allowNewEnroll: Boolean = false,
+    val documentType: String? = null,
     val idAspectRatio: Float? = null,
     val bypassSelfieCaptureWithFile: File? = null,
     val enableAutoCapture: Boolean = true,
