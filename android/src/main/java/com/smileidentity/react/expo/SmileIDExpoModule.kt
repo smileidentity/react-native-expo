@@ -7,26 +7,8 @@ import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import expo.modules.kotlin.records.Record
-import expo.modules.kotlin.records.Field
 import com.smileidentity.models.Config
 
-/**
- * Type‑safe bridge for the JS `ExpoConfig` object coming from JavaScript.
- */
-class SmileConfigRecord : Record {
-    @Field
-    var partnerId: String = ""
-
-    @Field
-    var authToken: String = ""
-
-    @Field
-    var prodLambdaUrl: String = ""
-
-    @Field
-    var testLambdaUrl: String = ""
-}
 
 class SmileIDExpoModule : Module() {
     // Each module class must implement the definition function. The definition consists of components
@@ -81,21 +63,14 @@ class SmileIDExpoModule : Module() {
         }
 
         View(SmileIDDocumentVerificationView::class) {
+            Events("onResult", "onError")
+            Prop("config") { view: SmileIDDocumentVerificationView, config: SmileDocumentVerificationRequestRecord ->
+                view.updateConfig(config)
+            }
+
 
         }
         View(SmileIDSmartSelfieEnrollmentView::class) {
         }
-    }
-
-    /*
-    *  Map the record to the SDK's expected Config data class
-     */
-    private fun SmileConfigRecord.toConfig(): Config {
-        return Config(
-            partnerId = this.partnerId,
-            authToken = this.authToken,
-            prodLambdaUrl = this.prodLambdaUrl,
-            testLambdaUrl = this.testLambdaUrl
-        )
     }
 }
