@@ -71,7 +71,7 @@ export default function HomeScreen() {
   const renderSelectedProductView = () => {
     if (!selectedProduct) return null;
 
-    const containerStyle = [styles.flexContainer, styles.productContainer];
+    const containerStyle = styles.fullScreenContainer;
 
     switch (selectedProduct) {
       case 'documentVerification':
@@ -162,5 +162,13 @@ const styles = StyleSheet.create({
   nativeView: {
     flex: 1,
     width: '100%',
+  },
+  fullScreenContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#f5f5f5',
   },
 });
