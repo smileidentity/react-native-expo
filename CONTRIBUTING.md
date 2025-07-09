@@ -208,7 +208,6 @@ For feature requests, provide:
 
 ## Project Structure
 
-// todo add final project structure
 
 ## Common Commands
 
