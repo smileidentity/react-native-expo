@@ -1,5 +1,5 @@
 {
-  "name": "react-native-expo-example",
+  "name": "sample-expo",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
@@ -9,10 +9,10 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "react-native-expo": "file:../../",
     "expo": "~53.0.16",
     "react": "19.0.0",
-    "react-native": "0.79.5"
+    "react-native": "0.79.5",
+    "react-native-svg": "^15.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
