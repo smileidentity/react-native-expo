@@ -1,5 +1,5 @@
 {
-  "name": "react-native-example",
+  "name": "sample-react-native",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,7 +10,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "react-native-expo": "file:../../",
     "@react-native/new-app-screen": "0.80.1",
     "expo": "~53.0.16",
     "react": "19.0.0",
