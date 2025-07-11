@@ -1,7 +1,6 @@
 package com.smileidentity.react.expo
 
 import android.content.Context
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.results.DocumentVerificationResult
@@ -18,54 +16,48 @@ import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
-import expo.modules.kotlin.views.ExpoView
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.io.File
 
 /**
  * SmartSelfie Enrollment View using ExpoView
  **/
 class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) :
-    ExpoView(context, appContext) {
-    private var composeView: ComposeView? = null
+    SmileIDExpoComposeView(
+        context = context,
+        appContext = appContext,
+        withHostingView = true
+    ) {
     private var props = mutableStateOf(DocumentVerificationProps())
     private val onResult by EventDispatcher()
     private val onError by EventDispatcher()
 
-    init {
-        ComposeView(context).also {
-            it.layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
-            it.setContent {
-                DocumentVerificationView(
-                    props = props.value,
-                    onResult = { result ->
-                        onResult(
-                            mapOf(
-                                "documentFrontFile" to result.documentFrontFile.toString(),
-                                "documentBackFile" to result.documentBackFile.toString(),
-                                "selfieFile" to result.selfieFile.toString(),
-                            )
-                        )
-                    },
-                    onError = { error ->
-                        onError(
-                            mapOf(
-                                "error" to error.localizedMessage.toString()
-                            )
-                        )
-                    }
-                )
-            }
-            addView(it)
-            composeView = it
-        }
-    }
-
     fun updateConfig(config: SmileDocumentVerificationRequestRecord) {
         props.value = config.toDocumentVerificationProps()
+    }
+
+    @Composable
+    override fun Content() {
+        DocumentVerificationView(
+            props = props.value,
+            onResult = { result ->
+                onResult(
+                    mapOf(
+                        "documentFrontFile" to result.documentFrontFile.toString(),
+                        "documentBackFile" to result.documentBackFile.toString(),
+                        "selfieFile" to result.selfieFile.toString(),
+                    )
+                )
+            },
+            onError = { error ->
+                onError(
+                    mapOf(
+                        "error" to error.localizedMessage.toString()
+                    )
+                )
+            }
+        )
     }
 }
 
