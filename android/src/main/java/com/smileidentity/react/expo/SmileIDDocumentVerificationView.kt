@@ -27,7 +27,7 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
     SmileIDExpoComposeView(
         context = context,
         appContext = appContext,
-        withHostingView = true
+        shouldHostComposeContent = true
     ) {
     private var props = mutableStateOf(DocumentVerificationProps())
     private val onResult by EventDispatcher()

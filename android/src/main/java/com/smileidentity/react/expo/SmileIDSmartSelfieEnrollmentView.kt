@@ -19,7 +19,7 @@ class SmileIDSmartSelfieEnrollmentView(context: Context, appContext: AppContext)
     SmileIDExpoComposeView(
         context = context,
         appContext = appContext,
-        withHostingView = true
+        shouldHostComposeContent = true
     ) {
 
     @Composable
