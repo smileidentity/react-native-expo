@@ -4,38 +4,38 @@ import SmileIDExpoModule from "./SmileIDExpoModule";
 
 export { default } from './SmileIDExpoModule';
 
-import SmileIDSmartSelfieEnrollmentView from './SmileIDSmartSelfieEnrollmentView';
+import SmileIDSmartSelfieEnrollmentView from './products/SmileIDSmartSelfieEnrollmentView';
 export { SmileIDSmartSelfieEnrollmentView };
 
-import SmileIDSmartSelfieEnrollmentEnhancedView from './SmileIDSmartSelfieEnrollmentEnhancedView';
+import SmileIDSmartSelfieEnrollmentEnhancedView from './products/SmileIDSmartSelfieEnrollmentEnhancedView';
 export { SmileIDSmartSelfieEnrollmentEnhancedView };
 
-import SmileIDDocumentVerificationView from './SmileIDDocumentVerificationView';
+import SmileIDDocumentVerificationView from './products/SmileIDDocumentVerificationView';
 export { SmileIDDocumentVerificationView };
 
-import SmileIDDocumentVerificationEnhancedView from './SmileIDDocumentVerificationEnhancedView';
+import SmileIDDocumentVerificationEnhancedView from './products/SmileIDDocumentVerificationEnhancedView';
 export { SmileIDDocumentVerificationEnhancedView };
 
-import SmileIDBvnConsentScreenView from './SmileIDBvnConsentScreenView';
+import SmileIDBvnConsentScreenView from './products/SmileIDBvnConsentScreenView';
 export { SmileIDBvnConsentScreenView };
 
-import SmileIDSmartSelfieAuthenticationView from "./SmileIDSmartSelfieAuthenticationView";
+import SmileIDSmartSelfieAuthenticationView from "./products/SmileIDSmartSelfieAuthenticationView";
 export { SmileIDSmartSelfieAuthenticationView };
 
-import SmileIDSmartSelfieAuthenticationEnhancedView from "./SmileIDSmartSelfieAuthenticationEnhancedView";
+import SmileIDSmartSelfieAuthenticationEnhancedView from "./products/SmileIDSmartSelfieAuthenticationEnhancedView";
 export { SmileIDSmartSelfieAuthenticationEnhancedView };
 
-import SmileIDBiometricKYCView from "./SmileIDBiometricKYCView";
+import SmileIDBiometricKYCView from "./products/SmileIDBiometricKYCView";
 export { SmileIDBiometricKYCView };
 
-import SmileIDEnhancedKyCView  from "./SmileIDEnhancedKyCView";
+import SmileIDEnhancedKyCView  from "./products/SmileIDEnhancedKyCView";
 export { SmileIDEnhancedKyCView };
 
 
 
 
-export * from  './SmileIDExpo.types';
-import type { ExpoConfig } from './SmileIDExpo.types';
+export * from './types/SmileIDExpo.types';
+import type { ExpoConfig } from './types/SmileIDExpo.types';
 
 export function initialize(
     useSandBox: boolean,

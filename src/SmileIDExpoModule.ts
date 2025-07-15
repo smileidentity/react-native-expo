@@ -1,6 +1,6 @@
 import { NativeModule, requireNativeModule } from 'expo';
 
-import {ExpoConfig, SmileIDExpoModuleEvents} from './SmileIDExpo.types';
+import {ExpoConfig, SmileIDExpoModuleEvents} from './types/SmileIDExpo.types';
 
 declare class SmileIDExpoModule extends NativeModule<SmileIDExpoModuleEvents> {
   /**
