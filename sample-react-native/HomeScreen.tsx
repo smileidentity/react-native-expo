@@ -11,13 +11,27 @@ import React, { useState, useEffect } from 'react';
 import {
   initialize,
   SmileIDDocumentVerificationView,
-  SmileIDSmartSelfieEnrollmentView
+  SmileIDSmartSelfieEnrollmentView,
+  ExpoConfig,
+  ExpoDocumentVerificationRequest
 } from 'react-native-expo';
 
 const PRODUCTS = [
   { title: 'Document Verification', key: 'documentVerification' },
   { title: 'SmartSelfie Enrollment', key: 'smartSelfieEnrollment' },
 ];
+
+const config = new ExpoConfig(
+    'your_partner_id', // partnerId
+    'your_auth_token', // authToken
+    'https://prod-lambda-url.com', // prodLambdaUrl
+    'https://test-lambda-url.com' // testLambdaUrl
+);
+
+const documentVerificationConfig: ExpoDocumentVerificationRequest = {
+  countryCode: 'NG',
+  captureBothSides: false,
+};
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
@@ -26,7 +40,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const initSmileID = async () => {
       try {
-        await initialize(true, true, 'my-api-key');
+        await initialize( true, true, config, undefined);
         console.log('SmileID SDK initialized successfully');
       } catch (error) {
         console.error('SmileID SDK initialization failed:', error);
@@ -41,16 +55,34 @@ export default function HomeScreen() {
     setSelectedProduct(productKey);
   };
 
+  const handleDocumentVerificationResult = (event: any) => {
+    const result = event.nativeEvent;
+    console.log('Document verification result:', result);
+    setSelectedProduct(null);
+  };
+
+  const handleDocumentVerificationError = (event: any) => {
+    const error = event.nativeEvent;
+    console.log('Document verification error:', error);
+    Alert.alert('Document Verification Error', error.error || 'An error occurred');
+    setSelectedProduct(null);
+  };
+
   const renderSelectedProductView = () => {
     if (!selectedProduct) return null;
 
-    const containerStyle = [styles.flexContainer, styles.productContainer];
+    const containerStyle = styles.fullScreenContainer;
 
     switch (selectedProduct) {
       case 'documentVerification':
         return (
             <View style={containerStyle}>
-              <SmileIDDocumentVerificationView style={styles.nativeView} />
+              <SmileIDDocumentVerificationView
+                  style={styles.nativeView}
+                  config={documentVerificationConfig}
+                  onResult={handleDocumentVerificationResult}
+                  onError={handleDocumentVerificationError}
+              />
             </View>
         );
       case 'smartSelfieEnrollment':
@@ -130,5 +162,13 @@ const styles = StyleSheet.create({
   nativeView: {
     flex: 1,
     width: '100%',
+  },
+  fullScreenContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#f5f5f5',
   },
 });
