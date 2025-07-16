@@ -62,5 +62,12 @@ class SmileIDExpoModule : Module() {
         }
         View(SmileIDSmartSelfieEnrollmentView::class) {
         }
+
+        View(SmileIDDocumentVerificationEnhancedView::class) {
+            Events("onResult", "onError")
+            Prop("config") { view: SmileIDDocumentVerificationEnhancedView, config: SmileEnhancedDocumentVerificationRequestRecord ->
+                view.updateConfig(config)
+            }
+        }
     }
 }
