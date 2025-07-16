@@ -72,10 +72,10 @@ const PRODUCTS = [
 ];
 
 const config = new ExpoConfig(
-    'your_partner_id',
-    'your_auth_token',
-    'https://prod-lambda-url.com',
-    'https://test-lambda-url.com'
+    'your_partner_id', // partnerId
+    'your_auth_token', // authToken
+    'https://prod-lambda-url.com', // prodLambdaUrl
+    'https://test-lambda-url.com' // testLambdaUrl
 );
 
 const documentVerificationConfig: ExpoDocumentVerificationRequest = {
@@ -99,8 +99,8 @@ export default function HomeScreen() {
     initSmileID();
   }, []);
 
-  const handleProductPress = (key: string) => {
-    setSelectedProduct(key);
+  const handleProductPress = (productKey: string) => {
+    setSelectedProduct(productKey);
   };
 
   const handleDocumentVerificationResult = (event: any) => {
@@ -110,7 +110,7 @@ export default function HomeScreen() {
 
   const handleDocumentVerificationError = (event: any) => {
     console.log('Document verification error:', event.nativeEvent);
-    Alert.alert('Verification Error', event.nativeEvent?.error || 'Something went wrong');
+    Alert.alert('Document Verification Error', event.nativeEvent?.error || 'Something went wrong');
     setSelectedProduct(null);
   };
 
