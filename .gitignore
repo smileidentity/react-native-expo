@@ -58,3 +58,5 @@ yarn-error.log
 
 # Smile Config
 smile_config.json
+
+example/ios/Pods

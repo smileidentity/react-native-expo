@@ -1,1 +1,0 @@
-../../../Target Support Files/FingerprintJS/FingerprintJS-umbrella.h

@@ -1,6 +1,0 @@
-module SmileIDExpo {
-  umbrella header "SmileIDExpo-umbrella.h"
-
-  export *
-  module * { export * }
-}
