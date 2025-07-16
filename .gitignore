@@ -43,6 +43,9 @@ android/keystores/debug.keystore
 samples/sample-expo/ios/Pods
 samples/sample-react-native/ios/Pods
 
+sample-expo/ios/Pods
+sample-react-native/ios/Pods
+
 # Ruby
 samples/sample-expo/vendor/
 samples/sample-react-native/vendor/
@@ -60,3 +63,4 @@ yarn-error.log
 smile_config.json
 
 example/ios/Pods
+example/ios/.xcode.env.local
