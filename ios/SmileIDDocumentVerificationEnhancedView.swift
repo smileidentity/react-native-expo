@@ -67,6 +67,14 @@ struct DocumentVerificationEnhancedView: View {
                 showAttribution: config.showAttribution,
                 useStrictMode: config.useStrictMode,
                 extraPartnerParams: config.extraPartnerParams,
+                consentInformation: ConsentInformation(
+                    consented: ConsentedInformation(
+                        consentGrantedDate: config.consentInformation?.consentGrantedDate ?? Date().toISO8601WithMilliseconds(),
+                        personalDetails: config.consentInformation?.personalDetails ?? false,
+                        contactInformation: config.consentInformation?.contactInformation ?? false,
+                        documentInformation: config.consentInformation?.documentInformation ?? false
+                    )
+                ),
                 delegate: delegate
             )
         } else {
