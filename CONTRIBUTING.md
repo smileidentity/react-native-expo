@@ -12,7 +12,7 @@ Before contributing, ensure you have the following installed:
 - **Yarn** (recommended) or npm
 - **Expo CLI**: `npm install -g @expo/cli`
 - **Android Studio** (for Android development)
-- **Xcode** (for iOS development, macOS only)
+- **Xcode** (version 16 or higher for iOS development and latest macOS, we're using Expo 53 which requires Xcode 16.2+)
 - **Git**
 
 ### Initial Setup
