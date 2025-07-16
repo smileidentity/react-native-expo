@@ -1,0 +1,4 @@
+framework module SmileIDSecurity {
+  header "SmileIDSecurity-Swift.h"
+  requires objc
+}

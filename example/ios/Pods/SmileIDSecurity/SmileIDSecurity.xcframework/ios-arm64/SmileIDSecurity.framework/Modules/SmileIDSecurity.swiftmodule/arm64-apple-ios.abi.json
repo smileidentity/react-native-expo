@@ -1,0 +1,771 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "TopLevel",
+    "printedName": "TopLevel",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SmileIDSecurity",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ArkanaKeys",
+        "printedName": "ArkanaKeys",
+        "children": [
+          {
+            "kind": "TypeDecl",
+            "name": "Global",
+            "printedName": "Global",
+            "children": [
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Global",
+                    "printedName": "SmileIDSecurity.ArkanaKeys.Global",
+                    "usr": "s:15SmileIDSecurity10ArkanaKeysO6GlobalV"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:15SmileIDSecurity10ArkanaKeysO6GlobalVAEycfc",
+                "mangledName": "$s15SmileIDSecurity10ArkanaKeysO6GlobalVAEycfc",
+                "moduleName": "SmileIDSecurity",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Var",
+                "name": "sENTRY_DSN",
+                "printedName": "sENTRY_DSN",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:15SmileIDSecurity10ArkanaKeysO6GlobalV10sENTRY_DSNSSvp",
+                "mangledName": "$s15SmileIDSecurity10ArkanaKeysO6GlobalV10sENTRY_DSNSSvp",
+                "moduleName": "SmileIDSecurity",
+                "declAttributes": [
+                  "HasInitialValue",
+                  "HasStorage",
+                  "AccessControl",
+                  "Inline"
+                ],
+                "isLet": true,
+                "hasStorage": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:15SmileIDSecurity10ArkanaKeysO6GlobalV10sENTRY_DSNSSvg",
+                    "mangledName": "$s15SmileIDSecurity10ArkanaKeysO6GlobalV10sENTRY_DSNSSvg",
+                    "moduleName": "SmileIDSecurity",
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Struct",
+            "usr": "s:15SmileIDSecurity10ArkanaKeysO6GlobalV",
+            "mangledName": "$s15SmileIDSecurity10ArkanaKeysO6GlobalV",
+            "moduleName": "SmileIDSecurity",
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "ArkanaKeysGlobalProtocol",
+                "printedName": "ArkanaKeysGlobalProtocol",
+                "usr": "s:15SmileIDSecurity24ArkanaKeysGlobalProtocolP",
+                "mangledName": "$s15SmileIDSecurity24ArkanaKeysGlobalProtocolP"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:15SmileIDSecurity10ArkanaKeysO",
+        "mangledName": "$s15SmileIDSecurity10ArkanaKeysO",
+        "moduleName": "SmileIDSecurity",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SmileIDSecurity",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ArkanaKeysGlobalProtocol",
+        "printedName": "ArkanaKeysGlobalProtocol",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "sENTRY_DSN",
+            "printedName": "sENTRY_DSN",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15SmileIDSecurity24ArkanaKeysGlobalProtocolP10sENTRY_DSNSSvp",
+            "mangledName": "$s15SmileIDSecurity24ArkanaKeysGlobalProtocolP10sENTRY_DSNSSvp",
+            "moduleName": "SmileIDSecurity",
+            "protocolReq": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15SmileIDSecurity24ArkanaKeysGlobalProtocolP10sENTRY_DSNSSvg",
+                "mangledName": "$s15SmileIDSecurity24ArkanaKeysGlobalProtocolP10sENTRY_DSNSSvg",
+                "moduleName": "SmileIDSecurity",
+                "genericSig": "<τ_0_0 where τ_0_0 : SmileIDSecurity.ArkanaKeysGlobalProtocol>",
+                "sugared_genericSig": "<Self where Self : SmileIDSecurity.ArkanaKeysGlobalProtocol>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:15SmileIDSecurity24ArkanaKeysGlobalProtocolP",
+        "mangledName": "$s15SmileIDSecurity24ArkanaKeysGlobalProtocolP",
+        "moduleName": "SmileIDSecurity",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ArkanaKeysEnvironmentProtocol",
+        "printedName": "ArkanaKeysEnvironmentProtocol",
+        "declKind": "Protocol",
+        "usr": "s:15SmileIDSecurity29ArkanaKeysEnvironmentProtocolP",
+        "mangledName": "$s15SmileIDSecurity29ArkanaKeysEnvironmentProtocolP",
+        "moduleName": "SmileIDSecurity",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SmileIDSecurity"
+      },
+      {
+        "kind": "Import",
+        "name": "CryptoKit",
+        "printedName": "CryptoKit",
+        "declKind": "Import",
+        "moduleName": "SmileIDSecurity"
+      },
+      {
+        "kind": "Import",
+        "name": "CommonCrypto",
+        "printedName": "CommonCrypto",
+        "declKind": "Import",
+        "moduleName": "SmileIDSecurity"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SmileIDCryptoError",
+        "printedName": "SmileIDCryptoError",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "deriveKeyError",
+            "printedName": "deriveKeyError",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(SmileIDSecurity.SmileIDCryptoError.Type) -> SmileIDSecurity.SmileIDCryptoError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SmileIDCryptoError",
+                    "printedName": "SmileIDSecurity.SmileIDCryptoError",
+                    "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "SmileIDSecurity.SmileIDCryptoError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SmileIDCryptoError",
+                        "printedName": "SmileIDSecurity.SmileIDCryptoError",
+                        "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO09deriveKeyD0yA2CmF",
+            "mangledName": "$s15SmileIDSecurity0A13IDCryptoErrorO09deriveKeyD0yA2CmF",
+            "moduleName": "SmileIDSecurity"
+          },
+          {
+            "kind": "Var",
+            "name": "encodingError",
+            "printedName": "encodingError",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(SmileIDSecurity.SmileIDCryptoError.Type) -> SmileIDSecurity.SmileIDCryptoError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SmileIDCryptoError",
+                    "printedName": "SmileIDSecurity.SmileIDCryptoError",
+                    "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "SmileIDSecurity.SmileIDCryptoError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SmileIDCryptoError",
+                        "printedName": "SmileIDSecurity.SmileIDCryptoError",
+                        "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO08encodingD0yA2CmF",
+            "mangledName": "$s15SmileIDSecurity0A13IDCryptoErrorO08encodingD0yA2CmF",
+            "moduleName": "SmileIDSecurity"
+          },
+          {
+            "kind": "Var",
+            "name": "cantReadSecretValueError",
+            "printedName": "cantReadSecretValueError",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(SmileIDSecurity.SmileIDCryptoError.Type) -> SmileIDSecurity.SmileIDCryptoError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SmileIDCryptoError",
+                    "printedName": "SmileIDSecurity.SmileIDCryptoError",
+                    "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "SmileIDSecurity.SmileIDCryptoError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SmileIDCryptoError",
+                        "printedName": "SmileIDSecurity.SmileIDCryptoError",
+                        "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO019cantReadSecretValueD0yA2CmF",
+            "mangledName": "$s15SmileIDSecurity0A13IDCryptoErrorO019cantReadSecretValueD0yA2CmF",
+            "moduleName": "SmileIDSecurity"
+          },
+          {
+            "kind": "Function",
+            "name": "==",
+            "printedName": "==(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SmileIDCryptoError",
+                "printedName": "SmileIDSecurity.SmileIDCryptoError",
+                "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SmileIDCryptoError",
+                "printedName": "SmileIDSecurity.SmileIDCryptoError",
+                "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO2eeoiySbAC_ACtFZ",
+            "mangledName": "$s15SmileIDSecurity0A13IDCryptoErrorO2eeoiySbAC_ACtFZ",
+            "moduleName": "SmileIDSecurity",
+            "static": true,
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "hashValue",
+            "printedName": "hashValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO9hashValueSivp",
+            "mangledName": "$s15SmileIDSecurity0A13IDCryptoErrorO9hashValueSivp",
+            "moduleName": "SmileIDSecurity",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO9hashValueSivg",
+                "mangledName": "$s15SmileIDSecurity0A13IDCryptoErrorO9hashValueSivg",
+                "moduleName": "SmileIDSecurity",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "hash",
+            "printedName": "hash(into:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Hasher",
+                "printedName": "Swift.Hasher",
+                "paramValueOwnership": "InOut",
+                "usr": "s:s6HasherV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO4hash4intoys6HasherVz_tF",
+            "mangledName": "$s15SmileIDSecurity0A13IDCryptoErrorO4hash4intoys6HasherVz_tF",
+            "moduleName": "SmileIDSecurity",
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:15SmileIDSecurity0A13IDCryptoErrorO",
+        "mangledName": "$s15SmileIDSecurity0A13IDCryptoErrorO",
+        "moduleName": "SmileIDSecurity",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SmileIDCryptoManager",
+        "printedName": "SmileIDCryptoManager",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SmileIDCryptoManager",
+                "printedName": "SmileIDSecurity.SmileIDCryptoManager",
+                "usr": "s:15SmileIDSecurity0A15IDCryptoManagerC"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15SmileIDSecurity0A15IDCryptoManagerC6sharedACvpZ",
+            "mangledName": "$s15SmileIDSecurity0A15IDCryptoManagerC6sharedACvpZ",
+            "moduleName": "SmileIDSecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SmileIDCryptoManager",
+                    "printedName": "SmileIDSecurity.SmileIDCryptoManager",
+                    "usr": "s:15SmileIDSecurity0A15IDCryptoManagerC"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15SmileIDSecurity0A15IDCryptoManagerC6sharedACvgZ",
+                "mangledName": "$s15SmileIDSecurity0A15IDCryptoManagerC6sharedACvgZ",
+                "moduleName": "SmileIDSecurity",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "sign",
+            "printedName": "sign(timestamp:files:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Foundation.URL]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "URL",
+                    "printedName": "Foundation.URL",
+                    "usr": "s:10Foundation3URLV"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15SmileIDSecurity0A15IDCryptoManagerC4sign9timestamp5filesS2S_Say10Foundation3URLVGtKF",
+            "mangledName": "$s15SmileIDSecurity0A15IDCryptoManagerC4sign9timestamp5filesS2S_Say10Foundation3URLVGtKF",
+            "moduleName": "SmileIDSecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "sign",
+            "printedName": "sign(timestamp:headers:payload:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[Swift.String : Swift.String]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Swift.String]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Foundation.Data?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Data",
+                    "printedName": "Foundation.Data",
+                    "usr": "s:10Foundation4DataV"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15SmileIDSecurity0A15IDCryptoManagerC4sign9timestamp7headers7payloadS2S_SDyS2SGSg10Foundation4DataVSgtKF",
+            "mangledName": "$s15SmileIDSecurity0A15IDCryptoManagerC4sign9timestamp7headers7payloadS2S_SDyS2SGSg10Foundation4DataVSgtKF",
+            "moduleName": "SmileIDSecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:15SmileIDSecurity0A15IDCryptoManagerC",
+        "mangledName": "$s15SmileIDSecurity0A15IDCryptoManagerC",
+        "moduleName": "SmileIDSecurity",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "hasMissingDesignatedInitializers": true
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/Keys\/ArkanaKeys.swift",
+      "kind": "Array",
+      "offset": 202,
+      "length": 392,
+      "value": "[0xb9, 0xa8, 0xfc, 0x6a, 0x9c, 0xea, 0x80, 0xe4, 0x5c, 0x74, 0x1, 0x3b, 0x32, 0xaf, 0x5b, 0x18, 0x1a, 0x48, 0x56, 0x8f, 0xe0, 0xab, 0x62, 0x2d, 0xa8, 0x63, 0x8, 0x9e, 0x3b, 0xce, 0x4e, 0xf6, 0x37, 0x43, 0x70, 0x31, 0xf, 0x96, 0xec, 0x71, 0xda, 0x5, 0xc7, 0x7d, 0xfb, 0x7e, 0xc1, 0x9, 0xe3, 0xec, 0x18, 0x5, 0xf8, 0xbe, 0xf3, 0x50, 0x73, 0x5c, 0xc6, 0x88, 0x9c, 0x6f, 0x10, 0x5c]"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/Keys\/ArkanaKeys.swift",
+      "kind": "Array",
+      "offset": 1412,
+      "length": 536,
+      "value": "[0xd1, 0xdc, 0x88, 0x1a, 0xef, 0xd0, 0xaf, 0xcb, 0x38, 0x4c, 0x30, 0x58, 0x6, 0x9b, 0x6d, 0x29, 0x2d, 0x70, 0x6f, 0xb6, 0xd4, 0xcf, 0x3, 0x4c, 0xc9, 0x56, 0x3a, 0xff, 0x5d, 0xfe, 0x7b, 0x97, 0xf, 0x21, 0x43, 0x1, 0x38, 0xa4, 0x8e, 0x48, 0x9a, 0x6a, 0xf6, 0x4c, 0xce, 0x4a, 0xf0, 0x31, 0xd5, 0xc2, 0x71, 0x6b, 0x9f, 0xdb, 0x80, 0x24, 0x5d, 0x29, 0xb5, 0xa6, 0xef, 0xa, 0x7e, 0x28, 0xcb, 0xd1, 0xd2, 0x3, 0xf3, 0xc5, 0xb4, 0xd1, 0x6c, 0x40, 0x30, 0xd, 0, 0x96, 0x6c, 0x29, 0x29, 0x7d, 0x65, 0xbf, 0xd8, 0x93]"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 418,
+      "length": 11,
+      "value": "\"si_selfie\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 450,
+      "length": 13,
+      "value": "\"si_liveness\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 489,
+      "length": 19,
+      "value": "\"si_document_front\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 533,
+      "length": 18,
+      "value": "\"si_document_back\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 418,
+      "length": 11,
+      "value": "\"si_selfie\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 450,
+      "length": 13,
+      "value": "\"si_liveness\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 489,
+      "length": 19,
+      "value": "\"si_document_front\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 533,
+      "length": 18,
+      "value": "\"si_document_back\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 2728,
+      "length": 10,
+      "value": "\"smileid-\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 3221,
+      "length": 35,
+      "value": "\"com.smileidentity.SmileIDSecurity\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "StringLiteral",
+      "offset": 3310,
+      "length": 8,
+      "value": "\"SECRET\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4490,
+      "length": 2,
+      "value": "32"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4520,
+      "length": 7,
+      "value": "200000"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-secure\/ios-secure\/Sources\/SmileIDCryptoManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4730,
+      "length": 1,
+      "value": "0"
+    }
+  ]
+}

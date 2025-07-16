@@ -1,0 +1,28 @@
+{
+  "name": "SmileIDExpo",
+  "version": "0.1.0",
+  "summary": "Official Smile ID SDK for Expo",
+  "description": "Official Smile ID SDK for Expo",
+  "license": "MIT",
+  "authors": "Harun Wangereka <harun@usesmileid.com> (https://github.com/wangerekaharun)",
+  "homepage": "https://github.com/smileidentity/react-native-expo.git#readme",
+  "platforms": {
+    "ios": "15.1"
+  },
+  "swift_versions": "5.7",
+  "source": {
+    "git": "https://github.com/smileidentity/react-native-expo.git"
+  },
+  "static_framework": true,
+  "dependencies": {
+    "ExpoModulesCore": [],
+    "SmileID": [
+      "11.0.2"
+    ]
+  },
+  "pod_target_xcconfig": {
+    "DEFINES_MODULE": "YES"
+  },
+  "source_files": "**/*.{h,m,mm,swift,hpp,cpp}",
+  "swift_version": "5.7"
+}

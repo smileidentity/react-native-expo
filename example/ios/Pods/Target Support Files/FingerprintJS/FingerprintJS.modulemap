@@ -1,0 +1,6 @@
+module FingerprintJS {
+  umbrella header "FingerprintJS-umbrella.h"
+
+  export *
+  module * { export * }
+}
