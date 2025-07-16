@@ -50,3 +50,33 @@ export interface ExpoDocumentVerificationRequest {
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
 }
+
+/**
+ * Interface for document verification request parameters
+ */
+export interface ExpoEnhancedDocumentVerificationRequest {
+  userId?: string;
+  jobId?: string;
+  countryCode: string;
+  allowNewEnroll?: boolean;
+  documentType?: string;
+  idAspectRatio?: number;
+  bypassSelfieCaptureWithFile?: string;
+  enableAutoCapture?: boolean;
+  captureBothSides?: boolean;
+  allowAgentMode?: boolean;
+  allowGalleryUpload?: boolean;
+  showInstructions?: boolean;
+  showAttribution?: boolean;
+  skipApiSubmission?: boolean;
+  useStrictMode?: boolean;
+  extraPartnerParams?: Record<string, string>;
+  consentInformation?: ExpoConsentInformation
+}
+
+export interface ExpoConsentInformation {
+  consentGrantedDate: string;
+  personalDetails: boolean;
+  contactInformation: boolean;
+  documentInformation: boolean
+}

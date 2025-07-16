@@ -47,6 +47,18 @@ public class SmileIDExpoModule: Module {
             }
         }
 
+        // Enhanced Document Verification View
+        View(SmileIDDocumentVerificationEnhancedView.self) {
+            Events("onResult", "onError")
+
+            Prop("config") { (
+                view: SmileIDDocumentVerificationEnhancedView,
+                config: EnhancedDocumentVerificationRequest
+            ) in
+                view.updateConfig(config)
+            }
+        }
+
         // SmartSelfie Enrollment View
         View(SmileIDSmartSelfieEnrollmentView.self) {
             Events("onResult", "onError")
