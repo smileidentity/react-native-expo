@@ -15,17 +15,60 @@ import {
   ExpoConfig,
   ExpoDocumentVerificationRequest,
 } from 'react-native-expo';
+import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
+import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
+import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
+import SmartSelfieEnrollmentSvgIcon from "./icons/SmartSelfieEnrollmentSvgIcon";
+import SmartSelfieAuthenticationSvgIcon from "./icons/SmartSelfieAuthenticationSvgIcon";
+import EnhancedKYCSvgIcon from "./icons/EnhancedKYCSvgIcon";
+import BvnConsentSvgIcon from "./icons/BvnConsentSvgIcon";
 
 const PRODUCTS = [
-  { title: 'SmartSelfie™ Enrollment', key: 'smartSelfieEnrollment', icon: '📸' },
-  { title: 'SmartSelfie™ Authentication', key: 'smartSelfieAuth', icon: '🧑‍🤝‍🧑' },
-  { title: 'SmartSelfie™ Enrollment (Enhanced)', key: 'smartSelfieEnrollmentEnhanced', icon: '⚙️' },
-  { title: 'SmartSelfie™ Authentication (Enhanced)', key: 'smartSelfieAuthEnhanced', icon: '✅' },
-  { title: 'Biometric KYC', key: 'biometricKYC', icon: '🧬' },
-  { title: 'Document Verification', key: 'documentVerification', icon: '📄' },
-  { title: 'Enhanced Document Verification', key: 'enhancedDocumentVerification', icon: '📄' },
-  { title: 'Enhanced KYC', key: 'enhancedKYC', icon: '📄' },
-  { title: 'BVN Consent', key: 'bvnConsent', icon: '📄' },
+  {
+    title: 'SmartSelfie™ Enrollment',
+    key: 'smartSelfieEnrollment',
+    icon: <SmartSelfieEnrollmentSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'SmartSelfie™ Authentication',
+    key: 'smartSelfieAuth',
+    icon: <SmartSelfieAuthenticationSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'SmartSelfie™ Enrollment (Enhanced)',
+    key: 'smartSelfieEnrollmentEnhanced',
+    icon: <SmartSelfieEnrollmentSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'SmartSelfie™ Authentication (Enhanced)',
+    key: 'smartSelfieAuthEnhanced',
+    icon: <SmartSelfieAuthenticationSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'Biometric KYC',
+    key: 'biometricKYC',
+    icon: <BiometricKYCSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'Document Verification',
+    key: 'documentVerification',
+    icon: <DocumentVerificationSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'Enhanced Document Verification',
+    key: 'enhancedDocumentVerification',
+    icon: <DocumentVerificationEnhancedSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'Enhanced KYC',
+    key: 'enhancedKYC',
+    icon: <EnhancedKYCSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'BVN Consent',
+    key: 'bvnConsent',
+    icon: <BvnConsentSvgIcon width={48} height={48} />,
+  },
 ];
 
 const config = new ExpoConfig(
@@ -124,7 +167,7 @@ export default function HomeScreen() {
                           style={styles.card}
                           onPress={() => handleProductPress(item.key)}
                       >
-                        <Text style={styles.icon}>{item.icon}</Text>
+                        <View style={styles.icon}>{item.icon}</View>
                         <Text style={styles.cardTitle}>{item.title}</Text>
                       </TouchableOpacity>
                   )}
@@ -175,8 +218,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    fontSize: 36,
+    width: 48,
+    height: 48,
     marginBottom: 12,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cardTitle: {
     color: '#fff',
