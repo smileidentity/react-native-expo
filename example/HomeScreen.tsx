@@ -1,31 +1,81 @@
+import React, { useEffect, useState } from 'react';
 import {
+  Alert,
+  FlatList,
   SafeAreaView,
-  ScrollView,
   Text,
-  View,
   TouchableOpacity,
+  View,
   StyleSheet,
-  Alert
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
 import {
   initialize,
   SmileIDDocumentVerificationView,
   SmileIDSmartSelfieEnrollmentView,
   ExpoConfig,
-  ExpoDocumentVerificationRequest
+  ExpoDocumentVerificationRequest,
 } from 'react-native-expo';
+import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
+import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
+import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
+import SmartSelfieEnrollmentSvgIcon from "./icons/SmartSelfieEnrollmentSvgIcon";
+import SmartSelfieAuthenticationSvgIcon from "./icons/SmartSelfieAuthenticationSvgIcon";
+import EnhancedKYCSvgIcon from "./icons/EnhancedKYCSvgIcon";
+import BvnConsentSvgIcon from "./icons/BvnConsentSvgIcon";
 
 const PRODUCTS = [
-  { title: 'Document Verification', key: 'documentVerification' },
-  { title: 'SmartSelfie Enrollment', key: 'smartSelfieEnrollment' },
+  {
+    title: 'SmartSelfie™ Enrollment',
+    key: 'smartSelfieEnrollment',
+    icon: <SmartSelfieEnrollmentSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'SmartSelfie™ Authentication',
+    key: 'smartSelfieAuth',
+    icon: <SmartSelfieAuthenticationSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'SmartSelfie™ Enrollment (Enhanced)',
+    key: 'smartSelfieEnrollmentEnhanced',
+    icon: <SmartSelfieEnrollmentSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'SmartSelfie™ Authentication (Enhanced)',
+    key: 'smartSelfieAuthEnhanced',
+    icon: <SmartSelfieAuthenticationSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'Biometric KYC',
+    key: 'biometricKYC',
+    icon: <BiometricKYCSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'Document Verification',
+    key: 'documentVerification',
+    icon: <DocumentVerificationSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'Enhanced Document Verification',
+    key: 'enhancedDocumentVerification',
+    icon: <DocumentVerificationEnhancedSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'Enhanced KYC',
+    key: 'enhancedKYC',
+    icon: <EnhancedKYCSvgIcon width={48} height={48} />,
+  },
+  {
+    title: 'BVN Consent',
+    key: 'bvnConsent',
+    icon: <BvnConsentSvgIcon width={48} height={48} />,
+  },
 ];
 
 const config = new ExpoConfig(
-  'your_partner_id', // partnerId
-  'your_auth_token', // authToken
-  'https://prod-lambda-url.com', // prodLambdaUrl
-  'https://test-lambda-url.com' // testLambdaUrl
+    'your_partner_id', // partnerId
+    'your_auth_token', // authToken
+    'https://prod-lambda-url.com', // prodLambdaUrl
+    'https://test-lambda-url.com' // testLambdaUrl
 );
 
 const documentVerificationConfig: ExpoDocumentVerificationRequest = {
@@ -36,18 +86,16 @@ const documentVerificationConfig: ExpoDocumentVerificationRequest = {
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
-  // Initialize SmileID SDK once when the component mounts
   useEffect(() => {
     const initSmileID = async () => {
       try {
-        await initialize( true, true, config,undefined);
+        await initialize(true, true, config, undefined);
         console.log('SmileID SDK initialized successfully');
       } catch (error) {
         console.error('SmileID SDK initialization failed:', error);
         Alert.alert('Initialization Error', 'Failed to initialize SmileID SDK');
       }
     };
-
     initSmileID();
   }, []);
 
@@ -56,38 +104,32 @@ export default function HomeScreen() {
   };
 
   const handleDocumentVerificationResult = (event: any) => {
-    const result = event.nativeEvent;
-    console.log('Document verification result:', result);
+    console.log('Document verification result:', event.nativeEvent);
     setSelectedProduct(null);
   };
 
   const handleDocumentVerificationError = (event: any) => {
-    const error = event.nativeEvent;
-    console.log('Document verification error:', error);
-    Alert.alert('Document Verification Error', error.error || 'An error occurred');
+    console.log('Document verification error:', event.nativeEvent);
+    Alert.alert('Document Verification Error', event.nativeEvent?.error || 'Something went wrong');
     setSelectedProduct(null);
   };
 
   const renderSelectedProductView = () => {
-    if (!selectedProduct) return null;
-
-    const containerStyle = styles.fullScreenContainer;
-
     switch (selectedProduct) {
       case 'documentVerification':
         return (
-            <View style={containerStyle}>
-              <SmileIDDocumentVerificationView 
-                style={styles.nativeView} 
-                config={documentVerificationConfig}
-                onResult={handleDocumentVerificationResult}
-                onError={handleDocumentVerificationError}
+            <View style={styles.nativeContainer}>
+              <SmileIDDocumentVerificationView
+                  style={styles.nativeView}
+                  config={documentVerificationConfig}
+                  onResult={handleDocumentVerificationResult}
+                  onError={handleDocumentVerificationError}
               />
             </View>
         );
       case 'smartSelfieEnrollment':
         return (
-            <View style={containerStyle}>
+            <View style={styles.nativeContainer}>
               <SmileIDSmartSelfieEnrollmentView style={styles.nativeView} />
             </View>
         );
@@ -97,78 +139,110 @@ export default function HomeScreen() {
   };
 
   return (
-      <SafeAreaView style={styles.flexContainer}>
+      <SafeAreaView style={styles.container}>
         {selectedProduct ? (
             renderSelectedProductView()
         ) : (
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-              <Text style={styles.header}>Identity Verification</Text>
-              <View style={styles.buttonContainer}>
-                {PRODUCTS.map((product) => (
-                    <TouchableOpacity
-                        key={product.key}
-                        style={styles.productButton}
-                        onPress={() => handleProductPress(product.key)}
-                    >
-                      <Text style={styles.buttonText}>{product.title}</Text>
-                    </TouchableOpacity>
-                ))}
+            <>
+              <View style={styles.headerBar}>
+                <Text style={styles.appTitle}>Smile ID</Text>
               </View>
-            </ScrollView>
+
+              <FlatList
+                  data={PRODUCTS}
+                  keyExtractor={(item) => item.key}
+                  numColumns={2}
+                  contentContainerStyle={styles.content}
+                  columnWrapperStyle={styles.gridRow}
+                  ListHeaderComponent={() => (
+                      <Text style={styles.sectionTitle}>Test Our Products</Text>
+                  )}
+                  ListFooterComponent={() => (
+                      <Text style={styles.version}>
+                        Partner O05 • 1.6_11.0.4-SNAPSHOT_debug
+                      </Text>
+                  )}
+                  renderItem={({ item }) => (
+                      <TouchableOpacity
+                          style={styles.card}
+                          onPress={() => handleProductPress(item.key)}
+                      >
+                        <View style={styles.icon}>{item.icon}</View>
+                        <Text style={styles.cardTitle}>{item.title}</Text>
+                      </TouchableOpacity>
+                  )}
+              />
+            </>
         )}
       </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  flexContainer: {
+  container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#dedfc6',
   },
-  scrollContainer: {
-    paddingVertical: 20,
+  headerBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
   },
-  header: {
-    fontSize: 28,
+  appTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#111',
+  },
+  content: {
+    paddingHorizontal: 16,
+    paddingBottom: 40,
+  },
+  sectionTitle: {
+    fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
-    color: '#333',
+    marginBottom: 16,
+    color: '#222',
   },
-  buttonContainer: {
-    paddingHorizontal: 20,
+  gridRow: {
+    justifyContent: 'space-between',
+    marginBottom: 16,
   },
-  productButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    marginBottom: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+  card: {
+    backgroundColor: '#1b2471',
+    width: '47%',
+    borderRadius: 20,
+    padding: 16,
+    alignItems: 'center',
   },
-  buttonText: {
+  icon: {
+    width: 48,
+    height: 48,
+    marginBottom: 12,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardTitle: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 14,
     textAlign: 'center',
+    fontWeight: '600',
   },
-  productContainer: {
-    padding: 10,
+  nativeContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
   nativeView: {
     flex: 1,
     width: '100%',
   },
-  fullScreenContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#f5f5f5',
+  version: {
+    textAlign: 'center',
+    marginTop: 16,
+    color: '#555',
+    fontSize: 12,
   },
 });
