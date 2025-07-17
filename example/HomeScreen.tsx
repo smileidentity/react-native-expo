@@ -17,6 +17,8 @@ import {
   ExpoDocumentVerificationRequest,
   ExpoEnhancedDocumentVerificationRequest,
   ExpoSmartSelfieEnrollmentRequest,
+  SmileIDSmartSelfieAuthenticationEnhancedView,
+  SmileIDSmartSelfieEnrollmentEnhancedView,
 } from 'react-native-expo';
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
@@ -151,17 +153,6 @@ export default function HomeScreen() {
               />
             </View>
         );
-      case  'enhancedDocumentVerification':
-        return (
-            <View style={styles.nativeContainer}>
-              <SmileIDDocumentVerificationEnhancedView
-                  style={styles.nativeView}
-                  config={enhancedDocumentVerificationConfig}
-                  onResult={handleSuccessResult}
-                  onError={handleError}
-              />
-            </View>
-        );
       case 'smartSelfieEnrollment':
         return (
             <View style={styles.nativeContainer}>
@@ -170,6 +161,17 @@ export default function HomeScreen() {
                   config={smartSelfieEnrollmentConfig}
                   onResult={handleSuccessResult}
                   onError={handleError}/>
+            </View>
+        );
+      case  'smartSelfieEnrollmentEnhanced':
+        return (
+            <View style={styles.nativeContainer}>
+              <SmileIDSmartSelfieEnrollmentEnhancedView
+                  style={styles.nativeView}
+                  config={smartSelfieEnrollmentConfig}
+                  onResult={handleSuccessResult}
+                  onError={handleError}
+              />
             </View>
         );
       default:
