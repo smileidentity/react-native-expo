@@ -250,6 +250,9 @@ class SmartSelfieEnrollmentRequest: Record {
     var skipApiSubmission: Boolean = false
 
     @Field
+    var useStrictMode: Boolean = false
+
+    @Field
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 }
 
@@ -265,6 +268,7 @@ internal fun SmartSelfieEnrollmentRequest.toSmartSelfieEnrollmentProps(): SmartS
         showAttribution = this.showAttribution,
         showInstructions = this.showInstructions,
         skipApiSubmission = this.skipApiSubmission,
+        useStrictMode = this.useStrictMode,
         extraParams = this.extraParams
     )
 }

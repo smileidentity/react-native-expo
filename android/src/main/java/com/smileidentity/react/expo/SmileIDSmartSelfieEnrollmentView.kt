@@ -63,7 +63,7 @@ class SmileIDSmartSelfieEnrollmentView(context: Context, appContext: AppContext)
  * Compose view that wraps the SmileID SmartSelfie enrollment screen
  **/
 @Composable
-fun SmartSelfieEnrollmentView(
+private fun SmartSelfieEnrollmentView(
     props: SmartSelfieEnrollmentProps,
     onResult: (SmartSelfieResult) -> Unit,
     onError: (Throwable) -> Unit
@@ -104,5 +104,6 @@ data class SmartSelfieEnrollmentProps(
     val showAttribution: Boolean = true,
     val showInstructions: Boolean = true,
     val skipApiSubmission: Boolean = false,
+    val useStrictMode: Boolean = false,
     val extraParams: ImmutableMap<String, String> = persistentMapOf()
 )

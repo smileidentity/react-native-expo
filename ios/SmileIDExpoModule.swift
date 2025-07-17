@@ -83,5 +83,29 @@ public class SmileIDExpoModule: Module {
                 view.updateConfig(config)
             }
         }
+        
+        // SmartSelfie Authentication View
+        View(SmileIDSmartSelfieAuthenticationView.self) {
+            Events("onResult", "onError")
+            
+            Prop("config") { (
+                view: SmileIDSmartSelfieAuthenticationView,
+                config: SmartSelfieEnrollmentRequest
+            ) in
+                view.updateConfig(config)
+            }
+        }
+        
+        // Enhanced SmartSelfie Authentication View
+        View(SmileIDSmartSelfieAuthenticationEnhancedView.self) {
+            Events("onResult", "onError")
+            
+            Prop("config") { (
+                view: SmileIDSmartSelfieAuthenticationEnhancedView,
+                config: SmartSelfieEnrollmentRequest
+            ) in
+                view.updateConfig(config)
+            }
+        }
     }
 }

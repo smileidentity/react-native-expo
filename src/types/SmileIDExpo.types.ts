@@ -96,5 +96,6 @@ export interface ExpoSmartSelfieEnrollmentRequest {
   showAttribution?: boolean;
   showInstructions?: boolean;
   skipApiSubmission?: boolean;
+  useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
 }
