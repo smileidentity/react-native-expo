@@ -28,6 +28,7 @@ struct DocumentVerificationRequest: Record {
     @Field public var extraPartnerParams: [String: String] = [:]
 }
 
+/// Type‑safe bridge for the JS `ExpoSmartSelfieEnrollmentRequest` object
 struct SmartSelfieEnrollmentRequest: Record {
     @Field public var userId: String?
     @Field public var jobId: String?
