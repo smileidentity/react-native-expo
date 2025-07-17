@@ -12,8 +12,11 @@ import {
   initialize,
   SmileIDDocumentVerificationView,
   SmileIDSmartSelfieEnrollmentView,
+  SmileIDDocumentVerificationEnhancedView,
   ExpoConfig,
-  ExpoDocumentVerificationRequest, SmileIDDocumentVerificationEnhancedView, ExpoEnhancedDocumentVerificationRequest,
+  ExpoDocumentVerificationRequest,
+  ExpoEnhancedDocumentVerificationRequest,
+  ExpoSmartSelfieEnrollmentRequest,
 } from 'react-native-expo';
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
@@ -83,6 +86,10 @@ const documentVerificationConfig: ExpoDocumentVerificationRequest = {
   captureBothSides: false,
 };
 
+const smartSelfieEnrollmentConfig: ExpoSmartSelfieEnrollmentRequest = {
+  showInstructions: false
+}
+
 const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
   countryCode: 'NG',
   captureBothSides: false,
@@ -109,14 +116,14 @@ export default function HomeScreen() {
     setSelectedProduct(productKey);
   };
 
-  const handleDocumentVerificationResult = (event: any) => {
-    console.log('Document verification result:', event.nativeEvent);
+  const handleSuccessResult = (event: any) => {
+    console.log('Success result:', event.nativeEvent);
     setSelectedProduct(null);
   };
 
-  const handleDocumentVerificationError = (event: any) => {
-    console.log('Document verification error:', event.nativeEvent);
-    Alert.alert('Document Verification Error', event.nativeEvent?.error || 'Something went wrong');
+  const handleError = (event: any) => {
+    console.log('Got error:', event.nativeEvent);
+    Alert.alert('Got error', event.nativeEvent?.error || 'Something went wrong');
     setSelectedProduct(null);
   };
 
@@ -128,8 +135,8 @@ export default function HomeScreen() {
               <SmileIDDocumentVerificationView
                   style={styles.nativeView}
                   config={documentVerificationConfig}
-                  onResult={handleDocumentVerificationResult}
-                  onError={handleDocumentVerificationError}
+                  onResult={handleSuccessResult}
+                  onError={handleError}
               />
             </View>
         );
@@ -139,15 +146,30 @@ export default function HomeScreen() {
               <SmileIDDocumentVerificationEnhancedView
                   style={styles.nativeView}
                   config={enhancedDocumentVerificationConfig}
-                  onResult={handleDocumentVerificationResult}
-                  onError={handleDocumentVerificationError}
+                  onResult={handleSuccessResult}
+                  onError={handleError}
+              />
+            </View>
+        );
+      case  'enhancedDocumentVerification':
+        return (
+            <View style={styles.nativeContainer}>
+              <SmileIDDocumentVerificationEnhancedView
+                  style={styles.nativeView}
+                  config={enhancedDocumentVerificationConfig}
+                  onResult={handleSuccessResult}
+                  onError={handleError}
               />
             </View>
         );
       case 'smartSelfieEnrollment':
         return (
             <View style={styles.nativeContainer}>
-              <SmileIDSmartSelfieEnrollmentView style={styles.nativeView} />
+              <SmileIDSmartSelfieEnrollmentView
+                  style={styles.nativeView}
+                  config={smartSelfieEnrollmentConfig}
+                  onResult={handleSuccessResult}
+                  onError={handleError}/>
             </View>
         );
       default:

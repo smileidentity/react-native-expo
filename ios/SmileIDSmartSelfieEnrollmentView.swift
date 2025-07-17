@@ -8,10 +8,16 @@ final class SmileIDSmartSelfieEnrollmentView: ExpoView {
     let onError = EventDispatcher()
     private let delegate: SmartSelfieEnrollmentDelegate
     private let hostingController: UIHostingController<SmartSelfieEnrollmentView>
+    private var config: SmartSelfieEnrollmentRequest?
 
     required init(appContext: AppContext? = nil) {
         delegate = SmartSelfieEnrollmentDelegate()
-        hostingController = UIHostingController(rootView: SmartSelfieEnrollmentView(delegate: delegate))
+        hostingController = UIHostingController(
+            rootView: SmartSelfieEnrollmentView(
+                delegate: delegate,
+                config: nil
+            )
+        )
         super.init(appContext: appContext)
         
         // Set up delegate callbacks
@@ -27,17 +33,38 @@ final class SmileIDSmartSelfieEnrollmentView: ExpoView {
         addSubview(hostingController.view)
         hostingController.view.fillSuperview()
     }
+    
+    func updateConfig(_ config: SmartSelfieEnrollmentRequest) {
+        self.config = config
+        hostingController.rootView = SmartSelfieEnrollmentView(
+            delegate: delegate,
+            config: config
+        )
+    }
 }
 
 // SwiftUI view that wraps the SmileID SmartSelfie enrollment screen
 struct SmartSelfieEnrollmentView: View {
     let delegate: SmartSelfieEnrollmentDelegate
+    let config: SmartSelfieEnrollmentRequest?
     
     var body: some View {
-        SmileID.smartSelfieEnrollmentScreen(
-            userId: "user_id",
-            delegate: delegate
-        )
+        if let config = config {
+            SmileID.smartSelfieEnrollmentScreen(
+                userId: config.userId ?? generateUserId(),
+                jobId: config.jobId ?? generateJobId(),
+                allowNewEnroll: config.allowNewEnroll,
+                allowAgentMode: config.allowAgentMode,
+                showAttribution: config.showAttribution,
+                showInstructions: config.showInstructions,
+                skipApiSubmission: config.skipApiSubmission,
+                extraPartnerParams: config.extraPartnerParams,
+                delegate: delegate
+            )
+        } else {
+            Text("Configuration not provided")
+                           .foregroundColor(.red)
+        }
     }
 }
 

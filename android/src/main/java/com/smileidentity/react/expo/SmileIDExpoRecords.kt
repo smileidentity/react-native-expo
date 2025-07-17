@@ -168,7 +168,7 @@ class EnhancedDocumentVerificationRequest : Record {
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 
     @Field
-    var consentInformationRecord: ConsentInformationRequest? = null
+    var consentInformationRequest: ConsentInformationRequest? = null
 
 }
 
@@ -204,21 +204,67 @@ internal fun EnhancedDocumentVerificationRequest.toDocumentVerificationProps(): 
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
         extraParams = this.extraParams,
-        consentInformation = this.consentInformationRecord?.toConsentInformation()
+        consentInformation = this.consentInformationRequest.toConsentInformation()
     )
 }
 
 /**
- * Map SmileConsentInformationRecord to ConsentInformation
+ * Map ConsentInformationRequest to ConsentInformation
  */
 
-internal fun ConsentInformationRequest.toConsentInformation(): ConsentInformation {
+internal fun ConsentInformationRequest?.toConsentInformation(): ConsentInformation {
     return ConsentInformation(
         consented = ConsentedInformation(
-            consentGrantedDate = this.consentGrantedDate ?: getCurrentIsoTimestamp(),
-            personalDetails = this.personalDetails,
-            contactInformation = this.contactInformation,
-            documentInformation = this.documentInformation
+            consentGrantedDate = this?.consentGrantedDate ?: getCurrentIsoTimestamp(),
+            personalDetails = this?.personalDetails ?: false,
+            contactInformation = this?.contactInformation ?: false,
+            documentInformation = this?.documentInformation ?: false
         )
+    )
+}
+
+
+/**
+ * Type‑safe bridge for the JS `ExpoSmartSelfieEnrollmentRequest` object
+ */
+class SmartSelfieEnrollmentRequest: Record {
+    @Field
+    var userId: String? = null
+
+    @Field
+    var jobId: String? = null
+
+    @Field
+    var allowNewEnroll: Boolean = true
+
+    @Field
+    var allowAgentMode: Boolean = false
+
+    @Field
+    var showAttribution: Boolean = true
+
+    @Field
+    var showInstructions: Boolean = true
+
+    @Field
+    var skipApiSubmission: Boolean = false
+
+    @Field
+    var extraParams: ImmutableMap<String, String> = persistentMapOf()
+}
+
+/*
+* Map SmartSelfieEnrollmentRequest to SmartSelfieEnrollmentProps
+ */
+internal fun SmartSelfieEnrollmentRequest.toSmartSelfieEnrollmentProps(): SmartSelfieEnrollmentProps {
+    return SmartSelfieEnrollmentProps(
+        userId = this.userId,
+        jobId = this.jobId,
+        allowNewEnroll = this.allowNewEnroll,
+        allowAgentMode = this.allowAgentMode,
+        showAttribution = this.showAttribution,
+        showInstructions = this.showInstructions,
+        skipApiSubmission = this.skipApiSubmission,
+        extraParams = this.extraParams
     )
 }

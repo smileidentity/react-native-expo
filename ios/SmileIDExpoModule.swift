@@ -62,6 +62,14 @@ public class SmileIDExpoModule: Module {
         // SmartSelfie Enrollment View
         View(SmileIDSmartSelfieEnrollmentView.self) {
             Events("onResult", "onError")
+
+
+            Prop("config") { (
+                view: SmileIDSmartSelfieEnrollmentView,
+                config: SmartSelfieEnrollmentRequest
+            ) in
+                view.updateConfig(config)
+            }
         }
     }
 }
