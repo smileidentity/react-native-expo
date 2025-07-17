@@ -27,3 +27,14 @@ struct DocumentVerificationRequest: Record {
     @Field public var useStrictMode: Bool = false
     @Field public var extraPartnerParams: [String: String] = [:]
 }
+
+struct SmartSelfieEnrollmentRequest: Record {
+    @Field public var userId: String?
+    @Field public var jobId: String?
+    @Field public var allowNewEnroll: Bool = true
+    @Field public var allowAgentMode: Bool = false
+    @Field public var showAttribution: Bool = true
+    @Field public var showInstructions: Bool = true
+    @Field public var skipApiSubmission: Bool = false
+    @Field public var extraPartnerParams: [String: String] = [:]
+}

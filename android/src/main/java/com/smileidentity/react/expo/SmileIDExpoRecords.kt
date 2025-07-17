@@ -112,3 +112,45 @@ internal fun SmileDocumentVerificationRequestRecord.toDocumentVerificationProps(
         extraParams = this.extraParams
     )
 }
+
+/**
+ * Type‑safe bridge for the JS `ExpoSmartSelfieEnrollmentRequest` object
+ */
+class SmartSelfieEnrollmentRequest: Record {
+    @Field
+    var userId: String? = null
+
+    @Field
+    var jobId: String? = null
+
+    @Field
+    var allowNewEnroll: Boolean = true
+
+    @Field
+    var allowAgentMode: Boolean = false
+
+    @Field
+    var showAttribution: Boolean = true
+
+    @Field
+    var showInstructions: Boolean = true
+
+    @Field
+    var skipApiSubmission: Boolean = false
+
+    @Field
+    var extraParams: ImmutableMap<String, String> = persistentMapOf()
+}
+
+internal fun SmartSelfieEnrollmentRequest.toSmartSelfieEnrollmentProps(): SmartSelfieEnrollmentProps {
+    return SmartSelfieEnrollmentProps(
+        userId = this.userId,
+        jobId = this.jobId,
+        allowNewEnroll = this.allowNewEnroll,
+        allowAgentMode = this.allowAgentMode,
+        showAttribution = this.showAttribution,
+        showInstructions = this.showInstructions,
+        skipApiSubmission = this.skipApiSubmission,
+        extraParams = this.extraParams
+    )
+}

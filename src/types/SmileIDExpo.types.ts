@@ -50,3 +50,18 @@ export interface ExpoDocumentVerificationRequest {
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
 }
+
+
+/**
+ * Interface for Smart Selfie Enrolment request parameters
+ */
+export interface ExpoSmartSelfieEnrollmentRequest {
+  userId?: string;
+  jobId?: string;
+  allowNewEnroll?: boolean;
+  allowAgentMode?: boolean;
+  showAttribution?: boolean;
+  showInstructions?: boolean;
+  skipApiSubmission?: boolean;
+  extraPartnerParams?: Record<string, string>;
+}
