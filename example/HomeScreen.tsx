@@ -13,7 +13,7 @@ import {
   SmileIDDocumentVerificationView,
   SmileIDSmartSelfieEnrollmentView,
   ExpoConfig,
-  ExpoDocumentVerificationRequest,
+  ExpoDocumentVerificationRequest, SmileIDDocumentVerificationEnhancedView, ExpoEnhancedDocumentVerificationRequest,
 } from 'react-native-expo';
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
@@ -83,6 +83,12 @@ const documentVerificationConfig: ExpoDocumentVerificationRequest = {
   captureBothSides: false,
 };
 
+const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
+  countryCode: 'NG',
+  captureBothSides: false,
+};
+
+
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
@@ -122,6 +128,17 @@ export default function HomeScreen() {
               <SmileIDDocumentVerificationView
                   style={styles.nativeView}
                   config={documentVerificationConfig}
+                  onResult={handleDocumentVerificationResult}
+                  onError={handleDocumentVerificationError}
+              />
+            </View>
+        );
+      case  'enhancedDocumentVerification':
+        return (
+            <View style={styles.nativeContainer}>
+              <SmileIDDocumentVerificationEnhancedView
+                  style={styles.nativeView}
+                  config={enhancedDocumentVerificationConfig}
                   onResult={handleDocumentVerificationResult}
                   onError={handleDocumentVerificationError}
               />
