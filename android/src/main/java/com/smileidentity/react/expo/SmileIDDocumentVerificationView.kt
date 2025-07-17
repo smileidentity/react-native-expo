@@ -67,7 +67,7 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
  * Compose view that wraps the SmileID document verification view
  **/
 @Composable
-fun DocumentVerificationView(
+private fun DocumentVerificationView(
     props: DocumentVerificationProps,
     onResult: (DocumentVerificationResult) -> Unit,
     onError: (Throwable) -> Unit

@@ -60,7 +60,7 @@ class SmileIDSmartSelfieEnrollmentEnhancedView(context: Context, appContext: App
  * Compose view that wraps the SmileID Enhanced SmartSelfie enrollment screen
  **/
 @Composable
-fun EnhancedSmartSelfieEnrollmentView(
+private fun EnhancedSmartSelfieEnrollmentView(
     props: SmartSelfieEnrollmentProps,
     onResult: (SmartSelfieResult) -> Unit,
     onError: (Throwable) -> Unit

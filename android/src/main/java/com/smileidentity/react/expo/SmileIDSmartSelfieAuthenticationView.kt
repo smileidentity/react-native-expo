@@ -17,6 +17,9 @@ import com.smileidentity.util.randomUserId
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 
+/**
+ * Smart Selfie Authentication View using ExpoView
+ **/
 class SmileIDSmartSelfieAuthenticationView(context: Context, appContext: AppContext) :
     SmileIDExpoComposeView(
         context = context,
@@ -55,7 +58,7 @@ class SmileIDSmartSelfieAuthenticationView(context: Context, appContext: AppCont
 }
 
 /**
- * Compose view that wraps the SmileID SmartSelfie enrollment screen
+ * Compose view that wraps the SmileID SmartSelfie authentication screen
  **/
 @Composable
 private fun SmartSelfieAuthenticationView(

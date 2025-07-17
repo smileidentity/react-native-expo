@@ -186,6 +186,17 @@ export default function HomeScreen() {
               />
             </View>
         );
+        case 'smartSelfieAuthEnhanced':
+        return (
+            <View style={styles.nativeContainer}>
+              <SmileIDSmartSelfieAuthenticationEnhancedView
+                  style={styles.nativeView}
+                  config={smartSelfieEnrollmentConfig}
+                  onResult={handleSuccessResult}
+                  onError={handleError}
+              />
+            </View>
+        );
       default:
         return null;
     }
