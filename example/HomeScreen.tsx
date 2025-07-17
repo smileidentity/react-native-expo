@@ -12,11 +12,11 @@ import {
   initialize,
   SmileIDDocumentVerificationView,
   SmileIDSmartSelfieEnrollmentView,
+  SmileIDDocumentVerificationEnhancedView,
   ExpoConfig,
   ExpoDocumentVerificationRequest,
-    SmileIDDocumentVerificationEnhancedView,
-    ExpoEnhancedDocumentVerificationRequest,
-   ExpoSmartSelfieEnrollmentRequest,
+  ExpoEnhancedDocumentVerificationRequest,
+  ExpoSmartSelfieEnrollmentRequest,
 } from 'react-native-expo';
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
