@@ -9,20 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import com.smileidentity.SmileID
-import com.smileidentity.compose.SmartSelfieEnrollment
+import com.smileidentity.compose.SmartSelfieAuthentication
 import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
-import kotlinx.collections.immutable.ImmutableMap
-import kotlinx.collections.immutable.persistentMapOf
 
-/**
- * Smart Selfie Enrolment View using ExpoView
- **/
-class SmileIDSmartSelfieEnrollmentView(context: Context, appContext: AppContext) :
+class SmileIDSmartSelfieAuthenticationView(context: Context, appContext: AppContext) :
     SmileIDExpoComposeView(
         context = context,
         appContext = appContext,
@@ -34,7 +29,7 @@ class SmileIDSmartSelfieEnrollmentView(context: Context, appContext: AppContext)
 
     @Composable
     override fun Content() {
-        SmartSelfieEnrollmentView(
+        SmartSelfieAuthenticationView(
             props = props.value,
             onResult = { result ->
                 onResult(
@@ -63,7 +58,7 @@ class SmileIDSmartSelfieEnrollmentView(context: Context, appContext: AppContext)
  * Compose view that wraps the SmileID SmartSelfie enrollment screen
  **/
 @Composable
-fun SmartSelfieEnrollmentView(
+private fun SmartSelfieAuthenticationView(
     props: SmartSelfieEnrollmentProps,
     onResult: (SmartSelfieResult) -> Unit,
     onError: (Throwable) -> Unit
@@ -74,7 +69,7 @@ fun SmartSelfieEnrollmentView(
             .navigationBarsPadding()
             .systemBarsPadding()
     ) {
-        SmileID.SmartSelfieEnrollment(
+        SmileID.SmartSelfieAuthentication(
             userId = props.userId ?: randomUserId(),
             jobId = props.jobId ?: randomJobId(),
             allowNewEnroll = props.allowNewEnroll,
@@ -84,26 +79,15 @@ fun SmartSelfieEnrollmentView(
             skipApiSubmission = props.skipApiSubmission,
             extraPartnerParams = props.extraParams,
         ) { result ->
-           when(result) {
-               is SmileIDResult.Success -> {
-                   onResult(result.data)
-               }
-               is SmileIDResult.Error -> {
-                   onError(result.throwable)
-               }
-           }
+            when (result) {
+                is SmileIDResult.Success -> {
+                    onResult(result.data)
+                }
+
+                is SmileIDResult.Error -> {
+                    onError(result.throwable)
+                }
+            }
         }
     }
 }
-
-data class SmartSelfieEnrollmentProps(
-    val userId: String? = null,
-    val jobId: String? = null,
-    val allowNewEnroll: Boolean = true,
-    val allowAgentMode: Boolean = false,
-    val showAttribution: Boolean = true,
-    val showInstructions: Boolean = true,
-    val skipApiSubmission: Boolean = false,
-    val useStrictMode: Boolean = false,
-    val extraParams: ImmutableMap<String, String> = persistentMapOf()
-)

@@ -66,5 +66,6 @@ struct SmartSelfieEnrollmentRequest: Record {
     @Field public var showAttribution: Bool = true
     @Field public var showInstructions: Bool = true
     @Field public var skipApiSubmission: Bool = false
+    @Field public var useStrictMode: Bool = false
     @Field public var extraPartnerParams: [String: String] = [:]
 }
