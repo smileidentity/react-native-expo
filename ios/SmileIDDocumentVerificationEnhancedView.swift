@@ -2,12 +2,12 @@ import ExpoModulesCore
 import SmileID
 import SwiftUI
 
-// Document Verification Enhanced View using ExpoView
+// Enhanced Document Verification View using ExpoView
 final class SmileIDDocumentVerificationEnhancedView: ExpoView {
     let onResult = EventDispatcher()
     let onError = EventDispatcher()
     private let delegate: EnhancedDocumentVerificationDelegate
-    private let hostingController: UIHostingController<DocumentVerificationEnhancedView>
+    private let hostingController: UIHostingController<EnhancedDocumentVerificationView>
     private var config: EnhancedDocumentVerificationRequest?
 
     required init(appContext: AppContext? = nil) {
@@ -69,10 +69,10 @@ struct EnhancedDocumentVerificationView: View {
                 extraPartnerParams: config.extraPartnerParams,
                 consentInformation: ConsentInformation(
                     consented: ConsentedInformation(
-                        consentGrantedDate: config.consentInformation?.consentGrantedDate ?? Date().toISO8601WithMilliseconds(),
-                        personalDetails: config.consentInformation?.personalDetails ?? false,
-                        contactInformation: config.consentInformation?.contactInformation ?? false,
-                        documentInformation: config.consentInformation?.documentInformation ?? false
+                        consentGrantedDate: config.consentInformationRequest?.consentGrantedDate ?? Date().toISO8601WithMilliseconds(),
+                        personalDetails: config.consentInformationRequest?.personalDetails ?? false,
+                        contactInformation: config.consentInformationRequest?.contactInformation ?? false,
+                        documentInformation: config.consentInformationRequest?.documentInformation ?? false
                     )
                 ),
                 delegate: delegate
