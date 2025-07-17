@@ -73,5 +73,12 @@ class SmileIDExpoModule : Module() {
                 view.updateConfig(config)
             }
         }
+
+        View(SmileIDDocumentVerificationEnhancedView::class) {
+            Events("onResult", "onError")
+            Prop("config") { view: SmileIDDocumentVerificationEnhancedView, config: EnhancedDocumentVerificationRequest ->
+                view.updateConfig(config)
+            }
+        }
     }
 }

@@ -151,6 +151,17 @@ export default function HomeScreen() {
               />
             </View>
         );
+      case  'enhancedDocumentVerification':
+        return (
+            <View style={styles.nativeContainer}>
+              <SmileIDDocumentVerificationEnhancedView
+                  style={styles.nativeView}
+                  config={enhancedDocumentVerificationConfig}
+                  onResult={handleSuccessResult}
+                  onError={handleError}
+              />
+            </View>
+        );
       case 'smartSelfieEnrollment':
         return (
             <View style={styles.nativeContainer}>
