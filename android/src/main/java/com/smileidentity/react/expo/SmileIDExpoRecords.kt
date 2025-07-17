@@ -298,6 +298,9 @@ class SmartSelfieEnrollmentRequest: Record {
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 }
 
+/*
+* Map SmartSelfieEnrollmentRequest to SmartSelfieEnrollmentProps
+ */
 internal fun SmartSelfieEnrollmentRequest.toSmartSelfieEnrollmentProps(): SmartSelfieEnrollmentProps {
     return SmartSelfieEnrollmentProps(
         userId = this.userId,
