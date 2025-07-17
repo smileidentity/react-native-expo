@@ -74,6 +74,9 @@ export interface ExpoEnhancedDocumentVerificationRequest {
   consentInformation?: ExpoConsentInformation
 }
 
+/**
+ * Interface for Consent Information request parameters
+ */
 export interface ExpoConsentInformation {
   consentGrantedDate: string;
   personalDetails: boolean;

@@ -213,7 +213,7 @@ class EnhancedDocumentVerificationRequest : Record {
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 
     @Field
-    var consentInformationRecord: ConsentInformationRequest? = null
+    var consentInformationRequest: ConsentInformationRequest? = null
 
 }
 
@@ -249,7 +249,7 @@ internal fun EnhancedDocumentVerificationRequest.toDocumentVerificationProps(): 
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
         extraParams = this.extraParams,
-        consentInformation = this.consentInformationRecord?.toConsentInformation()
+        consentInformation = this.consentInformationRequest.toConsentInformation()
     )
 }
 
@@ -257,13 +257,13 @@ internal fun EnhancedDocumentVerificationRequest.toDocumentVerificationProps(): 
  * Map SmileConsentInformationRecord to ConsentInformation
  */
 
-internal fun ConsentInformationRequest.toConsentInformation(): ConsentInformation {
+internal fun ConsentInformationRequest?.toConsentInformation(): ConsentInformation {
     return ConsentInformation(
         consented = ConsentedInformation(
-            consentGrantedDate = this.consentGrantedDate ?: getCurrentIsoTimestamp(),
-            personalDetails = this.personalDetails,
-            contactInformation = this.contactInformation,
-            documentInformation = this.documentInformation
+            consentGrantedDate = this?.consentGrantedDate ?: getCurrentIsoTimestamp(),
+            personalDetails = this?.personalDetails ?: false,
+            contactInformation = this?.contactInformation ?: false,
+            documentInformation = this?.documentInformation ?: false
         )
     )
 }
