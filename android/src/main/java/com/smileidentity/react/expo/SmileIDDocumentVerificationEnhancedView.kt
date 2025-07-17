@@ -10,8 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import com.smileidentity.SmileID
 import com.smileidentity.compose.EnhancedDocumentVerificationScreen
-import com.smileidentity.models.ConsentInformation
-import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.results.EnhancedDocumentVerificationResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -32,7 +30,7 @@ class SmileIDDocumentVerificationEnhancedView(context: Context, appContext: AppC
     private val onResult by EventDispatcher()
     private val onError by EventDispatcher()
 
-    fun updateConfig(config: SmileEnhancedDocumentVerificationRequestRecord) {
+    fun updateConfig(config: EnhancedDocumentVerificationRequest) {
         props.value = config.toDocumentVerificationProps()
     }
 
@@ -60,6 +58,9 @@ class SmileIDDocumentVerificationEnhancedView(context: Context, appContext: AppC
     }
 }
 
+/**
+ * Compose view that wraps the SmileID enhanced document verification view
+ **/
 @Composable
 fun EnhancedDocumentVerificationView(
     props: DocumentVerificationProps,
@@ -88,14 +89,7 @@ fun EnhancedDocumentVerificationView(
             showAttribution = props.showAttribution,
             useStrictMode = props.useStrictMode,
             extraPartnerParams = props.extraParams,
-            consentInformation = props.consentInformation ?: ConsentInformation(
-                consented = ConsentedInformation (
-                    consentGrantedDate = getCurrentIsoTimestamp(),
-                    personalDetails = false,
-                    contactInformation = false,
-                    documentInformation = false
-                )
-            )
+            consentInformation = props.consentInformation
         ) { result ->
             when (result) {
                 is SmileIDResult.Success -> {

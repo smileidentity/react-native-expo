@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.models.ConsentInformation
+import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.results.DocumentVerificationResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -34,7 +35,7 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
     private val onResult by EventDispatcher()
     private val onError by EventDispatcher()
 
-    fun updateConfig(config: SmileDocumentVerificationRequestRecord) {
+    fun updateConfig(config: DocumentVerificationRequest) {
         props.value = config.toDocumentVerificationProps()
     }
 
@@ -63,8 +64,7 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
 }
 
 /**
- * Compose view that wraps the SmileID document verification screen
- * @param props
+ * Compose view that wraps the SmileID document verification view
  **/
 @Composable
 fun DocumentVerificationView(
@@ -126,5 +126,12 @@ data class DocumentVerificationProps(
     val skipApiSubmission: Boolean = false,
     val useStrictMode: Boolean = false,
     val extraParams: ImmutableMap<String, String> = persistentMapOf(),
-    val consentInformation: ConsentInformation? = null
+    val consentInformation: ConsentInformation = ConsentInformation(
+        consented = ConsentedInformation (
+            consentGrantedDate = getCurrentIsoTimestamp(),
+            personalDetails = false,
+            contactInformation = false,
+            documentInformation = false
+        )
+    )
 )

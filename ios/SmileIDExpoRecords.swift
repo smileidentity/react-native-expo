@@ -46,11 +46,11 @@ struct EnhancedDocumentVerificationRequest: Record {
     @Field public var skipApiSubmission: Bool = false
     @Field public var useStrictMode: Bool = false
     @Field public var extraPartnerParams: [String: String] = [:]
-    @Field public var consentInformation: ExpoConsentInformation?
+    @Field public var consentInformationRequest: ConsentInformationRequest?
 }
 
 /// Type‑safe bridge for the JS `ExpoConsentInformation` object
-struct ExpoConsentInformation: Record {
+struct ConsentInformationRequest: Record {
     @Field public var consentGrantedDate: String
     @Field public var personalDetails: Bool
     @Field public var contactInformation: Bool

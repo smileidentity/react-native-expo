@@ -56,7 +56,7 @@ class SmileIDExpoModule : Module() {
 
         View(SmileIDDocumentVerificationView::class) {
             Events("onResult", "onError")
-            Prop("config") { view: SmileIDDocumentVerificationView, config: SmileDocumentVerificationRequestRecord ->
+            Prop("config") { view: SmileIDDocumentVerificationView, config: DocumentVerificationRequest ->
                 view.updateConfig(config)
             }
         }
@@ -65,7 +65,7 @@ class SmileIDExpoModule : Module() {
 
         View(SmileIDDocumentVerificationEnhancedView::class) {
             Events("onResult", "onError")
-            Prop("config") { view: SmileIDDocumentVerificationEnhancedView, config: SmileEnhancedDocumentVerificationRequestRecord ->
+            Prop("config") { view: SmileIDDocumentVerificationEnhancedView, config: EnhancedDocumentVerificationRequest ->
                 view.updateConfig(config)
             }
         }

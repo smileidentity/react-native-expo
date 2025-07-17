@@ -29,7 +29,7 @@ class SmileConfigRecord : Record {
 /**
  * Type‑safe bridge for the JS `ExpoDocumentVerificationRequest` object
  */
-class SmileDocumentVerificationRequestRecord : Record {
+class DocumentVerificationRequest : Record {
     @Field
     var userId: String? = null
 
@@ -94,7 +94,7 @@ internal fun SmileConfigRecord.toConfig(): Config {
 /*
 * Map DocumentVerificationProps to SmileDocumentVerificationRequestRecord
  */
-internal fun SmileDocumentVerificationRequestRecord.toDocumentVerificationProps(): DocumentVerificationProps {
+internal fun DocumentVerificationRequest.toDocumentVerificationProps(): DocumentVerificationProps {
     return DocumentVerificationProps(
         userId = this.userId,
         jobId = this.jobId,
@@ -118,7 +118,7 @@ internal fun SmileDocumentVerificationRequestRecord.toDocumentVerificationProps(
 /**
  * Type‑safe bridge for the JS `ExpoDocumentVerificationRequest` object
  */
-class SmileEnhancedDocumentVerificationRequestRecord : Record {
+class EnhancedDocumentVerificationRequest : Record {
     @Field
     var userId: String? = null
 
@@ -168,11 +168,11 @@ class SmileEnhancedDocumentVerificationRequestRecord : Record {
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 
     @Field
-    var consentInformationRecord: SmileConsentInformationRecord? = null
+    var consentInformationRecord: ConsentInformationRequest? = null
 
 }
 
-class SmileConsentInformationRecord : Record {
+class ConsentInformationRequest : Record {
     @Field
     var consentGrantedDate: String? = null
     @Field
@@ -186,7 +186,7 @@ class SmileConsentInformationRecord : Record {
 /**
  * Map EnhancedDocumentVerificationRequestRecord to DocumentVerificationProps
  */
-internal fun SmileEnhancedDocumentVerificationRequestRecord.toDocumentVerificationProps(): DocumentVerificationProps {
+internal fun EnhancedDocumentVerificationRequest.toDocumentVerificationProps(): DocumentVerificationProps {
     return DocumentVerificationProps(
         userId = this.userId,
         jobId = this.jobId,
@@ -212,7 +212,7 @@ internal fun SmileEnhancedDocumentVerificationRequestRecord.toDocumentVerificati
  * Map SmileConsentInformationRecord to ConsentInformation
  */
 
-internal fun SmileConsentInformationRecord.toConsentInformation(): ConsentInformation {
+internal fun ConsentInformationRequest.toConsentInformation(): ConsentInformation {
     return ConsentInformation(
         consented = ConsentedInformation(
             consentGrantedDate = this.consentGrantedDate ?: getCurrentIsoTimestamp(),
