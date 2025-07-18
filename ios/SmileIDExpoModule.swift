@@ -16,14 +16,17 @@ public class SmileIDExpoModule: Module {
 
         // Defines a JavaScript function that always returns a Promise and whose native code
         // is by default dispatched on the different thread than the JavaScript runtime runs on.
-        AsyncFunction("initialize") {
-            (
-                useSandBox: Bool,
-                enableCrashReporting: Bool,
-                config: SmileConfigRecord,
-                apiKey: String?
-            ) -> Void in
-            SmileID.initialize(
+       AsyncFunction("initialize") {
+           (
+               useSandBox: Bool,
+               enableCrashReporting: Bool,
+               config: SmileConfigRecord?,
+               apiKey: String?
+           ) async throws -> Void in
+           
+           if let apiKey = apiKey, let config = config {
+               // Case 1: Initialize with API key and config
+              SmileID.initialize(
                 apiKey: apiKey,
                 config: Config(
                     partnerId: config.partnerId,
@@ -32,8 +35,24 @@ public class SmileIDExpoModule: Module {
                     testLambdaUrl: config.testLambdaUrl
                 ),
                 useSandbox: useSandBox
-            )
-        }
+               )
+           } else if let config = config {
+               // Case 2: Initialize with just config
+               SmileID.initialize(
+                   config: Config(
+                       partnerId: config.partnerId,
+                       authToken: config.authToken,
+                       prodLambdaUrl: config.prodLambdaUrl,
+                       testLambdaUrl: config.testLambdaUrl
+                   ),
+                   useSandbox: useSandBox
+               )
+           } else {
+               // Case 3: Basic initialization
+               SmileID.initialize(useSandbox: useSandBox)
+           }
+       }
+
 
         // Document Verification View
         View(SmileIDDocumentVerificationView.self) {

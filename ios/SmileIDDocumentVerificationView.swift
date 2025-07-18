@@ -70,8 +70,7 @@ struct DocumentVerificationView: View {
                 delegate: delegate
             )
         } else {
-            Text("Configuration not provided")
-                .foregroundColor(.red)
+            Text("Configuration not provided").foregroundColor(.red)
         }
     }
 }
