@@ -46,7 +46,7 @@ We provide a sample app that demonstrates SDK integration and showcases Smile ID
 #### Android
 
 ```bash
-cd example
+cd sample-expo
 npx expo run:android
 ```
 
@@ -54,7 +54,7 @@ npx expo run:android
 
 First, install iOS dependencies:
 ```bash
-cd example/ios
+cd sample-expo/ios
 pod install
 cd ..
 ```
@@ -68,7 +68,7 @@ npx expo run:ios
 
 For development with hot reloading:
 ```bash
-cd example
+cd sample-expo
 npx expo start
 ```
 
@@ -245,20 +245,20 @@ npx expo start --clear
 
 **iOS build issues:**
 ```bash
-cd example/ios
+cd sample-expo/ios
 pod install --repo-update
 ```
 
 **Android build issues:**
 ```bash
-cd example/android
+cd sample-expo/android
 ./gradlew clean
 ```
 
 **Dependencies out of sync:**
 ```bash
 yarn install
-cd example
+cd sample-expo
 yarn install
 ```
 

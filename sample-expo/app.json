@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-expo-example",
-    "slug": "react-native-expo-example",
+    "name": "sample-expo",
+    "slug": "sample-expo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
