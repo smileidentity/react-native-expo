@@ -337,6 +337,9 @@ class IdInfoRequest: Record {
     var entered: Boolean = false
 }
 
+/**
+ * Type‑safe bridge for the JS `BiometricKYCProps` object
+ */
 internal fun BiometricKYCRequest.toBiometricKYCProps(): BiometricKYCProps {
     return BiometricKYCProps(
         userId = this.userId,
@@ -353,6 +356,9 @@ internal fun BiometricKYCRequest.toBiometricKYCProps(): BiometricKYCProps {
     )
 }
 
+/**
+ * Map IdInfoRequest to IdInfo
+*/
 internal fun IdInfoRequest?.toIdInfo(): IdInfo {
     return IdInfo(
         country = this?.country ?: "",

@@ -77,7 +77,7 @@ struct BiometricKYCView: View {
     }
 }
 
-// Delegate class for biometric kyc
+// Delegate class for biometric KYC
 class BiometricKYCDelegate: BiometricKycResultDelegate {
     var onResult: (([String: Any]) -> Void)?
     var onError: ((Error) -> Void)?

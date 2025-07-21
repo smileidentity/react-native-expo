@@ -117,6 +117,9 @@ export interface ExpoBiometricKYCRequest {
   expoIdInfo: ExpoIdInfoRequest;
 }
 
+/**
+ * Interface for ID Info request parameters
+ */
 export interface ExpoIdInfoRequest {
   country: string;
   idType?: string;
@@ -127,4 +130,15 @@ export interface ExpoIdInfoRequest {
   dob?: string;
   bankCode?: string;
   entered?: boolean
+}
+
+/**
+ * Interface for BVN Consent request parameters
+ */
+export interface ExpoConsentRequest {
+  partnerIconId: string;
+  partnerName: string;
+  partnerPrivacyPolicy: string;
+  productName: string,
+  userId?: string
 }

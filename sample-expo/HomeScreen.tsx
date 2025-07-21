@@ -26,8 +26,6 @@ import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
 import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
 import SmartSelfieEnrollmentSvgIcon from "./icons/SmartSelfieEnrollmentSvgIcon";
 import SmartSelfieAuthenticationSvgIcon from "./icons/SmartSelfieAuthenticationSvgIcon";
-import EnhancedKYCSvgIcon from "./icons/EnhancedKYCSvgIcon";
-import BvnConsentSvgIcon from "./icons/BvnConsentSvgIcon";
 
 const PRODUCTS = [
   {
@@ -64,17 +62,7 @@ const PRODUCTS = [
     title: 'Enhanced Document Verification',
     key: 'enhancedDocumentVerification',
     icon: <DocumentVerificationEnhancedSvgIcon width={48} height={48} />,
-  },
-  {
-    title: 'Enhanced KYC',
-    key: 'enhancedKYC',
-    icon: <EnhancedKYCSvgIcon width={48} height={48} />,
-  },
-  {
-    title: 'BVN Consent',
-    key: 'bvnConsent',
-    icon: <BvnConsentSvgIcon width={48} height={48} />,
-  },
+  }
 ];
 
 const config = new ExpoConfig(
