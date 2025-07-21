@@ -40,15 +40,18 @@ android/app/libs
 android/keystores/debug.keystore
 
 # Cocoapods
-samples/sample-expo/ios/Pods
-samples/sample-react-native/ios/Pods
+sample-expo/ios/Pods
+sample-react-native/ios/Pods
 
 # Ruby
-samples/sample-expo/vendor/
-samples/sample-react-native/vendor/
+sample-expo/vendor/
+sample-react-native/vendor/
 
 # node.js
 node_modules/
+sample-expo/node_modules/
+sample-react-native/node_modules/
+
 npm-debug.log
 yarn-debug.log
 yarn-error.log
