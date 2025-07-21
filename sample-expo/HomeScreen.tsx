@@ -86,13 +86,13 @@ const smartSelfieEnrollmentConfig: ExpoSmartSelfieEnrollmentRequest = {
 
 const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
   countryCode: 'NG',
-  captureBothSides: false,
+  captureBothSides: false
 };
 const expoIdInfoRequest : ExpoIdInfoRequest = {
   country: 'NG',
   idType: 'NIN_V2',
   idNumber: '00000000000',
-  entered: true,
+  entered: true
 }
 
 const biometricKYCConfig: ExpoBiometricKYCRequest = {

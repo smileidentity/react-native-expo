@@ -368,6 +368,6 @@ internal fun IdInfoRequest?.toIdInfo(): IdInfo {
         lastName = this?.lastName,
         dob = this?.dob,
         bankCode = this?.bankCode,
-        entered = this?.entered
+        entered = this?.entered ?: false
     )
 }
