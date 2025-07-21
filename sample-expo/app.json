@@ -22,7 +22,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.smileidentity.react.expo.example"
+      "package": "com.smileidentity.react.expo.sample"
     },
     "web": {
       "favicon": "./assets/favicon.png"

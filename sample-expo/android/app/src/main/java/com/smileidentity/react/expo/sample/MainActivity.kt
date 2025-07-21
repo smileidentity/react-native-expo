@@ -1,4 +1,4 @@
-package com.smileidentity.react.expo.example
+package com.smileidentity.react.expo.sample
 
 import android.os.Build
 import android.os.Bundle
