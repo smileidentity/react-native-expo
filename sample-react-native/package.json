@@ -14,6 +14,7 @@
     "expo-modules-core": "^2.5.0",
     "react": "19.0.0",
     "react-native": "0.79.1",
+    "react-native-svg": "^15.11.2",
     "react-native-expo": "https://github.com/smileidentity/react-native-expo"
   },
   "devDependencies": {
