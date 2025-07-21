@@ -31,9 +31,6 @@ export { SmileIDBiometricKYCView };
 import SmileIDEnhancedKyCView  from "./products/SmileIDEnhancedKyCView";
 export { SmileIDEnhancedKyCView };
 
-
-
-
 export * from './types/SmileIDExpo.types';
 import type { ExpoConfig } from './types/SmileIDExpo.types';
 
