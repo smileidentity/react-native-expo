@@ -3,6 +3,7 @@ package com.smileidentity.react.expo
 import com.smileidentity.models.Config
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.ConsentedInformation
+import com.smileidentity.models.IdInfo
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Field
 import kotlinx.collections.immutable.ImmutableMap
@@ -269,5 +270,104 @@ internal fun SmartSelfieEnrollmentRequest.toSmartSelfieEnrollmentProps(): SmartS
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
         extraParams = this.extraParams
+    )
+}
+
+/**
+ * Type‑safe bridge for the JS `BiometricKYCRequest` object
+ */
+class BiometricKYCRequest: Record {
+    @Field
+    var userId: String? = null
+
+    @Field
+    var jobId: String? = null
+
+    @Field
+    var allowNewEnroll: Boolean = true
+
+    @Field
+    var allowAgentMode: Boolean = false
+
+    @Field
+    var showAttribution: Boolean = true
+
+    @Field
+    var showInstructions: Boolean = true
+
+    @Field
+    var skipApiSubmission: Boolean = false
+
+    @Field
+    var useStrictMode: Boolean = false
+
+    @Field
+    var consentInformationRequest: ConsentInformationRequest? = null
+
+    @Field
+    var idInfo: IdInfoRequest? = null
+
+    @Field
+    var extraParams: ImmutableMap<String, String> = persistentMapOf()
+}
+
+/*
+* Type‑safe bridge for the JS `ExpoIdInfoRequest` object
+ */
+
+class IdInfoRequest: Record {
+    @Field
+    var country: String= ""
+    @Field
+    var idNumber: String? = null
+    @Field
+    var idType: String? = null
+    @Field
+    var firstName: String? = null
+    @Field
+    var middleName: String? = null
+    @Field
+    var lastName: String? = null
+    @Field
+    var dob: String? = null
+    @Field
+    var bankCode: String? = null
+    @Field
+    var entered: Boolean = false
+}
+
+/**
+ * Type‑safe bridge for the JS `BiometricKYCProps` object
+ */
+internal fun BiometricKYCRequest.toBiometricKYCProps(): BiometricKYCProps {
+    return BiometricKYCProps(
+        userId = this.userId,
+        jobId = this.jobId,
+        allowNewEnroll = this.allowNewEnroll,
+        allowAgentMode = this.allowAgentMode,
+        showAttribution = this.showAttribution,
+        showInstructions = this.showInstructions,
+        skipApiSubmission = this.skipApiSubmission,
+        useStrictMode = this.useStrictMode,
+        consentInformation = this.consentInformationRequest.toConsentInformation(),
+        extraParams = this.extraParams,
+        idInfo = this.idInfo.toIdInfo()
+    )
+}
+
+/**
+ * Map IdInfoRequest to IdInfo
+*/
+internal fun IdInfoRequest?.toIdInfo(): IdInfo {
+    return IdInfo(
+        country = this?.country ?: "",
+        idNumber = this?.idNumber,
+        idType = this?.idType,
+        firstName = this?.firstName,
+        middleName = this?.middleName,
+        lastName = this?.lastName,
+        dob = this?.dob,
+        bankCode = this?.bankCode,
+        entered = this?.entered ?: false
     )
 }

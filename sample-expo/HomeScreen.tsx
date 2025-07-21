@@ -20,14 +20,15 @@ import {
   SmileIDSmartSelfieAuthenticationEnhancedView,
   SmileIDSmartSelfieEnrollmentEnhancedView,
   SmileIDSmartSelfieAuthenticationView,
+  SmileIDBiometricKYCView,
+  ExpoBiometricKYCRequest,
+  ExpoIdInfoRequest,
 } from 'react-native-expo';
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
 import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
 import SmartSelfieEnrollmentSvgIcon from "./icons/SmartSelfieEnrollmentSvgIcon";
 import SmartSelfieAuthenticationSvgIcon from "./icons/SmartSelfieAuthenticationSvgIcon";
-import EnhancedKYCSvgIcon from "./icons/EnhancedKYCSvgIcon";
-import BvnConsentSvgIcon from "./icons/BvnConsentSvgIcon";
 
 const PRODUCTS = [
   {
@@ -64,17 +65,7 @@ const PRODUCTS = [
     title: 'Enhanced Document Verification',
     key: 'enhancedDocumentVerification',
     icon: <DocumentVerificationEnhancedSvgIcon width={48} height={48} />,
-  },
-  {
-    title: 'Enhanced KYC',
-    key: 'enhancedKYC',
-    icon: <EnhancedKYCSvgIcon width={48} height={48} />,
-  },
-  {
-    title: 'BVN Consent',
-    key: 'bvnConsent',
-    icon: <BvnConsentSvgIcon width={48} height={48} />,
-  },
+  }
 ];
 
 const config = new ExpoConfig(
@@ -95,8 +86,19 @@ const smartSelfieEnrollmentConfig: ExpoSmartSelfieEnrollmentRequest = {
 
 const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
   countryCode: 'NG',
-  captureBothSides: false,
+  captureBothSides: false
 };
+const expoIdInfoRequest : ExpoIdInfoRequest = {
+  country: 'NG',
+  idType: 'NIN_V2',
+  idNumber: '00000000000',
+  entered: true
+}
+
+const biometricKYCConfig: ExpoBiometricKYCRequest = {
+  showInstructions: true,
+  expoIdInfo: expoIdInfoRequest
+}
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
@@ -191,6 +193,17 @@ export default function HomeScreen() {
               <SmileIDSmartSelfieAuthenticationEnhancedView
                   style={styles.nativeView}
                   config={smartSelfieEnrollmentConfig}
+                  onResult={handleSuccessResult}
+                  onError={handleError}
+              />
+            </View>
+        );
+        case 'biometricKYC':
+        return (
+            <View style={styles.nativeContainer}>
+              <SmileIDBiometricKYCView
+                  style={styles.nativeView}
+                  config={biometricKYCConfig}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />

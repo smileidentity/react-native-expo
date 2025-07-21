@@ -16,9 +16,6 @@ export { SmileIDDocumentVerificationView };
 import SmileIDDocumentVerificationEnhancedView from './products/SmileIDDocumentVerificationEnhancedView';
 export { SmileIDDocumentVerificationEnhancedView };
 
-import SmileIDBvnConsentScreenView from './products/SmileIDBvnConsentScreenView';
-export { SmileIDBvnConsentScreenView };
-
 import SmileIDSmartSelfieAuthenticationView from "./products/SmileIDSmartSelfieAuthenticationView";
 export { SmileIDSmartSelfieAuthenticationView };
 
@@ -28,8 +25,6 @@ export { SmileIDSmartSelfieAuthenticationEnhancedView };
 import SmileIDBiometricKYCView from "./products/SmileIDBiometricKYCView";
 export { SmileIDBiometricKYCView };
 
-import SmileIDEnhancedKyCView  from "./products/SmileIDEnhancedKyCView";
-export { SmileIDEnhancedKyCView };
 
 export * from './types/SmileIDExpo.types';
 import type { ExpoConfig } from './types/SmileIDExpo.types';

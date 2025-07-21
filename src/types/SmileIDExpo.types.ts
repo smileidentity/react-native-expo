@@ -97,3 +97,46 @@ export interface ExpoSmartSelfieEnrollmentRequest {
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
 }
+
+/**
+ * Interface for Biometric KYC request parameters
+ */
+export interface ExpoBiometricKYCRequest {
+  userId?: string;
+  jobId?: string;
+  allowNewEnroll?: boolean;
+  allowAgentMode?: boolean;
+  showAttribution?: boolean;
+  showInstructions?: boolean;
+  skipApiSubmission?: boolean;
+  useStrictMode?: boolean;
+  extraPartnerParams?: Record<string, string>;
+  consentInformation?: ExpoConsentInformation;
+  expoIdInfo: ExpoIdInfoRequest;
+}
+
+/**
+ * Interface for ID Info request parameters
+ */
+export interface ExpoIdInfoRequest {
+  country: string;
+  idType?: string;
+  idNumber?: string;
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
+  dob?: string;
+  bankCode?: string;
+  entered?: boolean
+}
+
+/**
+ * Interface for BVN Consent request parameters
+ */
+export interface ExpoConsentRequest {
+  partnerIconId: string;
+  partnerName: string;
+  partnerPrivacyPolicy: string;
+  productName: string,
+  userId?: string
+}
