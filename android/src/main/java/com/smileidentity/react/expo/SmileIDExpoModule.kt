@@ -94,5 +94,12 @@ class SmileIDExpoModule : Module() {
                 view.updateConfig(config)
             }
         }
+
+        View(SmileIDBiometricKYCView::class) {
+            Events("onResult", "onError")
+            Prop("config") { view: SmileIDBiometricKYCView, config: BiometricKYCRequest ->
+                view.updateConfig(config)
+            }
+        }
     }
 }
