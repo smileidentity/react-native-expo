@@ -119,7 +119,7 @@ export interface ExpoBiometricKYCRequest {
 
 export interface ExpoIdInfoRequest {
   country: string;
-  iDType?: string;
+  idType?: string;
   idNumber?: string;
   firstName?: string;
   middleName?: string;

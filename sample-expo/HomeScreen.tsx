@@ -19,7 +19,7 @@ import {
   ExpoSmartSelfieEnrollmentRequest,
   SmileIDSmartSelfieAuthenticationEnhancedView,
   SmileIDSmartSelfieEnrollmentEnhancedView,
-  SmileIDSmartSelfieAuthenticationView,
+  SmileIDSmartSelfieAuthenticationView, SmileIDBiometricKYCView, ExpoBiometricKYCRequest, ExpoIdInfoRequest,
 } from 'react-native-expo';
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
@@ -97,6 +97,17 @@ const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationReques
   countryCode: 'NG',
   captureBothSides: false,
 };
+const expoIdInfoRequest : ExpoIdInfoRequest = {
+  country: 'NG',
+  idType: 'NIN_V2',
+  idNumber: '00000000000',
+  entered: true,
+}
+
+const biometricKYCConfig: ExpoBiometricKYCRequest = {
+  showInstructions: true,
+  expoIdInfo: expoIdInfoRequest
+}
 
 
 export default function HomeScreen() {
@@ -192,6 +203,17 @@ export default function HomeScreen() {
               <SmileIDSmartSelfieAuthenticationEnhancedView
                   style={styles.nativeView}
                   config={smartSelfieEnrollmentConfig}
+                  onResult={handleSuccessResult}
+                  onError={handleError}
+              />
+            </View>
+        );
+        case 'biometricKYC':
+        return (
+            <View style={styles.nativeContainer}>
+              <SmileIDBiometricKYCView
+                  style={styles.nativeView}
+                  config={biometricKYCConfig}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />
