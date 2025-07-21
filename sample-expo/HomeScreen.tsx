@@ -98,7 +98,6 @@ const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationReques
   captureBothSides: false,
 };
 
-
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
@@ -143,7 +142,7 @@ export default function HomeScreen() {
               />
             </View>
         );
-      case  'enhancedDocumentVerification':
+      case 'enhancedDocumentVerification':
         return (
             <View style={styles.nativeContainer}>
               <SmileIDDocumentVerificationEnhancedView
@@ -164,7 +163,7 @@ export default function HomeScreen() {
                   onError={handleError}/>
             </View>
         );
-      case  'smartSelfieEnrollmentEnhanced':
+      case 'smartSelfieEnrollmentEnhanced':
         return (
             <View style={styles.nativeContainer}>
               <SmileIDSmartSelfieEnrollmentEnhancedView
