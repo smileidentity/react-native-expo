@@ -23,11 +23,13 @@ import expo.modules.kotlin.viewevent.EventDispatcher
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 
-class SmileIDBiometricKYCView(context: Context, appContext: AppContext) :
-SmileIDExpoComposeView(
-context = context,
-appContext = appContext,
-shouldHostComposeContent = true
+/**
+ * Biometric KYC View using ExpoView
+ **/
+class SmileIDBiometricKYCView(context: Context, appContext: AppContext) : SmileIDExpoComposeView(
+    context = context,
+    appContext = appContext,
+    shouldHostComposeContent = true
 ) {
     private var props = mutableStateOf(BiometricKYCProps())
     private val onResult by EventDispatcher()

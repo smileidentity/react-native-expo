@@ -19,7 +19,10 @@ import {
   ExpoSmartSelfieEnrollmentRequest,
   SmileIDSmartSelfieAuthenticationEnhancedView,
   SmileIDSmartSelfieEnrollmentEnhancedView,
-  SmileIDSmartSelfieAuthenticationView, SmileIDBiometricKYCView, ExpoBiometricKYCRequest, ExpoIdInfoRequest,
+  SmileIDSmartSelfieAuthenticationView,
+  SmileIDBiometricKYCView,
+  ExpoBiometricKYCRequest,
+  ExpoIdInfoRequest,
 } from 'react-native-expo';
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";

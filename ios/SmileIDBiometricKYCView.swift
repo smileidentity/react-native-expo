@@ -43,7 +43,7 @@ final class SmileIDBiometricKYCView: ExpoView {
     }
 }
 
-// SwiftUI view that wraps the SmileID document verification screen
+// SwiftUI view that wraps the SmileID biometric kyc screen
 struct BiometricKYCView: View {
     let delegate: BiometricKYCDelegate
     let config: BiometricKYCRequest?
