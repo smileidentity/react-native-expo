@@ -108,7 +108,6 @@ private fun DocumentVerificationView(
     }
 }
 
-
 data class DocumentVerificationProps(
     val userId: String? = null,
     val jobId: String? = null,

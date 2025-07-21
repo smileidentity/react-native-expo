@@ -20,7 +20,6 @@ export class ExpoConfig {
   }
 }
 
-
 export type SmileIDExpoModuleEvents = {
   onChange: (params: ChangeEventPayload) => void;
 };
@@ -83,7 +82,6 @@ export interface ExpoConsentInformation {
   contactInformation: boolean;
   documentInformation: boolean
 }
-
 
 /**
  * Interface for Smart Selfie Enrolment request parameters

@@ -224,7 +224,6 @@ internal fun ConsentInformationRequest?.toConsentInformation(): ConsentInformati
     )
 }
 
-
 /**
  * Type‑safe bridge for the JS `ExpoSmartSelfieEnrollmentRequest` object
  */

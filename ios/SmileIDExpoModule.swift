@@ -53,7 +53,6 @@ public class SmileIDExpoModule: Module {
            }
        }
 
-
         // Document Verification View
         View(SmileIDDocumentVerificationView.self) {
             Events("onResult", "onError")
@@ -81,7 +80,6 @@ public class SmileIDExpoModule: Module {
         // SmartSelfie Enrollment View
         View(SmileIDSmartSelfieEnrollmentView.self) {
             Events("onResult", "onError")
-
 
             Prop("config") { (
                 view: SmileIDSmartSelfieEnrollmentView,
