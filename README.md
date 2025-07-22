@@ -26,10 +26,10 @@ Install the Smile ID Expo SDK:
 
    ```bash
    # Using npm
-   npm install react-native-expo-smileid
+   npm install @smile_identity/react-native-expo
 
    # Using yarn
-   yarn add react-native-expo-smileid
+   yarn install @smile_identity/react-native-expo
    ```
 
 #### **For Bare React Native Projects**
@@ -45,20 +45,28 @@ Install the Smile ID Expo SDK:
 2. **Install the Smile ID Expo SDK:**
 
    ```bash
-   npm install react-native-expo-smileid
+    # Using npm
+   npm install @smile_identity/react-native-expo
+   
+    # Using yarn
+    yarn install @smile_identity/react-native-expo
    ```
 
 3. **Rebuild Your Project:**
 
    ```bash
-   npx pod-install
+   cd sample-react-native/ios
+   pod-install
+   cd ..
+    # For Android
    npx react-native run-android
-   # or
+   # or for iOS
    npx react-native run-ios
    ```
 #### ⚠️ Important Note:
-Ensure that your React Native and Metro versions match. If they are mismatched, native views provided by 
-**react-native-expo-smileid**  may fail to render correctly and throw runtime errors.
+Ensure that your React Native and Metro versions match the versions used by **smile_identity/react-native-expo**.
+You can override them to use different versions, but make sure both React Native and Metro are on the same version.
+Mismatches can cause native views from **smile_identity/react-native-expo** to fail to render and throw runtime errors.
 
 ## 2. SDK Initialization
 
@@ -111,9 +119,9 @@ const config = new ExpoConfig(
 initialize(true, true, config, 'YOUR_API_KEY');
 ```
 
-## 3. Document Verification and Other Products
+## 3. Document Verification
 
-The SDK supports **Document Verification** and other Smile ID products with a simple, integrated component approach.
+The SDK supports **Document Verification** and other [Smile ID products](https://docs.usesmileid.com/integration-options/mobile/products) with a simple, integrated component approach.
 **This implementation works the same way for both Expo projects and bare React Native projects.**
 
 ### Configuration Setup
