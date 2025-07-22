@@ -24,11 +24,11 @@ import {
   ExpoBiometricKYCRequest,
   ExpoIdInfoRequest,
 } from 'react-native-expo';
-import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
-import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
-import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
-import SmartSelfieEnrollmentSvgIcon from "./icons/SmartSelfieEnrollmentSvgIcon";
-import SmartSelfieAuthenticationSvgIcon from "./icons/SmartSelfieAuthenticationSvgIcon";
+import DocumentVerificationEnhancedSvgIcon from './icons/DocumentVerificationEnhancedSvgIcon';
+import BiometricKYCSvgIcon from './icons/BiometricKYCSvgIcon';
+import DocumentVerificationSvgIcon from './icons/DocumentVerificationSvgIcon';
+import SmartSelfieEnrollmentSvgIcon from './icons/SmartSelfieEnrollmentSvgIcon';
+import SmartSelfieAuthenticationSvgIcon from './icons/SmartSelfieAuthenticationSvgIcon';
 
 const PRODUCTS = [
   {
@@ -65,7 +65,7 @@ const PRODUCTS = [
     title: 'Enhanced Document Verification',
     key: 'enhancedDocumentVerification',
     icon: <DocumentVerificationEnhancedSvgIcon width={48} height={48} />,
-  }
+  },
 ];
 
 const config = new ExpoConfig(
@@ -81,24 +81,24 @@ const documentVerificationConfig: ExpoDocumentVerificationRequest = {
 };
 
 const smartSelfieEnrollmentConfig: ExpoSmartSelfieEnrollmentRequest = {
-  showInstructions: false
-}
+  showInstructions: false,
+};
 
 const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
   countryCode: 'NG',
-  captureBothSides: false
+  captureBothSides: false,
 };
 const expoIdInfoRequest : ExpoIdInfoRequest = {
   country: 'NG',
   idType: 'NIN_V2',
   idNumber: '00000000000',
-  entered: true
-}
+  entered: true,
+};
 
 const biometricKYCConfig: ExpoBiometricKYCRequest = {
   showInstructions: true,
-  expoIdInfo: expoIdInfoRequest
-}
+  expoIdInfo: expoIdInfoRequest,
+};
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
