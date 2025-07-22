@@ -39,20 +39,28 @@ In the root project directory, install all dependencies:
 yarn install
 ```
 
-### Running the Sample App
+### Running the Sample Apps
 
 We provide a sample app that demonstrates SDK integration and showcases Smile ID products.
 
-#### Android
+#### Android (Expo Sample)
 
 ```bash
 cd sample-expo
 npx expo run:android
 ```
 
-#### iOS
+#### Android (React Native Sample)
+
+```bash
+cd sample-react-native
+npx react-native run-android
+```
+
+#### iOS (Expo Sample)
 
 First, install iOS dependencies:
+
 ```bash
 cd sample-expo/ios
 pod install
@@ -64,12 +72,37 @@ Then run the app:
 npx expo run:ios
 ```
 
+#### iOS (React Native Sample)
+
+First, install iOS dependencies:
+
+```bash
+cd sample-react-native/ios
+pod install
+cd ..
+```
+
+Then run the app:
+```bash
+npx react-native run-ios
+```
+
 ### Development Server
 
 For development with hot reloading:
+
+#### Expo Sample
+
 ```bash
 cd sample-expo
 npx expo start
+```
+
+#### React Native Sample
+
+```bash
+cd sample-react-native
+npx react-native start
 ```
 
 ## Development Workflow
