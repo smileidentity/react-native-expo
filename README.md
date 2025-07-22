@@ -121,8 +121,9 @@ initialize(true, true, config, 'YOUR_API_KEY');
 
 ## 3. Products
 
-The SDK supports all [Smile ID products](https://docs.usesmileid.com/integration-options/mobile/products) with a simple, integrated component approach.
-**This implementation works the same way for both Expo projects and bare React Native projects.**
+The SDK supports all [Smile ID products](https://docs.usesmileid.com/integration-options/mobile/products) with a simple, 
+integrated component approach.**This implementation works the same way for both Expo projects and bare React Native 
+projects.**
 
 ### Configuration Setup
 
