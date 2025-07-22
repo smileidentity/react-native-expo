@@ -20,7 +20,53 @@ Full documentation is available at [Smile ID Documentation](https://docs.usesmil
 
 ### 1. Dependency
 
-// todo: add this later
+#### **For Expo Managed Projects**
+
+Install the Smile ID Expo SDK:
+
+   ```bash
+   # Using npm
+   npm install @smile_identity/react-native-expo
+
+   # Using yarn
+   yarn install @smile_identity/react-native-expo
+   ```
+
+#### **For Bare React Native Projects**
+
+1. **Install Expo Modules Support (if not already set up):**
+
+   ```bash
+   npx install-expo-modules@latest
+   ```
+
+   This will configure your bare React Native project with the required Gradle and Pod settings to support Expo modules.
+
+2. **Install the Smile ID Expo SDK:**
+
+   ```bash
+    # Using npm
+   npm install @smile_identity/react-native-expo
+   
+    # Using yarn
+    yarn install @smile_identity/react-native-expo
+   ```
+
+3. **Rebuild Your Project:**
+
+   ```bash
+   cd sample-react-native/ios
+   pod-install
+   cd ..
+    # For Android
+   npx react-native run-android
+   # or for iOS
+   npx react-native run-ios
+   ```
+#### ⚠️ Important Note:
+Ensure that your React Native and Metro versions match the versions used by **smile_identity/react-native-expo**.
+You can override them to use different versions, but make sure both React Native and Metro are on the same version.
+Mismatches can cause native views from **smile_identity/react-native-expo** to fail to render and throw runtime errors.
 
 ## 2. SDK Initialization
 
@@ -73,9 +119,11 @@ const config = new ExpoConfig(
 initialize(true, true, config, 'YOUR_API_KEY');
 ```
 
-## 3. Document Verification
+## 3. Products
 
-The SDK currently supports Document Verification with a simple, integrated component approach.
+The SDK supports all [Smile ID products](https://docs.usesmileid.com/integration-options/mobile/products) with a simple, 
+integrated component approach.**This implementation works the same way for both Expo projects and bare React Native 
+projects.**
 
 ### Configuration Setup
 
@@ -91,7 +139,7 @@ const documentVerificationConfig: ExpoDocumentVerificationRequest = {
 };
 ```
 
-Additional parameters can be added based on your verification requirements
+Additional parameters can be added based on your verification requirements.
 
 ### Implementation
 
@@ -128,12 +176,14 @@ const handleDocumentVerificationError = (error: DocumentVerificationError) => {
 ```
 
 **Component Props:**
-- `style`: React Native StyleSheet for component styling
-- `config`: Document verification configuration object
-- `onResult`: Callback function for successful verification
-- `onError`: Callback function for error handling
+
+* `style`: React Native StyleSheet for component styling
+* `config`: Document verification configuration object
+* `onResult`: Callback function for successful verification
+* `onError`: Callback function for error handling
 
 This implementation provides a complete document verification flow with comprehensive error handling and result processing capabilities.
+Other Smile ID products can be integrated in a similar way using the provided components and configuration objects.
 
 ## Getting Help
 
