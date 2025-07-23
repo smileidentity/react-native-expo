@@ -30,7 +30,5 @@ runs:
           ${{ runner.os }}-yarn-
 
     - name: Install dependencies
-      run: |
-        yarn set version 4.9.2
-        yarn install --immutable
+      run: yarn install --frozen-lockfile
       shell: bash
