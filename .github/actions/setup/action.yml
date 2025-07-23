@@ -31,6 +31,6 @@ runs:
 
     - name: Install dependencies
       run: |
-        yarn set version 3.22.22
+        yarn set version 4.9.2
         yarn install --immutable
       shell: bash
