@@ -1,0 +1,36 @@
+name: Setup
+description: Setup Node.js, Yarn, and install dependencies
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js and Yarn
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+        cache: 'yarn'
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      id: yarn-cache
+      with:
+        path: |
+          ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          **/node_modules
+          .yarn/cache
+          .yarn/unplugged
+          .yarn/install-state.gz
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install dependencies
+      run: |
+        yarn set version 3.22.22
+        yarn install --immutable
+      shell: bash
