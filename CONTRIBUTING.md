@@ -47,6 +47,7 @@ We provide a sample app that demonstrates SDK integration and showcases Smile ID
 
 ```bash
 cd sample-expo
+yarn install
 npx expo run:android
 ```
 
@@ -54,6 +55,7 @@ npx expo run:android
 
 ```bash
 cd sample-react-native
+yarn install
 npx react-native run-android
 ```
 
@@ -63,6 +65,7 @@ First, install iOS dependencies:
 
 ```bash
 cd sample-expo/ios
+yarn install
 pod install
 cd ..
 ```
@@ -78,6 +81,7 @@ First, install iOS dependencies:
 
 ```bash
 cd sample-react-native/ios
+yarn install
 pod install
 cd ..
 ```
@@ -95,6 +99,7 @@ For development with hot reloading:
 
 ```bash
 cd sample-expo
+yarn install
 npx expo start
 ```
 
@@ -102,6 +107,7 @@ npx expo start
 
 ```bash
 cd sample-react-native
+yarn install
 npx react-native start
 ```
 
