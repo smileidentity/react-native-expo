@@ -88,17 +88,18 @@ const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationReques
   countryCode: 'NG',
   captureBothSides: false
 };
-const expoIdInfoRequest : ExpoIdInfoRequest = {
+
+
+const dummyIdInfoWithOptional: ExpoIdInfoRequest = {
   country: 'NG',
   idType: 'NIN_V2',
-  idNumber: '00000000000',
-  entered: true
-}
+  idNumber: '00000000000'
+};
 
-const biometricKYCConfig: ExpoBiometricKYCRequest = {
-  showInstructions: true,
-  expoIdInfo: expoIdInfoRequest
-}
+const dummyKYCRequestWithOptional: ExpoBiometricKYCRequest = {
+  idInfo: dummyIdInfoWithOptional
+};
+
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
@@ -203,7 +204,7 @@ export default function HomeScreen() {
             <View style={styles.nativeContainer}>
               <SmileIDBiometricKYCView
                   style={styles.nativeView}
-                  config={biometricKYCConfig}
+                  config={dummyKYCRequestWithOptional}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />
