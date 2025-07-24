@@ -90,14 +90,14 @@ const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationReques
 };
 
 
-const dummyIdInfoWithOptional: ExpoIdInfoRequest = {
+const expoIdInfoRequest: ExpoIdInfoRequest = {
   country: 'NG',
   idType: 'NIN_V2',
   idNumber: '00000000000'
 };
 
-const dummyKYCRequestWithOptional: ExpoBiometricKYCRequest = {
-  idInfo: dummyIdInfoWithOptional
+const biometricKYCConfig: ExpoBiometricKYCRequest = {
+  idInfo: expoIdInfoRequest
 };
 
 
@@ -204,7 +204,7 @@ export default function HomeScreen() {
             <View style={styles.nativeContainer}>
               <SmileIDBiometricKYCView
                   style={styles.nativeView}
-                  config={dummyKYCRequestWithOptional}
+                  config={biometricKYCConfig}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />
