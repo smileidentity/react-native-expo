@@ -6,6 +6,7 @@ import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.smileidentity.metadata.models.WrapperSdkName
 
 class SmileIDExpoModule : Module() {
     override fun definition() = ModuleDefinition {
