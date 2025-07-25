@@ -69,10 +69,10 @@ const PRODUCTS = [
 ];
 
 const config = new ExpoConfig(
-    'your_partner_id', // partnerId
-    'your_auth_token', // authToken
-    'https://prod-lambda-url.com', // prodLambdaUrl
-    'https://test-lambda-url.com' // testLambdaUrl
+  'your_partner_id', // partnerId
+  'your_auth_token', // authToken
+  'https://prod-lambda-url.com', // prodLambdaUrl
+  'https://test-lambda-url.com' // testLambdaUrl
 );
 
 const documentVerificationConfig: ExpoDocumentVerificationRequest = {
@@ -81,23 +81,23 @@ const documentVerificationConfig: ExpoDocumentVerificationRequest = {
 };
 
 const smartSelfieEnrollmentConfig: ExpoSmartSelfieEnrollmentRequest = {
-  showInstructions: false,
+  allowAgentMode: true,
+  showInstructions: true,
 };
 
 const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
   countryCode: 'NG',
   captureBothSides: false,
 };
-const expoIdInfoRequest : ExpoIdInfoRequest = {
+
+const expoIdInfoRequest: ExpoIdInfoRequest = {
   country: 'NG',
   idType: 'NIN_V2',
   idNumber: '00000000000',
-  entered: true,
 };
 
 const biometricKYCConfig: ExpoBiometricKYCRequest = {
-  showInstructions: true,
-  expoIdInfo: expoIdInfoRequest,
+  idInfo: expoIdInfoRequest,
 };
 
 export default function HomeScreen() {

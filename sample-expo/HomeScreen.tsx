@@ -81,24 +81,26 @@ const documentVerificationConfig: ExpoDocumentVerificationRequest = {
 };
 
 const smartSelfieEnrollmentConfig: ExpoSmartSelfieEnrollmentRequest = {
-  showInstructions: false
+  allowAgentMode: true,
+  showInstructions: true,
 }
 
 const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
   countryCode: 'NG',
   captureBothSides: false
 };
-const expoIdInfoRequest : ExpoIdInfoRequest = {
+
+
+const expoIdInfoRequest: ExpoIdInfoRequest = {
   country: 'NG',
   idType: 'NIN_V2',
-  idNumber: '00000000000',
-  entered: true
-}
+  idNumber: '00000000000'
+};
 
 const biometricKYCConfig: ExpoBiometricKYCRequest = {
-  showInstructions: true,
-  expoIdInfo: expoIdInfoRequest
-}
+  idInfo: expoIdInfoRequest
+};
+
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);

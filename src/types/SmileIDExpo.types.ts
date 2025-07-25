@@ -31,7 +31,7 @@ export type ChangeEventPayload = {
 /**
  * Interface for document verification request parameters
  */
-export interface ExpoDocumentVerificationRequest {
+export type ExpoDocumentVerificationRequest = {
   userId?: string;
   jobId?: string;
   countryCode: string;
@@ -53,7 +53,7 @@ export interface ExpoDocumentVerificationRequest {
 /**
  * Interface for document verification request parameters
  */
-export interface ExpoEnhancedDocumentVerificationRequest {
+export type ExpoEnhancedDocumentVerificationRequest = {
   userId?: string;
   jobId?: string;
   countryCode: string;
@@ -76,7 +76,7 @@ export interface ExpoEnhancedDocumentVerificationRequest {
 /**
  * Interface for Consent Information request parameters
  */
-export interface ExpoConsentInformation {
+export type ExpoConsentInformation = {
   consentGrantedDate: string;
   personalDetails: boolean;
   contactInformation: boolean;
@@ -86,7 +86,7 @@ export interface ExpoConsentInformation {
 /**
  * Interface for Smart Selfie Enrolment request parameters
  */
-export interface ExpoSmartSelfieEnrollmentRequest {
+export type ExpoSmartSelfieEnrollmentRequest = {
   userId?: string;
   jobId?: string;
   allowNewEnroll?: boolean;
@@ -101,7 +101,7 @@ export interface ExpoSmartSelfieEnrollmentRequest {
 /**
  * Interface for Biometric KYC request parameters
  */
-export interface ExpoBiometricKYCRequest {
+export type ExpoBiometricKYCRequest = {
   userId?: string;
   jobId?: string;
   allowNewEnroll?: boolean;
@@ -112,13 +112,13 @@ export interface ExpoBiometricKYCRequest {
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
   consentInformation?: ExpoConsentInformation;
-  expoIdInfo: ExpoIdInfoRequest;
+  idInfo: ExpoIdInfoRequest;
 }
 
 /**
  * Interface for ID Info request parameters
  */
-export interface ExpoIdInfoRequest {
+export type ExpoIdInfoRequest = {
   country: string;
   idType?: string;
   idNumber?: string;
@@ -133,7 +133,7 @@ export interface ExpoIdInfoRequest {
 /**
  * Interface for BVN Consent request parameters
  */
-export interface ExpoConsentRequest {
+export type ExpoConsentRequest = {
   partnerIconId: string;
   partnerName: string;
   partnerPrivacyPolicy: string;
