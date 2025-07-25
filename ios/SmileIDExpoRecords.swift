@@ -1,6 +1,6 @@
 import ExpoModulesCore
 
-/// Type‑safe bridge for the JS `ExpoConfig` object
+/// Type‑safe bridge for the JS `SmileConfig` object
 struct SmileConfigRecord: Record {
     @Field public var partnerId: String
     @Field public var authToken: String
