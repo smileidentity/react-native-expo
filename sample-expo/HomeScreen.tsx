@@ -110,14 +110,14 @@ const smartSelfieParams: SmartSelfieParams = {
     'custom_param_1': 'value1',
     'custom_param_2': 'value2'
   }
-}
+};
 
 const consentInformationParams: ConsentInformationParams = {
   consentGrantedDate: '2025-07-25T09:20:25.362Z',
   personalDetails: true,
   contactInformation: true,
   documentInformation: true
-}
+};
 
 const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
   // userId: 'user123', // Optional user ID
@@ -152,7 +152,6 @@ const idInfoParams: IdInfoParams = {
   dob: '1990-01-01',
   bankCode: '1234567890',
   entered: false
-
 };
 
 const biometricKYCParams: BiometricKYCParams = {

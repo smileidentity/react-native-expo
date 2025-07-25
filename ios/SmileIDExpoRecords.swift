@@ -46,7 +46,7 @@ struct EnhancedDocumentVerificationRecord: Record {
     @Field public var skipApiSubmission: Bool = false
     @Field public var useStrictMode: Bool = false
     @Field public var extraPartnerParams: [String: String] = [:]
-    @Field public var consentInformationRequest: ConsentInformationRecord?
+    @Field public var consentInformation: ConsentInformationRecord?
 }
 
 /// Type‑safe bridge for the JS `ConsentInformationParams` object
@@ -81,7 +81,7 @@ struct BiometricKYCRecord: Record {
     @Field public var skipApiSubmission: Bool = false
     @Field public var useStrictMode: Bool = false
     @Field public var extraPartnerParams: [String: String] = [:]
-    @Field public var consentInformationRequest: ConsentInformationRecord?
+    @Field public var consentInformation: ConsentInformationRecord?
     @Field public var idInfo: IdInfoRecord
 }
 

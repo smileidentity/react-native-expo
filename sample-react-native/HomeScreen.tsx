@@ -153,7 +153,6 @@ const idInfoParams: IdInfoParams = {
   dob: '1990-01-01',
   bankCode: '1234567890',
   entered: false,
-
 };
 
 const biometricKYCParams: BiometricKYCParams = {

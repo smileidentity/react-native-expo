@@ -169,7 +169,7 @@ class EnhancedDocumentVerificationRecord : Record {
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 
     @Field
-    var consentInformationParams: ConsentInformationParams? = null
+    var consentInformation: ConsentInformationParams? = null
 
 }
 
@@ -208,7 +208,7 @@ internal fun EnhancedDocumentVerificationRecord.toDocumentVerificationProps(): D
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
         extraParams = this.extraParams,
-        consentInformation = this.consentInformationParams.toConsentInformation()
+        consentInformation = this.consentInformation.toConsentInformation()
     )
 }
 
@@ -305,7 +305,7 @@ class BiometricKYCRecord: Record {
     var useStrictMode: Boolean = false
 
     @Field
-    var consentInformationParams: ConsentInformationParams? = null
+    var consentInformation: ConsentInformationParams? = null
 
     @Field
     var idInfo: IdInfoRecord? = null
@@ -352,7 +352,7 @@ internal fun BiometricKYCRecord.toBiometricKYCProps(): BiometricKYCProps {
         showInstructions = this.showInstructions,
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
-        consentInformation = this.consentInformationParams.toConsentInformation(),
+        consentInformation = this.consentInformation.toConsentInformation(),
         extraParams = this.extraParams,
         idInfo = this.idInfo.toIdInfo()
     )
