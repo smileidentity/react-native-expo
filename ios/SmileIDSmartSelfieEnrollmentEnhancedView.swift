@@ -8,6 +8,7 @@ final class SmileIDSmartSelfieEnrollmentEnhancedView: ExpoView {
     let onError = EventDispatcher()
     private let delegate: SmartSelfieEnrollmentDelegate
     private let hostingController: UIHostingController<EnhancedSmartSelfieEnrollmentView>
+		private let navigationController: UINavigationController
     private var config: SmartSelfieEnrollmentRequest?
 
     required init(appContext: AppContext? = nil) {
@@ -18,6 +19,7 @@ final class SmileIDSmartSelfieEnrollmentEnhancedView: ExpoView {
                 config: nil
             )
         )
+				navigationController = UINavigationController(rootViewController: hostingController)
         super.init(appContext: appContext)
 
         // Set up delegate callbacks
@@ -29,9 +31,9 @@ final class SmileIDSmartSelfieEnrollmentEnhancedView: ExpoView {
             self?.onError(["error": error.localizedDescription])
         }
 
-        // Add the hosting controller's view
-        addSubview(hostingController.view)
-        hostingController.view.fillSuperview()
+				// Add the navigation controller's view
+				addSubview(navigationController.view)
+				navigationController.view.fillSuperview()
     }
 
     func updateConfig(_ config: SmartSelfieEnrollmentRequest) {
