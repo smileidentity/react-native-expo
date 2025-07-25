@@ -31,9 +31,9 @@ final class SmileIDSmartSelfieEnrollmentEnhancedView: ExpoView {
             self?.onError(["error": error.localizedDescription])
         }
 
-			// Add the hosting controller's view
-			addSubview(hostingController.view)
-			hostingController.view.fillSuperview()
+				// Add the navigation controller's view
+				addSubview(navigationController.view)
+				navigationController.view.fillSuperview()
     }
 
     func updateConfig(_ config: SmartSelfieEnrollmentRequest) {
