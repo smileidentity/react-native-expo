@@ -81,7 +81,8 @@ const documentVerificationConfig: ExpoDocumentVerificationRequest = {
 };
 
 const smartSelfieEnrollmentConfig: ExpoSmartSelfieEnrollmentRequest = {
-  showInstructions: false,
+  allowAgentMode: true,
+  showInstructions: true,
 };
 
 const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
@@ -96,7 +97,7 @@ const expoIdInfoRequest: ExpoIdInfoRequest = {
 };
 
 const biometricKYCConfig: ExpoBiometricKYCRequest = {
-  idInfo: expoIdInfoRequest
+  idInfo: expoIdInfoRequest,
 };
 
 export default function HomeScreen() {

@@ -81,7 +81,8 @@ const documentVerificationConfig: ExpoDocumentVerificationRequest = {
 };
 
 const smartSelfieEnrollmentConfig: ExpoSmartSelfieEnrollmentRequest = {
-  showInstructions: false
+  allowAgentMode: true,
+  showInstructions: true,
 }
 
 const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
