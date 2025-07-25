@@ -340,7 +340,7 @@ class IdInfoRecord: Record {
 }
 
 /**
- * Nap BiometricKYCRecord to BiometricKYCProps
+ * Map BiometricKYCRecord to BiometricKYCProps
  */
 internal fun BiometricKYCRecord.toBiometricKYCProps(): BiometricKYCProps {
     return BiometricKYCProps(
