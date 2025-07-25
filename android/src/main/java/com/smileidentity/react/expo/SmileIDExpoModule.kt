@@ -6,6 +6,7 @@ import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.smileidentity.metadata.models.WrapperSdkName
 
 class SmileIDExpoModule : Module() {
     override fun definition() = ModuleDefinition {
@@ -16,6 +17,8 @@ class SmileIDExpoModule : Module() {
                 ?: throw IllegalStateException("Context is not available")
 
             withContext(Dispatchers.IO) {
+                SmileID.setWrapperInfo(WrapperSdkName.ReactNative, "11.0.0")
+
                 when {
                     // Case 1: Initialize with API key and config
                     apiKey != null && config != null -> {
