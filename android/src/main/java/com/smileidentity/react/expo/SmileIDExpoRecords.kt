@@ -11,7 +11,7 @@ import kotlinx.collections.immutable.persistentMapOf
 import java.io.File
 
 /**
- * Type‑safe bridge for the JS `ExpoConfig` object coming from JavaScript.
+ * Type‑safe bridge for the JS `SmileConfig` object coming from JavaScript.
  */
 class SmileConfigRecord : Record {
     @Field
@@ -28,9 +28,9 @@ class SmileConfigRecord : Record {
 }
 
 /**
- * Type‑safe bridge for the JS `ExpoDocumentVerificationRequest` object
+ * Type‑safe bridge for the JS `DocumentVerificationParams` object
  */
-class DocumentVerificationRequest : Record {
+class DocumentVerificationRecord : Record {
     @Field
     var userId: String? = null
 
@@ -93,9 +93,9 @@ internal fun SmileConfigRecord.toConfig(): Config {
 }
 
 /*
-* Map DocumentVerificationProps to SmileDocumentVerificationRequestRecord
+* Map DocumentVerificationRecord to DocumentVerificationProps
  */
-internal fun DocumentVerificationRequest.toDocumentVerificationProps(): DocumentVerificationProps {
+internal fun DocumentVerificationRecord.toDocumentVerificationProps(): DocumentVerificationProps {
     return DocumentVerificationProps(
         userId = this.userId,
         jobId = this.jobId,
@@ -117,9 +117,9 @@ internal fun DocumentVerificationRequest.toDocumentVerificationProps(): Document
 }
 
 /**
- * Type‑safe bridge for the JS `ExpoDocumentVerificationRequest` object
+ * Type‑safe bridge for the JS `EnhancedDocumentVerificationParams` object
  */
-class EnhancedDocumentVerificationRequest : Record {
+class EnhancedDocumentVerificationRecord : Record {
     @Field
     var userId: String? = null
 
@@ -169,11 +169,14 @@ class EnhancedDocumentVerificationRequest : Record {
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 
     @Field
-    var consentInformationRequest: ConsentInformationRequest? = null
+    var consentInformationParams: ConsentInformationParams? = null
 
 }
 
-class ConsentInformationRequest : Record {
+/**
+ * Type‑safe bridge for the JS `ConsentInformationParams` object
+ */
+class ConsentInformationParams : Record {
     @Field
     var consentGrantedDate: String? = null
     @Field
@@ -187,7 +190,7 @@ class ConsentInformationRequest : Record {
 /**
  * Map EnhancedDocumentVerificationRequestRecord to DocumentVerificationProps
  */
-internal fun EnhancedDocumentVerificationRequest.toDocumentVerificationProps(): DocumentVerificationProps {
+internal fun EnhancedDocumentVerificationRecord.toDocumentVerificationProps(): DocumentVerificationProps {
     return DocumentVerificationProps(
         userId = this.userId,
         jobId = this.jobId,
@@ -205,15 +208,15 @@ internal fun EnhancedDocumentVerificationRequest.toDocumentVerificationProps(): 
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
         extraParams = this.extraParams,
-        consentInformation = this.consentInformationRequest.toConsentInformation()
+        consentInformation = this.consentInformationParams.toConsentInformation()
     )
 }
 
 /**
- * Map ConsentInformationRequest to ConsentInformation
+ * Map ConsentInformationParams to ConsentInformation
  */
 
-internal fun ConsentInformationRequest?.toConsentInformation(): ConsentInformation {
+internal fun ConsentInformationParams?.toConsentInformation(): ConsentInformation {
     return ConsentInformation(
         consented = ConsentedInformation(
             consentGrantedDate = this?.consentGrantedDate ?: getCurrentIsoTimestamp(),
@@ -225,9 +228,9 @@ internal fun ConsentInformationRequest?.toConsentInformation(): ConsentInformati
 }
 
 /**
- * Type‑safe bridge for the JS `ExpoSmartSelfieEnrollmentRequest` object
+ * Type‑safe bridge for the JS `SmartSelfieParams` object
  */
-class SmartSelfieEnrollmentRequest: Record {
+class SmartSelfieRecord: Record {
     @Field
     var userId: String? = null
 
@@ -259,8 +262,8 @@ class SmartSelfieEnrollmentRequest: Record {
 /*
 * Map SmartSelfieEnrollmentRequest to SmartSelfieEnrollmentProps
  */
-internal fun SmartSelfieEnrollmentRequest.toSmartSelfieEnrollmentProps(): SmartSelfieEnrollmentProps {
-    return SmartSelfieEnrollmentProps(
+internal fun SmartSelfieRecord.toSmartSelfieEnrollmentProps(): SmartSelfieProps {
+    return SmartSelfieProps(
         userId = this.userId,
         jobId = this.jobId,
         allowNewEnroll = this.allowNewEnroll,
@@ -274,9 +277,9 @@ internal fun SmartSelfieEnrollmentRequest.toSmartSelfieEnrollmentProps(): SmartS
 }
 
 /**
- * Type‑safe bridge for the JS `BiometricKYCRequest` object
+ * Type‑safe bridge for the JS `BiometricKYCParams` object
  */
-class BiometricKYCRequest: Record {
+class BiometricKYCRecord: Record {
     @Field
     var userId: String? = null
 
@@ -302,20 +305,20 @@ class BiometricKYCRequest: Record {
     var useStrictMode: Boolean = false
 
     @Field
-    var consentInformationRequest: ConsentInformationRequest? = null
+    var consentInformationParams: ConsentInformationParams? = null
 
     @Field
-    var idInfo: IdInfoRequest? = null
+    var idInfo: IdInfoRecord? = null
 
     @Field
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 }
 
 /*
-* Type‑safe bridge for the JS `ExpoIdInfoRequest` object
+* Type‑safe bridge for the JS `IdInfoParams` object
  */
 
-class IdInfoRequest: Record {
+class IdInfoRecord: Record {
     @Field
     var country: String= ""
     @Field
@@ -337,9 +340,9 @@ class IdInfoRequest: Record {
 }
 
 /**
- * Type‑safe bridge for the JS `BiometricKYCProps` object
+ * Nap BiometricKYCRecord to BiometricKYCProps
  */
-internal fun BiometricKYCRequest.toBiometricKYCProps(): BiometricKYCProps {
+internal fun BiometricKYCRecord.toBiometricKYCProps(): BiometricKYCProps {
     return BiometricKYCProps(
         userId = this.userId,
         jobId = this.jobId,
@@ -349,16 +352,16 @@ internal fun BiometricKYCRequest.toBiometricKYCProps(): BiometricKYCProps {
         showInstructions = this.showInstructions,
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
-        consentInformation = this.consentInformationRequest.toConsentInformation(),
+        consentInformation = this.consentInformationParams.toConsentInformation(),
         extraParams = this.extraParams,
         idInfo = this.idInfo.toIdInfo()
     )
 }
 
 /**
- * Map IdInfoRequest to IdInfo
+ * Map IdInfoRecord to IdInfo
 */
-internal fun IdInfoRequest?.toIdInfo(): IdInfo {
+internal fun IdInfoRecord?.toIdInfo(): IdInfo {
     return IdInfo(
         country = this?.country ?: "",
         idNumber = this?.idNumber,

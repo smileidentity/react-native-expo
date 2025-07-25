@@ -93,7 +93,7 @@ initialize(true);
 
 ```typescript
 // Create configuration object with your Smile ID portal credentials
-const config = new ExpoConfig(
+const config = new SmileConfig(
   'your_partner_id',              // Partner ID from Smile ID portal
   'your_auth_token',              // Authentication token
   'https://prod-lambda-url.com',  // Production lambda URL
@@ -127,19 +127,33 @@ projects.**
 
 ### Configuration Setup
 
-First, create a document verification configuration object:
+First, create a document verification params object:
 
 ```typescript
-import { ExpoDocumentVerificationRequest } from 'react-native-expo';
+import { DocumentVerificationParams } from 'react-native-expo';
 
-const documentVerificationConfig: ExpoDocumentVerificationRequest = {
-  countryCode: 'NG',        // ISO country code for document type
-  captureBothSides: false,  // Whether to capture both sides of document
-  // Add additional parameters as needed for your use case
+const documentVerificationParams: DocumentVerificationParams = {
+   userId: 'user123',
+   jobId: 'job456',
+   countryCode: 'NG',
+   allowNewEnroll: false,
+   documentType: 'PASSPORT',
+   idAspectRatio: 1.414,
+   bypassSelfieCaptureWithFile: 'your_selfie_image_path',
+   enableAutoCapture: true,
+   captureBothSides: false,
+   allowAgentMode: true,
+   showInstructions: true,
+   showAttribution: true,
+   allowGalleryUpload: true,
+   skipApiSubmission: false,
+   useStrictMode: false,
+   extraPartnerParams: {
+      'custom_param_1': 'value1',
+      'custom_param_2': 'value2'
+   }
 };
 ```
-
-Additional parameters can be added based on your verification requirements.
 
 ### Implementation
 
@@ -150,8 +164,8 @@ import { SmileIDDocumentVerificationView } from 'react-native-expo';
 
 // Component implementation
 <SmileIDDocumentVerificationView 
-  style={styles.nativeView} 
-  config={documentVerificationConfig}
+  style={styles.nativeView}
+  params={documentVerificationParams}
   onResult={handleDocumentVerificationResult}
   onError={handleDocumentVerificationError}
 />
@@ -163,13 +177,13 @@ Implement the required callback functions to handle verification results:
 
 ```typescript
 // Handle successful verification
-const handleDocumentVerificationResult = (result: DocumentVerificationResult) => {
+const handleSuccessResult = (result: DocumentVerificationResult) => {
   console.log('Document verification successful:', result);
   // Process the verification result
 };
 
 // Handle verification errors
-const handleDocumentVerificationError = (error: DocumentVerificationError) => {
+const handleError = (error: DocumentVerificationError) => {
   console.error('Document verification failed:', error);
   // Handle error appropriately
 };
@@ -178,7 +192,7 @@ const handleDocumentVerificationError = (error: DocumentVerificationError) => {
 **Component Props:**
 
 * `style`: React Native StyleSheet for component styling
-* `config`: Document verification configuration object
+* `params`: Document verification parameters object
 * `onResult`: Callback function for successful verification
 * `onError`: Callback function for error handling
 

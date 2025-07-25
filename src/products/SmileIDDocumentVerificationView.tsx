@@ -1,12 +1,12 @@
 import { requireNativeViewManager } from 'expo-modules-core';
 import * as React from 'react';
 import { ViewProps } from "react-native";
-import { ExpoDocumentVerificationRequest } from '../types/SmileIDExpo.types';
+import { DocumentVerificationParams } from '../types/SmileIDExpo.types';
 
 interface SmileIDDocumentVerificationViewProps extends ViewProps {
-  config: ExpoDocumentVerificationRequest;
-  onResult?: (result: any) => void;
-  onError?: (error: any) => void;
+    params: DocumentVerificationParams;
+    onResult?: (result: any) => void;
+    onError?: (error: any) => void;
 }
 
 const NativeView: React.ComponentType<SmileIDDocumentVerificationViewProps> =

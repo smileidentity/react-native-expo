@@ -56,7 +56,7 @@ class SmileIDBiometricKYCView(context: Context, appContext: AppContext) : SmileI
         )
     }
 
-    fun updateConfig(config: BiometricKYCRequest) {
+    fun updateConfig(config: BiometricKYCRecord) {
         props.value = config.toBiometricKYCProps()
     }
 }

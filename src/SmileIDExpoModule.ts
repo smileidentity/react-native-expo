@@ -1,6 +1,6 @@
 import { NativeModule, requireNativeModule } from 'expo';
 
-import {ExpoConfig, SmileIDExpoModuleEvents} from './types/SmileIDExpo.types';
+import {SmileConfig, SmileIDExpoModuleEvents} from './types/SmileIDExpo.types';
 
 declare class SmileIDExpoModule extends NativeModule<SmileIDExpoModuleEvents> {
   /**
@@ -13,7 +13,7 @@ declare class SmileIDExpoModule extends NativeModule<SmileIDExpoModuleEvents> {
   initialize(
       useSandBox: boolean,
       enableCrashReporting: boolean,
-      config?: ExpoConfig,
+      config?: SmileConfig,
       apiKey?: string,
   ): Promise<void>;
 }
