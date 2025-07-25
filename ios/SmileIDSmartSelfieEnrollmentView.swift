@@ -8,7 +8,7 @@ final class SmileIDSmartSelfieEnrollmentView: ExpoView {
     let onError = EventDispatcher()
     private let delegate: SmartSelfieEnrollmentDelegate
     private let hostingController: UIHostingController<SmartSelfieEnrollmentView>
-    private var config: SmartSelfieEnrollmentRequest?
+    private var config: SmartSelfieRecord?
 
     required init(appContext: AppContext? = nil) {
         delegate = SmartSelfieEnrollmentDelegate()
@@ -34,7 +34,7 @@ final class SmileIDSmartSelfieEnrollmentView: ExpoView {
         hostingController.view.fillSuperview()
     }
     
-    func updateConfig(_ config: SmartSelfieEnrollmentRequest) {
+    func updateConfig(_ config: SmartSelfieRecord) {
         self.config = config
         hostingController.rootView = SmartSelfieEnrollmentView(
             delegate: delegate,
@@ -46,7 +46,7 @@ final class SmileIDSmartSelfieEnrollmentView: ExpoView {
 // SwiftUI view that wraps the SmileID SmartSelfie enrollment screen
 struct SmartSelfieEnrollmentView: View {
     let delegate: SmartSelfieEnrollmentDelegate
-    let config: SmartSelfieEnrollmentRequest?
+    let config: SmartSelfieRecord?
     
     var body: some View {
         if let config = config {
