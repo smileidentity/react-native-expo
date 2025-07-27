@@ -51,8 +51,8 @@ class SmileIDSmartSelfieEnrollmentEnhancedView(context: Context, appContext: App
         )
     }
 
-    fun updateConfig(config: SmartSelfieRecord) {
-        props.value = config.toSmartSelfieEnrollmentProps()
+    fun updateConfig(config: SmartSelfieParams) {
+        props.value = config.toSmartSelfieProps()
     }
 }
 

@@ -30,7 +30,7 @@ class SmileIDDocumentVerificationEnhancedView(context: Context, appContext: AppC
     private val onResult by EventDispatcher()
     private val onError by EventDispatcher()
 
-    fun updateConfig(config: EnhancedDocumentVerificationRecord) {
+    fun updateConfig(config: EnhancedDocumentVerificationParams) {
         props.value = config.toDocumentVerificationProps()
     }
 

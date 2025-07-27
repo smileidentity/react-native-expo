@@ -12,7 +12,7 @@ class SmileIDExpoModule : Module() {
     override fun definition() = ModuleDefinition {
         Name("SmileIDExpo")
 
-        AsyncFunction("initialize") Coroutine { useSandBox: Boolean, enableCrashReporting: Boolean, config: SmileConfigRecord?, apiKey: String? ->
+        AsyncFunction("initialize") Coroutine { useSandBox: Boolean, enableCrashReporting: Boolean, config: SmileConfig?, apiKey: String? ->
             val context = appContext.reactContext
                 ?: throw IllegalStateException("Context is not available")
 
@@ -58,49 +58,49 @@ class SmileIDExpoModule : Module() {
 
         View(SmileIDDocumentVerificationView::class) {
             Events("onResult", "onError")
-            Prop("params") { view: SmileIDDocumentVerificationView, config: DocumentVerificationRecord ->
+            Prop("params") { view: SmileIDDocumentVerificationView, config: DocumentVerificationParams ->
                 view.updateConfig(config)
             }
         }
 
         View(SmileIDDocumentVerificationEnhancedView::class) {
             Events("onResult", "onError")
-            Prop("params") { view: SmileIDDocumentVerificationEnhancedView, config: EnhancedDocumentVerificationRecord ->
+            Prop("params") { view: SmileIDDocumentVerificationEnhancedView, config: EnhancedDocumentVerificationParams ->
                 view.updateConfig(config)
             }
         }
 
         View(SmileIDSmartSelfieEnrollmentView::class) {
             Events("onResult", "onError")
-            Prop("params") { view: SmileIDSmartSelfieEnrollmentView, config: SmartSelfieRecord ->
+            Prop("params") { view: SmileIDSmartSelfieEnrollmentView, config: SmartSelfieParams ->
                 view.updateConfig(config)
             }
         }
 
         View(SmileIDSmartSelfieEnrollmentEnhancedView::class) {
             Events("onResult", "onError")
-            Prop("params") { view: SmileIDSmartSelfieEnrollmentEnhancedView, config: SmartSelfieRecord ->
+            Prop("params") { view: SmileIDSmartSelfieEnrollmentEnhancedView, config: SmartSelfieParams ->
                 view.updateConfig(config)
             }
         }
 
         View(SmileIDSmartSelfieAuthenticationView::class) {
             Events("onResult", "onError")
-            Prop("params") { view: SmileIDSmartSelfieAuthenticationView, config: SmartSelfieRecord ->
+            Prop("params") { view: SmileIDSmartSelfieAuthenticationView, config: SmartSelfieParams ->
                 view.updateConfig(config)
             }
         }
 
         View(SmileIDSmartSelfieAuthenticationEnhancedView::class) {
             Events("onResult", "onError")
-            Prop("params") { view: SmileIDSmartSelfieAuthenticationEnhancedView, config: SmartSelfieRecord ->
+            Prop("params") { view: SmileIDSmartSelfieAuthenticationEnhancedView, config: SmartSelfieParams ->
                 view.updateConfig(config)
             }
         }
 
         View(SmileIDBiometricKYCView::class) {
             Events("onResult", "onError")
-            Prop("params") { view: SmileIDBiometricKYCView, config: BiometricKYCRecord ->
+            Prop("params") { view: SmileIDBiometricKYCView, config: BiometricKYCParams ->
                 view.updateConfig(config)
             }
         }

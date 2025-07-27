@@ -1,7 +1,7 @@
 import ExpoModulesCore
 
 /// Type‑safe bridge for the JS `SmileConfig` object
-struct SmileConfigRecord: Record {
+struct SmileConfig: Record {
     @Field public var partnerId: String
     @Field public var authToken: String
     @Field public var prodLambdaUrl: String
@@ -9,7 +9,7 @@ struct SmileConfigRecord: Record {
 }
 
 /// Type‑safe bridge for the JS `DocumentVerificationParams` object
-struct DocumentVerificationRecord: Record {
+struct DocumentVerificationParams: Record {
     @Field public var userId: String?
     @Field public var jobId: String?
     @Field public var countryCode: String
@@ -29,7 +29,7 @@ struct DocumentVerificationRecord: Record {
 }
 
 /// Type‑safe bridge for the JS `EnhancedDocumentVerificationParams` object
-struct EnhancedDocumentVerificationRecord: Record {
+struct EnhancedDocumentVerificationParams: Record {
     @Field public var userId: String?
     @Field public var jobId: String?
     @Field public var countryCode: String
@@ -58,7 +58,7 @@ struct ConsentInformationRecord: Record {
 }
 
 /// Type‑safe bridge for the JS `SmartSelfieParams` object
-struct SmartSelfieRecord: Record {
+struct SmartSelfieParams: Record {
     @Field public var userId: String?
     @Field public var jobId: String?
     @Field public var allowNewEnroll: Bool = true
@@ -71,7 +71,7 @@ struct SmartSelfieRecord: Record {
 }
 
 /// Type‑safe bridge for the JS `BiometricKYCParams` object
-struct BiometricKYCRecord: Record {
+struct BiometricKYCParams: Record {
     @Field public var userId: String?
     @Field public var jobId: String?
     @Field public var allowNewEnroll: Bool = true
@@ -82,11 +82,11 @@ struct BiometricKYCRecord: Record {
     @Field public var useStrictMode: Bool = false
     @Field public var extraPartnerParams: [String: String] = [:]
     @Field public var consentInformation: ConsentInformationRecord?
-    @Field public var idInfo: IdInfoRecord
+    @Field public var idInfo: IdInfoParams
 }
 
 /// Type‑safe bridge for the JS `IdInfoParams` object
-struct IdInfoRecord: Record {
+struct IdInfoParams: Record {
     @Field public var country: String
     @Field public var idType: String?
     @Field public var idNumber: String?

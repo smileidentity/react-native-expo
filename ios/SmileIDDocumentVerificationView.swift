@@ -8,7 +8,7 @@ final class SmileIDDocumentVerificationView: ExpoView {
     let onError = EventDispatcher()
     private let delegate: DocumentVerificationDelegate
     private let hostingController: UIHostingController<DocumentVerificationView>
-    private var config: DocumentVerificationRecord?
+    private var config: DocumentVerificationParams?
 
     required init(appContext: AppContext? = nil) {
         delegate = DocumentVerificationDelegate()
@@ -34,7 +34,7 @@ final class SmileIDDocumentVerificationView: ExpoView {
         hostingController.view.fillSuperview()
     }
 
-    func updateConfig(_ config: DocumentVerificationRecord) {
+    func updateConfig(_ config: DocumentVerificationParams) {
         self.config = config
         hostingController.rootView = DocumentVerificationView(
             delegate: delegate,
@@ -46,7 +46,7 @@ final class SmileIDDocumentVerificationView: ExpoView {
 // SwiftUI view that wraps the SmileID document verification screen
 struct DocumentVerificationView: View {
     let delegate: DocumentVerificationDelegate
-    let config: DocumentVerificationRecord?
+    let config: DocumentVerificationParams?
 
     var body: some View {
         if let config = config {

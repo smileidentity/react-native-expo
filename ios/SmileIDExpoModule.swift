@@ -20,7 +20,7 @@ public class SmileIDExpoModule: Module {
            (
                useSandBox: Bool,
                enableCrashReporting: Bool,
-               config: SmileConfigRecord?,
+               config: SmileConfig?,
                apiKey: String?
            ) async throws -> Void in
 				 SmileID.setWrapperInfo(name: .reactNative, version: "11.0.0")
@@ -60,7 +60,7 @@ public class SmileIDExpoModule: Module {
             
             Prop("params") { (
                 view: SmileIDDocumentVerificationView,
-                config: DocumentVerificationRecord
+                config: DocumentVerificationParams
             ) in
                 view.updateConfig(config)
             }
@@ -72,7 +72,7 @@ public class SmileIDExpoModule: Module {
 
             Prop("params") { (
                 view: SmileIDDocumentVerificationEnhancedView,
-                config: EnhancedDocumentVerificationRecord
+                config: EnhancedDocumentVerificationParams
             ) in
                 view.updateConfig(config)
             }
@@ -84,7 +84,7 @@ public class SmileIDExpoModule: Module {
 
             Prop("params") { (
                 view: SmileIDSmartSelfieEnrollmentView,
-                config: SmartSelfieRecord
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -96,7 +96,7 @@ public class SmileIDExpoModule: Module {
 
             Prop("params") { (
                 view: SmileIDSmartSelfieEnrollmentEnhancedView,
-                config: SmartSelfieRecord
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -108,7 +108,7 @@ public class SmileIDExpoModule: Module {
             
             Prop("params") { (
                 view: SmileIDSmartSelfieAuthenticationView,
-                config: SmartSelfieRecord
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -120,7 +120,7 @@ public class SmileIDExpoModule: Module {
             
             Prop("params") { (
                 view: SmileIDSmartSelfieAuthenticationEnhancedView,
-                config: SmartSelfieRecord
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -132,7 +132,7 @@ public class SmileIDExpoModule: Module {
             
             Prop("params") { (
                 view: SmileIDBiometricKYCView,
-                config: BiometricKYCRecord
+                config: BiometricKYCParams
             ) in
                 view.updateConfig(config)
             }

@@ -8,7 +8,7 @@ final class SmileIDDocumentVerificationEnhancedView: ExpoView {
     let onError = EventDispatcher()
     private let delegate: EnhancedDocumentVerificationDelegate
     private let hostingController: UIHostingController<EnhancedDocumentVerificationView>
-    private var config: EnhancedDocumentVerificationRecord?
+    private var config: EnhancedDocumentVerificationParams?
 
     required init(appContext: AppContext? = nil) {
         delegate = EnhancedDocumentVerificationDelegate()
@@ -34,7 +34,7 @@ final class SmileIDDocumentVerificationEnhancedView: ExpoView {
         hostingController.view.fillSuperview()
     }
 
-    func updateConfig(_ config: EnhancedDocumentVerificationRecord) {
+    func updateConfig(_ config: EnhancedDocumentVerificationParams) {
         self.config = config
         hostingController.rootView = EnhancedDocumentVerificationView(
             delegate: delegate,
@@ -46,7 +46,7 @@ final class SmileIDDocumentVerificationEnhancedView: ExpoView {
 // SwiftUI view that wraps the SmileID enhanced document verification screen
 struct EnhancedDocumentVerificationView: View {
     let delegate: EnhancedDocumentVerificationDelegate
-    let config: EnhancedDocumentVerificationRecord?
+    let config: EnhancedDocumentVerificationParams?
 
     var body: some View {
         if let config = config {

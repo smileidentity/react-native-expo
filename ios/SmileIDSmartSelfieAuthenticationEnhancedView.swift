@@ -9,7 +9,7 @@ final class SmileIDSmartSelfieAuthenticationEnhancedView: ExpoView {
     private let delegate: SmartSelfieEnrollmentDelegate
     private let hostingController: UIHostingController<EnhancedSmartSelfieAuthenticationView>
     private let navigationController: UINavigationController
-    private var config: SmartSelfieRecord?
+    private var config: SmartSelfieParams?
 
     required init(appContext: AppContext? = nil) {
         delegate = SmartSelfieEnrollmentDelegate()
@@ -36,7 +36,7 @@ final class SmileIDSmartSelfieAuthenticationEnhancedView: ExpoView {
         navigationController.view.fillSuperview()
     }
 
-    func updateConfig(_ config: SmartSelfieRecord) {
+    func updateConfig(_ config: SmartSelfieParams) {
         self.config = config
         hostingController.rootView = EnhancedSmartSelfieAuthenticationView(
             delegate: delegate,
@@ -48,7 +48,7 @@ final class SmileIDSmartSelfieAuthenticationEnhancedView: ExpoView {
 // SwiftUI view that wraps the SmileID Enhanced SmartSelfie authentication view
 struct EnhancedSmartSelfieAuthenticationView: View {
     let delegate: SmartSelfieEnrollmentDelegate
-    let config: SmartSelfieRecord?
+    let config: SmartSelfieParams?
 
     var body: some View {
         if let config = config {
