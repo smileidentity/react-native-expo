@@ -1,7 +1,7 @@
 /**
  * Config class used to pass the smile config to initialize method
  */
-export class ExpoConfig {
+export class SmileConfig {
   partnerId: string;
   authToken: string;
   prodLambdaUrl: string;
@@ -29,9 +29,9 @@ export type ChangeEventPayload = {
 };
 
 /**
- * Interface for document verification request parameters
+ * Document verification request parameters
  */
-export type ExpoDocumentVerificationRequest = {
+export type DocumentVerificationParams = {
   userId?: string;
   jobId?: string;
   countryCode: string;
@@ -51,9 +51,9 @@ export type ExpoDocumentVerificationRequest = {
 }
 
 /**
- * Interface for document verification request parameters
+ * Enhanced Document verification request parameters
  */
-export type ExpoEnhancedDocumentVerificationRequest = {
+export type EnhancedDocumentVerificationParams = {
   userId?: string;
   jobId?: string;
   countryCode: string;
@@ -70,13 +70,13 @@ export type ExpoEnhancedDocumentVerificationRequest = {
   skipApiSubmission?: boolean;
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
-  consentInformation?: ExpoConsentInformation
+  consentInformation?: ConsentInformationParams
 }
 
 /**
- * Interface for Consent Information request parameters
+ * Consent Information request parameters
  */
-export type ExpoConsentInformation = {
+export type ConsentInformationParams = {
   consentGrantedDate: string;
   personalDetails: boolean;
   contactInformation: boolean;
@@ -84,9 +84,10 @@ export type ExpoConsentInformation = {
 }
 
 /**
- * Interface for Smart Selfie Enrolment request parameters
+ * Smart Selfie request parameters
+ * Used for SmartSelfie Authentication and SmartSelfie Enrolment & the enhanced versions
  */
-export type ExpoSmartSelfieEnrollmentRequest = {
+export type SmartSelfieParams = {
   userId?: string;
   jobId?: string;
   allowNewEnroll?: boolean;
@@ -99,9 +100,9 @@ export type ExpoSmartSelfieEnrollmentRequest = {
 }
 
 /**
- * Interface for Biometric KYC request parameters
+ *  Biometric KYC request parameters
  */
-export type ExpoBiometricKYCRequest = {
+export type BiometricKYCParams = {
   userId?: string;
   jobId?: string;
   allowNewEnroll?: boolean;
@@ -111,14 +112,14 @@ export type ExpoBiometricKYCRequest = {
   skipApiSubmission?: boolean;
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
-  consentInformation?: ExpoConsentInformation;
-  idInfo: ExpoIdInfoRequest;
+  consentInformation?: ConsentInformationParams;
+  idInfo: IdInfoParams;
 }
 
 /**
- * Interface for ID Info request parameters
+ * ID Info request parameters
  */
-export type ExpoIdInfoRequest = {
+export type IdInfoParams = {
   country: string;
   idType?: string;
   idNumber?: string;
@@ -131,9 +132,9 @@ export type ExpoIdInfoRequest = {
 }
 
 /**
- * Interface for BVN Consent request parameters
+ * BVN Consent request parameters
  */
-export type ExpoConsentRequest = {
+export type ConsentParams = {
   partnerIconId: string;
   partnerName: string;
   partnerPrivacyPolicy: string;

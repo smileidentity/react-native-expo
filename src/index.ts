@@ -27,12 +27,12 @@ export { SmileIDBiometricKYCView };
 
 
 export * from './types/SmileIDExpo.types';
-import type { ExpoConfig } from './types/SmileIDExpo.types';
+import type { SmileConfig } from './types/SmileIDExpo.types';
 
 export function initialize(
     useSandBox: boolean,
     enableCrashReporting: boolean,
-    config?: ExpoConfig,
+    config?: SmileConfig,
     apiKey?: string
 ): Promise<void> {
     return SmileIDExpoModule.initialize(useSandBox, enableCrashReporting, config, apiKey);
