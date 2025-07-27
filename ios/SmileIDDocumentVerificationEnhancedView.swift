@@ -69,10 +69,10 @@ struct EnhancedDocumentVerificationView: View {
                 extraPartnerParams: config.extraPartnerParams,
                 consentInformation: ConsentInformation(
                     consented: ConsentedInformation(
-                        consentGrantedDate: config.consentInformationRequest?.consentGrantedDate ?? Date().toISO8601WithMilliseconds(),
-                        personalDetails: config.consentInformationRequest?.personalDetails ?? false,
-                        contactInformation: config.consentInformationRequest?.contactInformation ?? false,
-                        documentInformation: config.consentInformationRequest?.documentInformation ?? false
+                        consentGrantedDate: config.consentInformation?.consentGrantedDate ?? Date().toISO8601WithMilliseconds(),
+                        personalDetails: config.consentInformation?.personalDetails ?? false,
+                        contactInformation: config.consentInformation?.contactInformation ?? false,
+                        documentInformation: config.consentInformation?.documentInformation ?? false
                     )
                 ),
                 delegate: delegate
