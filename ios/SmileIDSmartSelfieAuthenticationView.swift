@@ -6,12 +6,12 @@ import SmileID
 final class SmileIDSmartSelfieAuthenticationView: ExpoView {
     let onResult = EventDispatcher()
     let onError = EventDispatcher()
-    private let delegate: SmartSelfieEnrollmentDelegate
+    private let delegate: SmartSelfieDelegate
     private let hostingController: UIHostingController<SmartSelfieAuthenticationView>
     private var config: SmartSelfieParams?
 
     required init(appContext: AppContext? = nil) {
-        delegate = SmartSelfieEnrollmentDelegate()
+        delegate = SmartSelfieDelegate()
         hostingController = UIHostingController(
             rootView: SmartSelfieAuthenticationView(
                 delegate: delegate,
@@ -45,7 +45,7 @@ final class SmileIDSmartSelfieAuthenticationView: ExpoView {
 
 // SwiftUI view that wraps the SmileID SmartSelfie authentication view
 struct SmartSelfieAuthenticationView: View {
-    let delegate: SmartSelfieEnrollmentDelegate
+    let delegate: SmartSelfieDelegate
     let config: SmartSelfieParams?
 
     var body: some View {

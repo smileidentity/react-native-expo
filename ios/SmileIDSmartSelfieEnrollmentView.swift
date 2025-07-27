@@ -6,12 +6,12 @@ import SmileID
 final class SmileIDSmartSelfieEnrollmentView: ExpoView {
     let onResult = EventDispatcher()
     let onError = EventDispatcher()
-    private let delegate: SmartSelfieEnrollmentDelegate
+    private let delegate: SmartSelfieDelegate
     private let hostingController: UIHostingController<SmartSelfieEnrollmentView>
     private var config: SmartSelfieParams?
 
     required init(appContext: AppContext? = nil) {
-        delegate = SmartSelfieEnrollmentDelegate()
+        delegate = SmartSelfieDelegate()
         hostingController = UIHostingController(
             rootView: SmartSelfieEnrollmentView(
                 delegate: delegate,
@@ -45,7 +45,7 @@ final class SmileIDSmartSelfieEnrollmentView: ExpoView {
 
 // SwiftUI view that wraps the SmileID SmartSelfie enrollment screen
 struct SmartSelfieEnrollmentView: View {
-    let delegate: SmartSelfieEnrollmentDelegate
+    let delegate: SmartSelfieDelegate
     let config: SmartSelfieParams?
     
     var body: some View {
@@ -69,7 +69,7 @@ struct SmartSelfieEnrollmentView: View {
 }
 
 // Delegate class for SmartSelfie enrollment
-class SmartSelfieEnrollmentDelegate: SmartSelfieResultDelegate {
+class SmartSelfieDelegate: SmartSelfieResultDelegate {
     var onResult: (([String: Any]) -> Void)?
     var onError: ((Error) -> Void)?
     
@@ -78,20 +78,13 @@ class SmartSelfieEnrollmentDelegate: SmartSelfieResultDelegate {
         livenessImages: [URL],
         apiResponse: SmartSelfieResponse?
     ) {
-    }
-    
-    func didSucceed(
-        selfie: URL,
-        livenessImages: [URL],
-        didSubmitSmartSelfieJob: Bool
-    ) {
         let result: [String: Any] = [
-            "selfie": selfie.absoluteString,
-            "livenessImages": livenessImages.map { $0.absoluteString },
-            "didSubmitSmartSelfieJob": didSubmitSmartSelfieJob
+            "selfie": selfieImage.absoluteString,
+            "livenessImages": livenessImages.map { $0.absoluteString }
         ]
         onResult?(result)
     }
+
     
     func didError(error: Error) {
         onError?(error)
