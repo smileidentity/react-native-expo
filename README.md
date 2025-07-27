@@ -108,7 +108,7 @@ initialize(true, true, config);
 
 ```typescript
 // Use the same config object from Option 2
-const config = new ExpoConfig(
+const config = new SmileConfig(
   'your_partner_id',
   'your_auth_token', 
   'https://prod-lambda-url.com',

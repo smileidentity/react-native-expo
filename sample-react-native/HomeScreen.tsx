@@ -69,7 +69,7 @@ const PRODUCTS = [
   },
 ];
 
-const smileConfig = new SmileConfig(
+const config = new SmileConfig(
   'your_partner_id', // partnerId
   'your_auth_token', // authToken
   'https://prod-lambda-url.com', // prodLambdaUrl
@@ -179,7 +179,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const initSmileID = async () => {
       try {
-        await initialize(true, true, smileConfig, undefined);
+        await initialize(true, true, config, undefined);
         console.log('SmileID SDK initialized successfully');
       } catch (error) {
         console.error('SmileID SDK initialization failed:', error);
