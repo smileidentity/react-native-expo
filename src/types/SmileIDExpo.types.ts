@@ -8,10 +8,10 @@ export class SmileConfig {
   testLambdaUrl: string;
 
   constructor(
-    partnerId: string,
-    authToken: string,
-    prodLambdaUrl: string,
-    testLambdaUrl: string
+      partnerId: string,
+      authToken: string,
+      prodLambdaUrl: string,
+      testLambdaUrl: string
   ) {
     this.partnerId = partnerId;
     this.authToken = authToken;
