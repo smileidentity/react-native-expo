@@ -19,7 +19,10 @@ final class SmileIDSmartSelfieEnrollmentEnhancedView: ExpoView {
                 config: nil
             )
         )
-				navigationController = UINavigationController(rootViewController: hostingController)
+	    navigationController = UINavigationController(rootViewController: hostingController)
+	    // Force light mode
+	    hostingController.overrideUserInterfaceStyle = .light
+
         super.init(appContext: appContext)
 
         // Set up delegate callbacks
