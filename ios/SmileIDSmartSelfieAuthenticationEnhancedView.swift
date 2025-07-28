@@ -52,7 +52,7 @@ struct EnhancedSmartSelfieAuthenticationView: View {
 
     var body: some View {
         if let config = config {
-            SmileID.smartSelfieEnrollmentScreenEnhanced(
+            SmileID.smartSelfieAuthenticationScreenEnhanced(
                 userId: config.userId ?? generateUserId(),
                 allowNewEnroll: config.allowNewEnroll,
                 showAttribution: config.showAttribution,
