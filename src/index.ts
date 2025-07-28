@@ -37,3 +37,27 @@ export function initialize(
 ): Promise<void> {
     return SmileIDExpoModule.initialize(useSandBox, enableCrashReporting, config, apiKey);
 }
+
+export function setCallbackUrl(callbackUrl: string): Promise<void> {
+    return SmileIDExpoModule.setCallbackUrl(callbackUrl);
+}
+
+export function setAllowOfflineMode(allowOfflineMode: boolean): Promise<void> {
+    return SmileIDExpoModule.setAllowOfflineMode(allowOfflineMode);
+}
+
+export function submitJob(jobId: string): Promise<void> {
+    return SmileIDExpoModule.submitJob(jobId);
+}
+
+export function getSubmittedJobs(): Promise<[string]> {
+    return SmileIDExpoModule.getSubmittedJobs();
+}
+
+export function getUnsubmittedJobs(): Promise<[string]> {
+    return SmileIDExpoModule.getUnsubmittedJobs();
+}
+
+export function cleanup(jobId: string): Promise<void> {
+    return SmileIDExpoModule.cleanup(jobId);
+}
