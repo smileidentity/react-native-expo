@@ -1,21 +1,8 @@
 import { NativeModule, requireNativeModule } from "expo";
 
 import {
-  AuthenticationRequest,
-  AuthenticationResponse,
-  BiometricKycJobStatusResponse,
-  DocumentVerificationJobStatusResponse,
-  EnhancedDocumentVerificationJobStatusResponse,
-  EnhancedKycAsyncResponse,
-  EnhancedKycRequest,
-  EnhancedKycResponse,
-    SmileConfig,
-  JobStatusRequest,
-  PrepUploadRequest,
-  PrepUploadResponse, ProductsConfigRequest, ProductsConfigResponse, ServicesResponse,
-  SmartSelfieJobStatusResponse,
+  SmileConfig,
   SmileIDExpoModuleEvents,
-  UploadRequest, ValidDocumentsResponse,
 } from "./types/SmileIDExpo.types";
 
 declare class SmileIDExpoModule extends NativeModule<SmileIDExpoModuleEvents> {
@@ -66,65 +53,6 @@ declare class SmileIDExpoModule extends NativeModule<SmileIDExpoModuleEvents> {
    * directory
    */
   cleanup: (jobId: string) => Promise<void>;
-  /**
-   * NB: Only available on Android
-   * Disable crash reporting
-   */
-  disableCrashReporting: () => Promise<void>;
-
-  authenticate(request: AuthenticationRequest): Promise<AuthenticationResponse>;
-
-  prepUpload(request: PrepUploadRequest): Promise<PrepUploadResponse>;
-
-  upload(url: string, request: UploadRequest): Promise<void>;
-
-  doEnhancedKyc(request: EnhancedKycRequest): Promise<EnhancedKycResponse>;
-
-  doEnhancedKycAsync(
-    request: EnhancedKycRequest,
-  ): Promise<EnhancedKycAsyncResponse>;
-
-  getSmartSelfieJobStatus(
-    request: JobStatusRequest,
-  ): Promise<SmartSelfieJobStatusResponse>;
-
-  getDocumentVerificationJobStatus(
-    request: JobStatusRequest,
-  ): Promise<DocumentVerificationJobStatusResponse>;
-
-  getBiometricKycJobStatus(
-    request: JobStatusRequest,
-  ): Promise<BiometricKycJobStatusResponse>;
-
-  getEnhancedDocumentVerificationJobStatus(
-    request: JobStatusRequest,
-  ): Promise<EnhancedDocumentVerificationJobStatusResponse>;
-
-  getProductsConfig(
-    request: ProductsConfigRequest,
-  ): Promise<ProductsConfigResponse>;
-
-  getValidDocuments(
-    request: ProductsConfigRequest,
-  ): Promise<ValidDocumentsResponse>;
-
-  getServices(): Promise<ServicesResponse>;
-
-  pollSmartSelfieJobStatus(
-    request: JobStatusRequest,
-  ): Promise<SmartSelfieJobStatusResponse>;
-
-  pollDocumentVerificationJobStatus(
-    request: JobStatusRequest,
-  ): Promise<DocumentVerificationJobStatusResponse>;
-
-  pollBiometricKycJobStatus(
-    request: JobStatusRequest,
-  ): Promise<BiometricKycJobStatusResponse>;
-
-  pollEnhancedDocumentVerificationJobStatus(
-    request: JobStatusRequest,
-  ): Promise<EnhancedDocumentVerificationJobStatusResponse>;
 }
 
 // This call loads the native module object from the JSI.
