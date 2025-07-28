@@ -8,7 +8,7 @@ final class SmileIDDocumentVerificationEnhancedView: ExpoView {
     let onError = EventDispatcher()
     private let delegate: EnhancedDocumentVerificationDelegate
     private let hostingController: UIHostingController<EnhancedDocumentVerificationView>
-    private var config: EnhancedDocumentVerificationRequest?
+    private var config: EnhancedDocumentVerificationParams?
 
     required init(appContext: AppContext? = nil) {
         delegate = EnhancedDocumentVerificationDelegate()
@@ -34,7 +34,7 @@ final class SmileIDDocumentVerificationEnhancedView: ExpoView {
         hostingController.view.fillSuperview()
     }
 
-    func updateConfig(_ config: EnhancedDocumentVerificationRequest) {
+    func updateConfig(_ config: EnhancedDocumentVerificationParams) {
         self.config = config
         hostingController.rootView = EnhancedDocumentVerificationView(
             delegate: delegate,
@@ -46,7 +46,7 @@ final class SmileIDDocumentVerificationEnhancedView: ExpoView {
 // SwiftUI view that wraps the SmileID enhanced document verification screen
 struct EnhancedDocumentVerificationView: View {
     let delegate: EnhancedDocumentVerificationDelegate
-    let config: EnhancedDocumentVerificationRequest?
+    let config: EnhancedDocumentVerificationParams?
 
     var body: some View {
         if let config = config {
@@ -69,10 +69,10 @@ struct EnhancedDocumentVerificationView: View {
                 extraPartnerParams: config.extraPartnerParams,
                 consentInformation: ConsentInformation(
                     consented: ConsentedInformation(
-                        consentGrantedDate: config.consentInformationRequest?.consentGrantedDate ?? Date().toISO8601WithMilliseconds(),
-                        personalDetails: config.consentInformationRequest?.personalDetails ?? false,
-                        contactInformation: config.consentInformationRequest?.contactInformation ?? false,
-                        documentInformation: config.consentInformationRequest?.documentInformation ?? false
+                        consentGrantedDate: config.consentInformation?.consentGrantedDate ?? Date().toISO8601WithMilliseconds(),
+                        personalDetails: config.consentInformation?.personalDetails ?? false,
+                        contactInformation: config.consentInformation?.contactInformation ?? false,
+                        documentInformation: config.consentInformation?.documentInformation ?? false
                     )
                 ),
                 delegate: delegate

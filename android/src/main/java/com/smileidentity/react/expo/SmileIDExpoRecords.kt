@@ -11,9 +11,9 @@ import kotlinx.collections.immutable.persistentMapOf
 import java.io.File
 
 /**
- * Type‑safe bridge for the JS `ExpoConfig` object coming from JavaScript.
+ * Type‑safe bridge for the JS `SmileConfig` object coming from JavaScript.
  */
-class SmileConfigRecord : Record {
+class SmileConfig : Record {
     @Field
     var partnerId: String = ""
 
@@ -28,9 +28,9 @@ class SmileConfigRecord : Record {
 }
 
 /**
- * Type‑safe bridge for the JS `ExpoDocumentVerificationRequest` object
+ * Type‑safe bridge for the JS `DocumentVerificationParams` object
  */
-class DocumentVerificationRequest : Record {
+class DocumentVerificationParams : Record {
     @Field
     var userId: String? = null
 
@@ -81,9 +81,9 @@ class DocumentVerificationRequest : Record {
 }
 
 /*
-* Map the record to the SDK's expected Config data class
+* Map the SmileConfig record to the SDK's expected Config data class
 * */
-internal fun SmileConfigRecord.toConfig(): Config {
+internal fun SmileConfig.toConfig(): Config {
     return Config(
         partnerId = this.partnerId,
         authToken = this.authToken,
@@ -93,9 +93,9 @@ internal fun SmileConfigRecord.toConfig(): Config {
 }
 
 /*
-* Map DocumentVerificationProps to SmileDocumentVerificationRequestRecord
+* Map DocumentVerificationParams to DocumentVerificationProps
  */
-internal fun DocumentVerificationRequest.toDocumentVerificationProps(): DocumentVerificationProps {
+internal fun DocumentVerificationParams.toDocumentVerificationProps(): DocumentVerificationProps {
     return DocumentVerificationProps(
         userId = this.userId,
         jobId = this.jobId,
@@ -117,9 +117,9 @@ internal fun DocumentVerificationRequest.toDocumentVerificationProps(): Document
 }
 
 /**
- * Type‑safe bridge for the JS `ExpoDocumentVerificationRequest` object
+ * Type‑safe bridge for the JS `EnhancedDocumentVerificationParams` object
  */
-class EnhancedDocumentVerificationRequest : Record {
+class EnhancedDocumentVerificationParams : Record {
     @Field
     var userId: String? = null
 
@@ -169,11 +169,14 @@ class EnhancedDocumentVerificationRequest : Record {
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 
     @Field
-    var consentInformationRequest: ConsentInformationRequest? = null
+    var consentInformation: ConsentInformationParams? = null
 
 }
 
-class ConsentInformationRequest : Record {
+/**
+ * Type‑safe bridge for the JS `ConsentInformationParams` object
+ */
+class ConsentInformationParams : Record {
     @Field
     var consentGrantedDate: String? = null
     @Field
@@ -187,7 +190,7 @@ class ConsentInformationRequest : Record {
 /**
  * Map EnhancedDocumentVerificationRequestRecord to DocumentVerificationProps
  */
-internal fun EnhancedDocumentVerificationRequest.toDocumentVerificationProps(): DocumentVerificationProps {
+internal fun EnhancedDocumentVerificationParams.toDocumentVerificationProps(): DocumentVerificationProps {
     return DocumentVerificationProps(
         userId = this.userId,
         jobId = this.jobId,
@@ -205,15 +208,15 @@ internal fun EnhancedDocumentVerificationRequest.toDocumentVerificationProps(): 
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
         extraParams = this.extraParams,
-        consentInformation = this.consentInformationRequest.toConsentInformation()
+        consentInformation = this.consentInformation.toConsentInformation()
     )
 }
 
 /**
- * Map ConsentInformationRequest to ConsentInformation
+ * Map ConsentInformationParams to ConsentInformation
  */
 
-internal fun ConsentInformationRequest?.toConsentInformation(): ConsentInformation {
+internal fun ConsentInformationParams?.toConsentInformation(): ConsentInformation {
     return ConsentInformation(
         consented = ConsentedInformation(
             consentGrantedDate = this?.consentGrantedDate ?: getCurrentIsoTimestamp(),
@@ -225,9 +228,9 @@ internal fun ConsentInformationRequest?.toConsentInformation(): ConsentInformati
 }
 
 /**
- * Type‑safe bridge for the JS `ExpoSmartSelfieEnrollmentRequest` object
+ * Type‑safe bridge for the JS `SmartSelfieParams` object
  */
-class SmartSelfieEnrollmentRequest: Record {
+class SmartSelfieParams: Record {
     @Field
     var userId: String? = null
 
@@ -257,10 +260,10 @@ class SmartSelfieEnrollmentRequest: Record {
 }
 
 /*
-* Map SmartSelfieEnrollmentRequest to SmartSelfieEnrollmentProps
+* Map SmartSelfieParams to SmartSelfieProps
  */
-internal fun SmartSelfieEnrollmentRequest.toSmartSelfieEnrollmentProps(): SmartSelfieEnrollmentProps {
-    return SmartSelfieEnrollmentProps(
+internal fun SmartSelfieParams.toSmartSelfieProps(): SmartSelfieProps {
+    return SmartSelfieProps(
         userId = this.userId,
         jobId = this.jobId,
         allowNewEnroll = this.allowNewEnroll,
@@ -274,9 +277,9 @@ internal fun SmartSelfieEnrollmentRequest.toSmartSelfieEnrollmentProps(): SmartS
 }
 
 /**
- * Type‑safe bridge for the JS `BiometricKYCRequest` object
+ * Type‑safe bridge for the JS `BiometricKYCParams` object
  */
-class BiometricKYCRequest: Record {
+class BiometricKYCParams: Record {
     @Field
     var userId: String? = null
 
@@ -302,20 +305,20 @@ class BiometricKYCRequest: Record {
     var useStrictMode: Boolean = false
 
     @Field
-    var consentInformationRequest: ConsentInformationRequest? = null
+    var consentInformation: ConsentInformationParams? = null
 
     @Field
-    var idInfo: IdInfoRequest? = null
+    var idInfo: IdInfoParams? = null
 
     @Field
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 }
 
 /*
-* Type‑safe bridge for the JS `ExpoIdInfoRequest` object
+* Type‑safe bridge for the JS `IdInfoParams` object
  */
 
-class IdInfoRequest: Record {
+class IdInfoParams: Record {
     @Field
     var country: String= ""
     @Field
@@ -337,9 +340,9 @@ class IdInfoRequest: Record {
 }
 
 /**
- * Type‑safe bridge for the JS `BiometricKYCProps` object
+ * Map BiometricKYCParams to BiometricKYCProps
  */
-internal fun BiometricKYCRequest.toBiometricKYCProps(): BiometricKYCProps {
+internal fun BiometricKYCParams.toBiometricKYCProps(): BiometricKYCProps {
     return BiometricKYCProps(
         userId = this.userId,
         jobId = this.jobId,
@@ -349,16 +352,16 @@ internal fun BiometricKYCRequest.toBiometricKYCProps(): BiometricKYCProps {
         showInstructions = this.showInstructions,
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
-        consentInformation = this.consentInformationRequest.toConsentInformation(),
+        consentInformation = this.consentInformation.toConsentInformation(),
         extraParams = this.extraParams,
         idInfo = this.idInfo.toIdInfo()
     )
 }
 
 /**
- * Map IdInfoRequest to IdInfo
+ * Map IdInfoParams to IdInfo
 */
-internal fun IdInfoRequest?.toIdInfo(): IdInfo {
+internal fun IdInfoParams?.toIdInfo(): IdInfo {
     return IdInfo(
         country = this?.country ?: "",
         idNumber = this?.idNumber,

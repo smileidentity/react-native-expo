@@ -20,7 +20,7 @@ public class SmileIDExpoModule: Module {
            (
                useSandBox: Bool,
                enableCrashReporting: Bool,
-               config: SmileConfigRecord?,
+               config: SmileConfig?,
                apiKey: String?
            ) async throws -> Void in
 				 SmileID.setWrapperInfo(name: .reactNative, version: "11.0.0")
@@ -58,9 +58,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDDocumentVerificationView.self) {
             Events("onResult", "onError")
             
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDDocumentVerificationView,
-                config: DocumentVerificationRequest
+                config: DocumentVerificationParams
             ) in
                 view.updateConfig(config)
             }
@@ -70,9 +70,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDDocumentVerificationEnhancedView.self) {
             Events("onResult", "onError")
 
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDDocumentVerificationEnhancedView,
-                config: EnhancedDocumentVerificationRequest
+                config: EnhancedDocumentVerificationParams
             ) in
                 view.updateConfig(config)
             }
@@ -82,9 +82,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDSmartSelfieEnrollmentView.self) {
             Events("onResult", "onError")
 
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDSmartSelfieEnrollmentView,
-                config: SmartSelfieEnrollmentRequest
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -94,9 +94,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDSmartSelfieEnrollmentEnhancedView.self) {
             Events("onResult", "onError")
 
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDSmartSelfieEnrollmentEnhancedView,
-                config: SmartSelfieEnrollmentRequest
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -106,9 +106,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDSmartSelfieAuthenticationView.self) {
             Events("onResult", "onError")
             
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDSmartSelfieAuthenticationView,
-                config: SmartSelfieEnrollmentRequest
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -118,9 +118,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDSmartSelfieAuthenticationEnhancedView.self) {
             Events("onResult", "onError")
             
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDSmartSelfieAuthenticationEnhancedView,
-                config: SmartSelfieEnrollmentRequest
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -130,9 +130,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDBiometricKYCView.self) {
             Events("onResult", "onError")
             
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDBiometricKYCView,
-                config: BiometricKYCRequest
+                config: BiometricKYCParams
             ) in
                 view.updateConfig(config)
             }

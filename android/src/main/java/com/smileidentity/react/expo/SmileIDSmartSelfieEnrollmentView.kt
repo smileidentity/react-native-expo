@@ -28,7 +28,7 @@ class SmileIDSmartSelfieEnrollmentView(context: Context, appContext: AppContext)
         appContext = appContext,
         shouldHostComposeContent = true
     ) {
-    private var props = mutableStateOf(SmartSelfieEnrollmentProps())
+    private var props = mutableStateOf(SmartSelfieProps())
     private val onResult by EventDispatcher()
     private val onError by EventDispatcher()
 
@@ -54,8 +54,8 @@ class SmileIDSmartSelfieEnrollmentView(context: Context, appContext: AppContext)
         )
     }
 
-    fun updateConfig(config: SmartSelfieEnrollmentRequest) {
-        props.value = config.toSmartSelfieEnrollmentProps()
+    fun updateConfig(config: SmartSelfieParams) {
+        props.value = config.toSmartSelfieProps()
     }
 }
 
@@ -64,7 +64,7 @@ class SmileIDSmartSelfieEnrollmentView(context: Context, appContext: AppContext)
  **/
 @Composable
 private fun SmartSelfieEnrollmentView(
-    props: SmartSelfieEnrollmentProps,
+    props: SmartSelfieProps,
     onResult: (SmartSelfieResult) -> Unit,
     onError: (Throwable) -> Unit
 ) {
@@ -96,7 +96,7 @@ private fun SmartSelfieEnrollmentView(
     }
 }
 
-data class SmartSelfieEnrollmentProps(
+data class SmartSelfieProps(
     val userId: String? = null,
     val jobId: String? = null,
     val allowNewEnroll: Boolean = true,

@@ -6,13 +6,13 @@ import SmileID
 final class SmileIDSmartSelfieAuthenticationEnhancedView: ExpoView {
     let onResult = EventDispatcher()
     let onError = EventDispatcher()
-    private let delegate: SmartSelfieEnrollmentDelegate
+    private let delegate: SmartSelfieDelegate
     private let hostingController: UIHostingController<EnhancedSmartSelfieAuthenticationView>
     private let navigationController: UINavigationController
-    private var config: SmartSelfieEnrollmentRequest?
+    private var config: SmartSelfieParams?
 
     required init(appContext: AppContext? = nil) {
-        delegate = SmartSelfieEnrollmentDelegate()
+        delegate = SmartSelfieDelegate()
         hostingController = UIHostingController(
             rootView: EnhancedSmartSelfieAuthenticationView(
                 delegate: delegate,
@@ -36,7 +36,7 @@ final class SmileIDSmartSelfieAuthenticationEnhancedView: ExpoView {
         navigationController.view.fillSuperview()
     }
 
-    func updateConfig(_ config: SmartSelfieEnrollmentRequest) {
+    func updateConfig(_ config: SmartSelfieParams) {
         self.config = config
         hostingController.rootView = EnhancedSmartSelfieAuthenticationView(
             delegate: delegate,
@@ -47,12 +47,12 @@ final class SmileIDSmartSelfieAuthenticationEnhancedView: ExpoView {
 
 // SwiftUI view that wraps the SmileID Enhanced SmartSelfie authentication view
 struct EnhancedSmartSelfieAuthenticationView: View {
-    let delegate: SmartSelfieEnrollmentDelegate
-    let config: SmartSelfieEnrollmentRequest?
+    let delegate: SmartSelfieDelegate
+    let config: SmartSelfieParams?
 
     var body: some View {
         if let config = config {
-            SmileID.smartSelfieEnrollmentScreenEnhanced(
+            SmileID.smartSelfieAuthenticationScreenEnhanced(
                 userId: config.userId ?? generateUserId(),
                 allowNewEnroll: config.allowNewEnroll,
                 showAttribution: config.showAttribution,

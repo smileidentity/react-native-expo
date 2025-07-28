@@ -9,7 +9,7 @@ import {
   EnhancedKycAsyncResponse,
   EnhancedKycRequest,
   EnhancedKycResponse,
-  ExpoConfig,
+    SmileConfig,
   JobStatusRequest,
   PrepUploadRequest,
   PrepUploadResponse, ProductsConfigRequest, ProductsConfigResponse, ServicesResponse,
@@ -27,10 +27,10 @@ declare class SmileIDExpoModule extends NativeModule<SmileIDExpoModuleEvents> {
    * @param apiKey - api key specific to the partner and also environment
    */
   initialize(
-    useSandBox: boolean,
-    enableCrashReporting: boolean,
-    config?: ExpoConfig,
-    apiKey?: string,
+      useSandBox: boolean,
+      enableCrashReporting: boolean,
+      config?: SmileConfig,
+      apiKey?: string,
   ): Promise<void>;
 
   /**
