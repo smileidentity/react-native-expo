@@ -18,6 +18,8 @@ final class SmileIDSmartSelfieEnrollmentView: ExpoView {
                 config: nil
             )
         )
+        // Force light mode
+        hostingController.overrideUserInterfaceStyle = .light
         super.init(appContext: appContext)
         
         // Set up delegate callbacks
