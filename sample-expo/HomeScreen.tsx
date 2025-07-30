@@ -8,8 +8,15 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
+
 import {
   initialize,
+  setCallbackUrl,
+  setAllowOfflineMode,
+  submitJob,
+  getSubmittedJobs,
+  getUnsubmittedJobs,
+  cleanup,
   SmileIDDocumentVerificationView,
   SmileIDSmartSelfieEnrollmentView,
   SmileIDDocumentVerificationEnhancedView,
@@ -24,6 +31,7 @@ import {
   BiometricKYCParams,
   IdInfoParams, ConsentInformationParams,
 } from 'react-native-expo';
+
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
 import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
@@ -74,6 +82,9 @@ const config = new SmileConfig(
     'https://prod-lambda-url.com', // prodLambdaUrl
     'https://test-lambda-url.com' // testLambdaUrl
 );
+
+const jobId = 'your_job_id'; // Replace with your actual job ID
+const callbackUrl = 'https://your-callback-url.com'; // Replace with your actual callback URL
 
 const documentVerificationParams: DocumentVerificationParams = {
   // userId: 'user123', // Optional user ID
@@ -176,16 +187,51 @@ export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
   useEffect(() => {
-    const initSmileID = async () => {
+    const setupSmileID = async () => {
       try {
         await initialize(true, true, config, undefined);
-        console.log('SmileID SDK initialized successfully');
+        console.log('[SmileID] SDK initialized');
+
+        // Set the callback URL if needed
+        // await setCallbackUrl(callbackUrl);
+        // console.log('[SmileID] Callback URL set');
+
+        // Enable offline mode if needed
+        // await setAllowOfflineMode(true);
+        // console.log('[SmileID] Offline mode enabled');
+
       } catch (error) {
-        console.error('SmileID SDK initialization failed:', error);
-        Alert.alert('Initialization Error', 'Failed to initialize SmileID SDK');
+        console.error('[SmileID] Setup failed:', error);
+        Alert.alert('SmileID Setup Error', 'Failed to initialize SDK');
       }
     };
-    initSmileID();
+
+    setupSmileID();
+  }, []);
+
+  useEffect(() => {
+    const handleJobs = async () => {
+      try {
+        // Submit a job if needed
+        // await submitJob(jobId);
+        // console.log('[SmileID] Job submitted');
+
+        // Get submitted jobs if needed
+        // const submitted = await getSubmittedJobs();
+        // console.log('[SmileID] Submitted jobs:', submitted);
+
+        // Get unsubmitted jobs if needed
+        // const unsubmitted = await getUnsubmittedJobs();
+        // console.log('[SmileID] Unsubmitted jobs:', unsubmitted);
+
+        // Clean up a job if needed
+        // await cleanup(jobId);
+        console.log('[SmileID] Job cleaned up');
+      } catch (error) {
+        console.error('[SmileID] Job operation failed:', error);
+      }
+    };
+    handleJobs();
   }, []);
 
   const handleProductPress = (productKey: string) => {
