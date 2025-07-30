@@ -8,8 +8,15 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
+
 import {
   initialize,
+  setCallbackUrl,
+  setAllowOfflineMode,
+  submitJob,
+  getSubmittedJobs,
+  getUnsubmittedJobs,
+  cleanup,
   SmileIDDocumentVerificationView,
   SmileIDSmartSelfieEnrollmentView,
   SmileIDDocumentVerificationEnhancedView,
@@ -24,6 +31,7 @@ import {
   BiometricKYCParams,
   IdInfoParams, ConsentInformationParams,
 } from 'react-native-expo';
+
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
 import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
@@ -187,6 +195,81 @@ export default function HomeScreen() {
     };
     initSmileID();
   }, []);
+
+  useEffect(() => {
+    const setSmileCallBackUrl = async () => {
+        try {
+            await setCallbackUrl('https://your-callback-url.com');
+            console.log('Callback URL set successfully');
+        } catch (error) {
+            console.error('Failed to set callback URL:', error);
+        }
+    };
+    setSmileCallBackUrl();
+  }, []);
+
+  useEffect(() => {
+    const allowOfflineMode = async () => {
+      try {
+        await setAllowOfflineMode(true);
+        console.log('Offline mode enabled successfully');
+      } catch (error) {
+        console.error('Failed to enable offline mode:', error);
+      }
+    };
+    allowOfflineMode();
+  }, []);
+
+    useEffect(() => {
+        const submit = async () => {
+        try {
+            await submitJob('job-E50C785D-00D7-4B7E-A6B7-35B5BCF7F866');
+            console.log('Job submitted successfully');
+        } catch (error) {
+            console.error('Failed to submit job:', error);
+        }
+        };
+      submit();
+    }, []);
+
+  useEffect(() => {
+    const submittedJobs = async () => {
+      try {
+        const jobs = await getSubmittedJobs();
+        console.log('Fetched submitted jobs successfully :', jobs);
+      } catch (error) {
+        console.error('Failed to fetch submitted jobs:', error);
+        Alert.alert('Fetch Jobs Error', 'Failed to fetch submitted jobs');
+      }
+    }
+    submittedJobs();
+  }, []);
+
+  useEffect(() => {
+    const unsubmittedJobs = async () => {
+      try {
+        const jobs = await getUnsubmittedJobs();
+        console.log('Fetched unsubmitted jobs successfully :', jobs);
+      } catch (error) {
+        console.error('Failed to fetch unsubmitted jobs:', error);
+      }
+    }
+    unsubmittedJobs();
+  }, []);
+
+  useEffect(() => {
+    const cleanJob = async () => {
+      try {
+        await cleanup('job-E50C785D-00D7-4B7E-A6B7-35B5BCF7F866');
+        console.log('Job cleaned up successfully');
+      } catch (error) {
+        console.error('Failed to cleanup job:', error);
+      }
+    }
+    cleanJob();
+  }, []);
+
+
 
   const handleProductPress = (productKey: string) => {
     setSelectedProduct(productKey);

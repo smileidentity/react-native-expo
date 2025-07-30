@@ -5,17 +5,10 @@ import UIKit
 
 public class SmileIDExpoModule: Module {
 
-    // Each module class must implement the definition function. The definition consists of components
-    // that describes the module's functionality and behavior.
-    // See https://docs.expo.dev/modules/module-api for more details about available components.
     public func definition() -> ModuleDefinition {
-        // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-        // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-        // The module will be accessible from `requireNativeModule('SmileIDExpo')` in JavaScript.
+    
         Name("SmileIDExpo")
 
-        // Defines a JavaScript function that always returns a Promise and whose native code
-        // is by default dispatched on the different thread than the JavaScript runtime runs on.
        AsyncFunction("initialize") {
            (
                useSandBox: Bool,
@@ -53,6 +46,49 @@ public class SmileIDExpoModule: Module {
                SmileID.initialize(useSandbox: useSandBox)
            }
        }
+        
+        // Set callback url
+        AsyncFunction("setCallbackUrl") { (callbackUrl: String) async throws -> Void in
+            guard let url = URL(string: callbackUrl) else {
+                   throw Exception(name: "InvalidUrl", description: "Invalid callback URL: \(callbackUrl)")
+                 }
+                 SmileID.setCallbackUrl(url: url)
+        }
+        
+        // Set offline mode
+        AsyncFunction("setAllowOfflineMode") { (allowOfflineMode: Bool) async throws -> Void in
+            SmileID.setAllowOfflineMode(allowOfflineMode: allowOfflineMode)
+        }
+        
+        // Submit a job
+        AsyncFunction("submitJob") { (jobId: String) async throws -> Void in
+            do {
+                try  SmileID.submitJob(jobId: jobId)
+            } catch {
+                throw error
+            }
+        }
+        
+        // Get submitted jobs
+        AsyncFunction("getSubmittedJobs") { () async throws -> [String] in
+            let submittedJobs: [String] =  SmileID.getSubmittedJobs()
+            return submittedJobs
+        }
+        
+        // Get unsubmitted jobs
+        AsyncFunction("getUnsubmittedJobs") { () async throws -> [String] in
+            let unsubmittedJobs: [String] = SmileID.getUnsubmittedJobs()
+                return unsubmittedJobs
+        }
+        
+        //  Cleanup job data
+        AsyncFunction("cleanup") { (jobId: String) async throws -> Void in
+            do {
+                try  SmileID.cleanup(jobId: jobId)
+            } catch {
+                throw error
+            }
+        }
 
         // Document Verification View
         View(SmileIDDocumentVerificationView.self) {
