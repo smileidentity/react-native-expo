@@ -199,7 +199,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const setSmileCallBackUrl = async () => {
         try {
-            await setCallbackUrl('https://your-callback-url.com');
+            await setCallbackUrl('https://your-callback-url.com'); // Replace with your actual callback URL
             console.log('Callback URL set successfully');
         } catch (error) {
             console.error('Failed to set callback URL:', error);
@@ -223,7 +223,7 @@ export default function HomeScreen() {
     useEffect(() => {
         const submit = async () => {
         try {
-            await submitJob('job-E50C785D-00D7-4B7E-A6B7-35B5BCF7F866');
+            await submitJob('your_job_id'); // Replace with your actual job ID
             console.log('Job submitted successfully');
         } catch (error) {
             console.error('Failed to submit job:', error);
@@ -260,7 +260,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const cleanJob = async () => {
       try {
-        await cleanup('job-E50C785D-00D7-4B7E-A6B7-35B5BCF7F866');
+        await cleanup('your_job_id'); // Replace with your actual job ID
         console.log('Job cleaned up successfully');
       } catch (error) {
         console.error('Failed to cleanup job:', error);
