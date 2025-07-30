@@ -3,7 +3,6 @@
           xmlns:tools="http://schemas.android.com/tools">
 
     <application
-            android:pageSizeCompat="enabled"
             tools:targetApi="36"/>
 
 </manifest>
