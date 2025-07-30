@@ -83,6 +83,9 @@ const config = new SmileConfig(
     'https://test-lambda-url.com' // testLambdaUrl
 );
 
+const jobId = 'your_job_id'; // Replace with your actual job ID
+const callbackUrl = 'https://your-callback-url.com'; // Replace with your actual callback URL
+
 const documentVerificationParams: DocumentVerificationParams = {
   // userId: 'user123', // Optional user ID
   // jobId: 'job456', // Optional job ID
@@ -184,92 +187,52 @@ export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
   useEffect(() => {
-    const initSmileID = async () => {
+    const setupSmileID = async () => {
       try {
         await initialize(true, true, config, undefined);
-        console.log('SmileID SDK initialized successfully');
+        console.log('[SmileID] SDK initialized');
+
+        // Set the callback URL if needed
+        // await setCallbackUrl(callbackUrl);
+        // console.log('[SmileID] Callback URL set');
+
+        // Enable offline mode if needed
+        // await setAllowOfflineMode(true);
+        // console.log('[SmileID] Offline mode enabled');
+
       } catch (error) {
-        console.error('SmileID SDK initialization failed:', error);
-        Alert.alert('Initialization Error', 'Failed to initialize SmileID SDK');
+        console.error('[SmileID] Setup failed:', error);
+        Alert.alert('SmileID Setup Error', 'Failed to initialize SDK');
       }
     };
-    initSmileID();
+
+    setupSmileID();
   }, []);
 
   useEffect(() => {
-    const setSmileCallBackUrl = async () => {
-        try {
-            await setCallbackUrl('https://your-callback-url.com'); // Replace with your actual callback URL
-            console.log('Callback URL set successfully');
-        } catch (error) {
-            console.error('Failed to set callback URL:', error);
-        }
-    };
-    setSmileCallBackUrl();
-  }, []);
-
-  useEffect(() => {
-    const allowOfflineMode = async () => {
+    const handleJobs = async () => {
       try {
-        await setAllowOfflineMode(true);
-        console.log('Offline mode enabled successfully');
+        // Submit a job if needed
+        // await submitJob(jobId);
+        // console.log('[SmileID] Job submitted');
+
+        // Get submitted jobs if needed
+        // const submitted = await getSubmittedJobs();
+        // console.log('[SmileID] Submitted jobs:', submitted);
+
+        // Get unsubmitted jobs if needed
+        // const unsubmitted = await getUnsubmittedJobs();
+        // console.log('[SmileID] Unsubmitted jobs:', unsubmitted);
+
+        // Clean up a job if needed
+        // await cleanup(jobId);
+        console.log('[SmileID] Job cleaned up');
       } catch (error) {
-        console.error('Failed to enable offline mode:', error);
+        console.error('[SmileID] Job operation failed:', error);
       }
     };
-    allowOfflineMode();
+    handleJobs();
   }, []);
-
-    useEffect(() => {
-        const submit = async () => {
-        try {
-            await submitJob('your_job_id'); // Replace with your actual job ID
-            console.log('Job submitted successfully');
-        } catch (error) {
-            console.error('Failed to submit job:', error);
-        }
-        };
-      submit();
-    }, []);
-
-  useEffect(() => {
-    const submittedJobs = async () => {
-      try {
-        const jobs = await getSubmittedJobs();
-        console.log('Fetched submitted jobs successfully :', jobs);
-      } catch (error) {
-        console.error('Failed to fetch submitted jobs:', error);
-        Alert.alert('Fetch Jobs Error', 'Failed to fetch submitted jobs');
-      }
-    }
-    submittedJobs();
-  }, []);
-
-  useEffect(() => {
-    const unsubmittedJobs = async () => {
-      try {
-        const jobs = await getUnsubmittedJobs();
-        console.log('Fetched unsubmitted jobs successfully :', jobs);
-      } catch (error) {
-        console.error('Failed to fetch unsubmitted jobs:', error);
-      }
-    }
-    unsubmittedJobs();
-  }, []);
-
-  useEffect(() => {
-    const cleanJob = async () => {
-      try {
-        await cleanup('your_job_id'); // Replace with your actual job ID
-        console.log('Job cleaned up successfully');
-      } catch (error) {
-        console.error('Failed to cleanup job:', error);
-      }
-    }
-    cleanJob();
-  }, []);
-
-
 
   const handleProductPress = (productKey: string) => {
     setSelectedProduct(productKey);
