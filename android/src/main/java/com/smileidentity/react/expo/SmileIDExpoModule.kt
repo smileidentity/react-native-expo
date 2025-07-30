@@ -92,17 +92,17 @@ class SmileIDExpoModule : Module() {
             }
         }
 
-        AsyncFunction("getSubmittedJobs") {
-           try {
-               val jobs = SmileID.getUnsubmittedJobs()
-                return@AsyncFunction jobs
-           } catch (e: Exception) {
-               throw CodedException(
-                   "GetUnsubmittedJobsError",
-                   "Failed to get unsubmitted jobs: ${e.message}",
-                   e
-               )
-           }
+        AsyncFunction("getUnsubmittedJobs") {
+            try {
+                val jobs = SmileID.getUnsubmittedJobs()
+                 return@AsyncFunction jobs
+            } catch (e: Exception) {
+                throw CodedException(
+                    "GetUnsubmittedJobsError",
+                    "Failed to get unsubmitted jobs: ${e.message}",
+                    e
+                )
+            }
         }
         AsyncFunction("cleanup") { jobId : String ->
             try {
