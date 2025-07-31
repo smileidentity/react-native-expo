@@ -84,6 +84,7 @@ private fun BiometricKYCView(
             showAttribution = props.showAttribution,
             showInstructions = props.showInstructions,
             extraPartnerParams = props.extraParams,
+            consentInformation = props.consentInformation,
             idInfo = props.idInfo
         ) { result ->
             when(result) {

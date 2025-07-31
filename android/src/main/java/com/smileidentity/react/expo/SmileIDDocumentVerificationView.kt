@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
+import com.smileidentity.models.AutoCapture
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.results.DocumentVerificationResult
@@ -21,6 +22,8 @@ import expo.modules.kotlin.viewevent.EventDispatcher
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import java.io.File
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Document Verification View using ExpoView
@@ -86,7 +89,8 @@ private fun DocumentVerificationView(
             documentType = props.documentType,
             idAspectRatio = props.idAspectRatio,
             bypassSelfieCaptureWithFile = props.bypassSelfieCaptureWithFile,
-            enableAutoCapture = props.enableAutoCapture,
+            autoCaptureTimeout = props.autoCaptureTimeout,
+            autoCapture = props.autoCapture,
             captureBothSides = props.captureBothSides,
             allowAgentMode = props.allowAgentMode,
             allowGalleryUpload = props.allowGalleryUpload,
@@ -116,7 +120,8 @@ data class DocumentVerificationProps(
     val documentType: String? = null,
     val idAspectRatio: Float? = null,
     val bypassSelfieCaptureWithFile: File? = null,
-    val enableAutoCapture: Boolean = true,
+    val autoCaptureTimeout: Duration = 10.seconds,
+    val autoCapture: AutoCapture = AutoCapture.AutoCapture,
     val captureBothSides: Boolean = true,
     val allowAgentMode: Boolean = false,
     val allowGalleryUpload: Boolean = false,

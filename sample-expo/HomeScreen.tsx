@@ -1,35 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Alert,
-  FlatList,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
 
 import {
-  initialize,
-  setCallbackUrl,
-  setAllowOfflineMode,
-  submitJob,
-  getSubmittedJobs,
-  getUnsubmittedJobs,
-  cleanup,
-  SmileIDDocumentVerificationView,
-  SmileIDSmartSelfieEnrollmentView,
-  SmileIDDocumentVerificationEnhancedView,
-  SmileConfig,
+  AutoCapture,
+  BiometricKYCParams,
+  ConsentInformationParams,
   DocumentVerificationParams,
   EnhancedDocumentVerificationParams,
+  IdInfoParams,
+  initialize,
   SmartSelfieParams,
-  SmileIDSmartSelfieAuthenticationEnhancedView,
-  SmileIDSmartSelfieEnrollmentEnhancedView,
-  SmileIDSmartSelfieAuthenticationView,
+  SmileConfig,
   SmileIDBiometricKYCView,
-  BiometricKYCParams,
-  IdInfoParams, ConsentInformationParams,
+  SmileIDDocumentVerificationEnhancedView,
+  SmileIDDocumentVerificationView,
+  SmileIDSmartSelfieAuthenticationEnhancedView,
+  SmileIDSmartSelfieAuthenticationView,
+  SmileIDSmartSelfieEnrollmentEnhancedView,
+  SmileIDSmartSelfieEnrollmentView,
 } from 'react-native-expo';
 
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
@@ -94,7 +82,8 @@ const documentVerificationParams: DocumentVerificationParams = {
   documentType: 'PASSPORT',
   // idAspectRatio: 1.414, // Optional aspect ratio for document capture
   // bypassSelfieCaptureWithFile: '', // Optional file path to bypass selfie capture
-  enableAutoCapture: true,
+  autoCaptureTimeout: 10, // this is in seconds,
+  autoCapture: AutoCapture.AutoCapture,
   captureBothSides: false,
   allowAgentMode: true,
   showInstructions: true,
@@ -138,7 +127,8 @@ const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
   documentType: 'PASSPORT',
   // idAspectRatio: 1.414, // Optional aspect ratio for document capture
   // bypassSelfieCaptureWithFile: '', // Optional file path to bypass selfie capture
-  enableAutoCapture: false,
+  autoCaptureTimeout: 10, // this is in seconds,
+  autoCapture: AutoCapture.AutoCapture,
   captureBothSides: false,
   allowGalleryUpload: true,
   showInstructions: true,

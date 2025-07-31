@@ -1,5 +1,6 @@
 package com.smileidentity.react.expo
 
+import com.smileidentity.models.AutoCapture
 import com.smileidentity.models.Config
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.ConsentedInformation
@@ -9,6 +10,8 @@ import expo.modules.kotlin.records.Field
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import java.io.File
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Type‑safe bridge for the JS `SmileConfig` object coming from JavaScript.
@@ -53,7 +56,10 @@ class DocumentVerificationParams : Record {
     var bypassSelfieCaptureWithFile: File? = null
 
     @Field
-    var enableAutoCapture: Boolean = true
+    var autoCaptureTimeout: Int = 10
+
+    @Field
+    var autoCapture: AutoCaptureParams = AutoCaptureParams.AutoCapture
 
     @Field
     var captureBothSides: Boolean = true
@@ -104,7 +110,8 @@ internal fun DocumentVerificationParams.toDocumentVerificationProps(): DocumentV
         documentType = this.documentType,
         idAspectRatio = this.idAspectRatio,
         bypassSelfieCaptureWithFile = this.bypassSelfieCaptureWithFile,
-        enableAutoCapture = this.enableAutoCapture,
+        autoCaptureTimeout = this.autoCaptureTimeout.seconds,
+        autoCapture = this.autoCapture.toAutoCapture(),
         captureBothSides = this.captureBothSides,
         allowAgentMode = this.allowAgentMode,
         allowGalleryUpload = this.allowGalleryUpload,
@@ -142,7 +149,10 @@ class EnhancedDocumentVerificationParams : Record {
     var bypassSelfieCaptureWithFile: File? = null
 
     @Field
-    var enableAutoCapture: Boolean = true
+    var autoCaptureTimeout: Int = 10
+
+    @Field
+    var autoCapture: AutoCaptureParams = AutoCaptureParams.AutoCapture
 
     @Field
     var captureBothSides: Boolean = true
@@ -199,7 +209,8 @@ internal fun EnhancedDocumentVerificationParams.toDocumentVerificationProps(): D
         documentType = this.documentType,
         idAspectRatio = this.idAspectRatio,
         bypassSelfieCaptureWithFile = this.bypassSelfieCaptureWithFile,
-        enableAutoCapture = this.enableAutoCapture,
+        autoCaptureTimeout = this.autoCaptureTimeout.seconds,
+        autoCapture = this.autoCapture.toAutoCapture(),
         captureBothSides = this.captureBothSides,
         allowAgentMode = this.allowAgentMode,
         allowGalleryUpload = this.allowGalleryUpload,
@@ -374,3 +385,23 @@ internal fun IdInfoParams?.toIdInfo(): IdInfo {
         entered = this?.entered ?: false
     )
 }
+
+/*
+ * Enum class to represent the auto capture parameters
+ */
+enum class AutoCaptureParams {
+    AutoCapture,
+    AutoCaptureOnly,
+    ManualCaptureOnly
+}
+
+/**
+ * Extension function to convert AutoCaptureParams to AutoCapture
+ */
+fun AutoCaptureParams.toAutoCapture(): AutoCapture =
+    when (this) {
+        AutoCaptureParams.AutoCapture -> AutoCapture.AutoCapture
+        AutoCaptureParams.AutoCaptureOnly -> AutoCapture.AutoCaptureOnly
+        AutoCaptureParams.ManualCaptureOnly -> AutoCapture.ManualCaptureOnly
+    }
+
