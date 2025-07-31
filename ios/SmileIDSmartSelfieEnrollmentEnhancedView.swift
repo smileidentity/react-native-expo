@@ -6,18 +6,23 @@ import SmileID
 final class SmileIDSmartSelfieEnrollmentEnhancedView: ExpoView {
     let onResult = EventDispatcher()
     let onError = EventDispatcher()
-    private let delegate: SmartSelfieEnrollmentDelegate
+    private let delegate: SmartSelfieDelegate
     private let hostingController: UIHostingController<EnhancedSmartSelfieEnrollmentView>
-    private var config: SmartSelfieEnrollmentRequest?
+		private let navigationController: UINavigationController
+    private var config: SmartSelfieParams?
 
     required init(appContext: AppContext? = nil) {
-        delegate = SmartSelfieEnrollmentDelegate()
+        delegate = SmartSelfieDelegate()
         hostingController = UIHostingController(
             rootView: EnhancedSmartSelfieEnrollmentView(
                 delegate: delegate,
                 config: nil
             )
         )
+	    navigationController = UINavigationController(rootViewController: hostingController)
+	    // Force light mode
+	    hostingController.overrideUserInterfaceStyle = .light
+
         super.init(appContext: appContext)
 
         // Set up delegate callbacks
@@ -29,12 +34,12 @@ final class SmileIDSmartSelfieEnrollmentEnhancedView: ExpoView {
             self?.onError(["error": error.localizedDescription])
         }
 
-        // Add the hosting controller's view
-        addSubview(hostingController.view)
-        hostingController.view.fillSuperview()
+				// Add the navigation controller's view
+				addSubview(navigationController.view)
+				navigationController.view.fillSuperview()
     }
 
-    func updateConfig(_ config: SmartSelfieEnrollmentRequest) {
+    func updateConfig(_ config: SmartSelfieParams) {
         self.config = config
         hostingController.rootView = EnhancedSmartSelfieEnrollmentView(
             delegate: delegate,
@@ -45,8 +50,8 @@ final class SmileIDSmartSelfieEnrollmentEnhancedView: ExpoView {
 
 // SwiftUI view that wraps the SmileID Enhanced SmartSelfie enrollment screen
 struct EnhancedSmartSelfieEnrollmentView: View {
-    let delegate: SmartSelfieEnrollmentDelegate
-    let config: SmartSelfieEnrollmentRequest?
+    let delegate: SmartSelfieDelegate
+    let config: SmartSelfieParams?
 
     var body: some View {
         if let config = config {

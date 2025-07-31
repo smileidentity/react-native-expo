@@ -14,7 +14,6 @@ import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.IdInfo
 import com.smileidentity.results.BiometricKycResult
-import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -57,7 +56,7 @@ class SmileIDBiometricKYCView(context: Context, appContext: AppContext) : SmileI
         )
     }
 
-    fun updateConfig(config: BiometricKYCRequest) {
+    fun updateConfig(config: BiometricKYCParams) {
         props.value = config.toBiometricKYCProps()
     }
 }

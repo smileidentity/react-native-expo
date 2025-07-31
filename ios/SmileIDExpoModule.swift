@@ -5,24 +5,18 @@ import UIKit
 
 public class SmileIDExpoModule: Module {
 
-    // Each module class must implement the definition function. The definition consists of components
-    // that describes the module's functionality and behavior.
-    // See https://docs.expo.dev/modules/module-api for more details about available components.
     public func definition() -> ModuleDefinition {
-        // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-        // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-        // The module will be accessible from `requireNativeModule('SmileIDExpo')` in JavaScript.
+    
         Name("SmileIDExpo")
 
-        // Defines a JavaScript function that always returns a Promise and whose native code
-        // is by default dispatched on the different thread than the JavaScript runtime runs on.
        AsyncFunction("initialize") {
            (
                useSandBox: Bool,
                enableCrashReporting: Bool,
-               config: SmileConfigRecord?,
+               config: SmileConfig?,
                apiKey: String?
            ) async throws -> Void in
+				 SmileID.setWrapperInfo(name: .reactNative, version: "11.0.0")
            
            if let apiKey = apiKey, let config = config {
                // Case 1: Initialize with API key and config
@@ -52,14 +46,57 @@ public class SmileIDExpoModule: Module {
                SmileID.initialize(useSandbox: useSandBox)
            }
        }
+        
+        // Set callback url
+        AsyncFunction("setCallbackUrl") { (callbackUrl: String) async throws -> Void in
+            guard let url = URL(string: callbackUrl) else {
+                   throw Exception(name: "InvalidUrl", description: "Invalid callback URL: \(callbackUrl)")
+                 }
+                 SmileID.setCallbackUrl(url: url)
+        }
+        
+        // Set offline mode
+        AsyncFunction("setAllowOfflineMode") { (allowOfflineMode: Bool) async throws -> Void in
+            SmileID.setAllowOfflineMode(allowOfflineMode: allowOfflineMode)
+        }
+        
+        // Submit a job
+        AsyncFunction("submitJob") { (jobId: String) async throws -> Void in
+            do {
+                try  SmileID.submitJob(jobId: jobId)
+            } catch {
+                throw error
+            }
+        }
+        
+        // Get submitted jobs
+        AsyncFunction("getSubmittedJobs") { () async throws -> [String] in
+            let submittedJobs: [String] =  SmileID.getSubmittedJobs()
+            return submittedJobs
+        }
+        
+        // Get unsubmitted jobs
+        AsyncFunction("getUnsubmittedJobs") { () async throws -> [String] in
+            let unsubmittedJobs: [String] = SmileID.getUnsubmittedJobs()
+                return unsubmittedJobs
+        }
+        
+        //  Cleanup job data
+        AsyncFunction("cleanup") { (jobId: String) async throws -> Void in
+            do {
+                try  SmileID.cleanup(jobId: jobId)
+            } catch {
+                throw error
+            }
+        }
 
         // Document Verification View
         View(SmileIDDocumentVerificationView.self) {
             Events("onResult", "onError")
             
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDDocumentVerificationView,
-                config: DocumentVerificationRequest
+                config: DocumentVerificationParams
             ) in
                 view.updateConfig(config)
             }
@@ -69,9 +106,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDDocumentVerificationEnhancedView.self) {
             Events("onResult", "onError")
 
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDDocumentVerificationEnhancedView,
-                config: EnhancedDocumentVerificationRequest
+                config: EnhancedDocumentVerificationParams
             ) in
                 view.updateConfig(config)
             }
@@ -81,9 +118,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDSmartSelfieEnrollmentView.self) {
             Events("onResult", "onError")
 
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDSmartSelfieEnrollmentView,
-                config: SmartSelfieEnrollmentRequest
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -93,9 +130,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDSmartSelfieEnrollmentEnhancedView.self) {
             Events("onResult", "onError")
 
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDSmartSelfieEnrollmentEnhancedView,
-                config: SmartSelfieEnrollmentRequest
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -105,9 +142,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDSmartSelfieAuthenticationView.self) {
             Events("onResult", "onError")
             
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDSmartSelfieAuthenticationView,
-                config: SmartSelfieEnrollmentRequest
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -117,9 +154,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDSmartSelfieAuthenticationEnhancedView.self) {
             Events("onResult", "onError")
             
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDSmartSelfieAuthenticationEnhancedView,
-                config: SmartSelfieEnrollmentRequest
+                config: SmartSelfieParams
             ) in
                 view.updateConfig(config)
             }
@@ -129,9 +166,9 @@ public class SmileIDExpoModule: Module {
         View(SmileIDBiometricKYCView.self) {
             Events("onResult", "onError")
             
-            Prop("config") { (
+            Prop("params") { (
                 view: SmileIDBiometricKYCView,
-                config: BiometricKYCRequest
+                config: BiometricKYCParams
             ) in
                 view.updateConfig(config)
             }

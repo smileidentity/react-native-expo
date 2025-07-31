@@ -8,22 +8,30 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
+
 import {
   initialize,
+  setCallbackUrl,
+  setAllowOfflineMode,
+  submitJob,
+  getSubmittedJobs,
+  getUnsubmittedJobs,
+  cleanup,
   SmileIDDocumentVerificationView,
   SmileIDSmartSelfieEnrollmentView,
   SmileIDDocumentVerificationEnhancedView,
-  ExpoConfig,
-  ExpoDocumentVerificationRequest,
-  ExpoEnhancedDocumentVerificationRequest,
-  ExpoSmartSelfieEnrollmentRequest,
+  SmileConfig,
+  DocumentVerificationParams,
+  EnhancedDocumentVerificationParams,
+  SmartSelfieParams,
   SmileIDSmartSelfieAuthenticationEnhancedView,
   SmileIDSmartSelfieEnrollmentEnhancedView,
   SmileIDSmartSelfieAuthenticationView,
   SmileIDBiometricKYCView,
-  ExpoBiometricKYCRequest,
-  ExpoIdInfoRequest,
+  BiometricKYCParams,
+  IdInfoParams, ConsentInformationParams,
 } from 'react-native-expo';
+
 import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
 import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
 import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
@@ -68,52 +76,162 @@ const PRODUCTS = [
   }
 ];
 
-const config = new ExpoConfig(
+const config = new SmileConfig(
     'your_partner_id', // partnerId
     'your_auth_token', // authToken
     'https://prod-lambda-url.com', // prodLambdaUrl
     'https://test-lambda-url.com' // testLambdaUrl
 );
 
-const documentVerificationConfig: ExpoDocumentVerificationRequest = {
+const jobId = 'your_job_id'; // Replace with your actual job ID
+const callbackUrl = 'https://your-callback-url.com'; // Replace with your actual callback URL
+
+const documentVerificationParams: DocumentVerificationParams = {
+  // userId: 'user123', // Optional user ID
+  // jobId: 'job456', // Optional job ID
   countryCode: 'NG',
+  allowNewEnroll: false,
+  documentType: 'PASSPORT',
+  // idAspectRatio: 1.414, // Optional aspect ratio for document capture
+  // bypassSelfieCaptureWithFile: '', // Optional file path to bypass selfie capture
+  enableAutoCapture: true,
   captureBothSides: false,
+  allowAgentMode: true,
+  showInstructions: true,
+  showAttribution: true,
+  allowGalleryUpload: true,
+  skipApiSubmission: false,
+  useStrictMode: false,
+  extraPartnerParams: {
+    'custom_param_1': 'value1',
+    'custom_param_2': 'value2'
+    }
 };
 
-const smartSelfieEnrollmentConfig: ExpoSmartSelfieEnrollmentRequest = {
-  showInstructions: false
-}
+const smartSelfieParams: SmartSelfieParams = {
+  // userId: 'user123', // Optional user ID
+  // jobId: 'job456', // Optional job ID
+  allowNewEnroll: false,
+  allowAgentMode: true,
+  showAttribution: true,
+  showInstructions: true,
+  skipApiSubmission: false,
+  useStrictMode: false,
+  extraPartnerParams: {
+    'custom_param_1': 'value1',
+    'custom_param_2': 'value2'
+  }
+};
 
-const enhancedDocumentVerificationConfig: ExpoEnhancedDocumentVerificationRequest = {
+const consentInformationParams: ConsentInformationParams = {
+  consentGrantedDate: '2025-07-25T09:20:25.362Z',
+  personalDetails: true,
+  contactInformation: true,
+  documentInformation: true
+};
+
+const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
+  // userId: 'user123', // Optional user ID
+  // jobId: 'job456', // Optional job ID
   countryCode: 'NG',
-  captureBothSides: false
+  allowNewEnroll: false,
+  documentType: 'PASSPORT',
+  // idAspectRatio: 1.414, // Optional aspect ratio for document capture
+  // bypassSelfieCaptureWithFile: '', // Optional file path to bypass selfie capture
+  enableAutoCapture: false,
+  captureBothSides: false,
+  allowGalleryUpload: true,
+  showInstructions: true,
+  showAttribution: true,
+  skipApiSubmission: false,
+  useStrictMode: false,
+  extraPartnerParams: {
+    'custom_param_1': 'value1',
+    'custom_param_2': 'value2'
+  },
+  consentInformation: consentInformationParams
 };
-const expoIdInfoRequest : ExpoIdInfoRequest = {
+
+
+const idInfoParams: IdInfoParams = {
   country: 'NG',
   idType: 'NIN_V2',
   idNumber: '00000000000',
-  entered: true
-}
+  firstName: 'John',
+  middleName: 'A',
+  lastName: 'Doe',
+  dob: '1990-01-01',
+  bankCode: '1234567890',
+  entered: false
+};
 
-const biometricKYCConfig: ExpoBiometricKYCRequest = {
+const biometricKYCParams: BiometricKYCParams = {
+  // userId: 'user123', // Optional user ID
+  // jobId: 'job456', // Optional job ID
+  allowNewEnroll: false,
+  allowAgentMode: true,
+  showAttribution: true,
   showInstructions: true,
-  expoIdInfo: expoIdInfoRequest
-}
+  skipApiSubmission: false,
+  useStrictMode: false,
+  extraPartnerParams: {
+    'custom_param_1': 'value1',
+    'custom_param_2': 'value2'
+    },
+  consentInformation: consentInformationParams,
+  idInfo: idInfoParams
+};
+
 
 export default function HomeScreen() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
   useEffect(() => {
-    const initSmileID = async () => {
+    const setupSmileID = async () => {
       try {
         await initialize(true, true, config, undefined);
-        console.log('SmileID SDK initialized successfully');
+        console.log('[SmileID] SDK initialized');
+
+        // Set the callback URL if needed
+        // await setCallbackUrl(callbackUrl);
+        // console.log('[SmileID] Callback URL set');
+
+        // Enable offline mode if needed
+        // await setAllowOfflineMode(true);
+        // console.log('[SmileID] Offline mode enabled');
+
       } catch (error) {
-        console.error('SmileID SDK initialization failed:', error);
-        Alert.alert('Initialization Error', 'Failed to initialize SmileID SDK');
+        console.error('[SmileID] Setup failed:', error);
+        Alert.alert('SmileID Setup Error', 'Failed to initialize SDK');
       }
     };
-    initSmileID();
+
+    setupSmileID();
+  }, []);
+
+  useEffect(() => {
+    const handleJobs = async () => {
+      try {
+        // Submit a job if needed
+        // await submitJob(jobId);
+        // console.log('[SmileID] Job submitted');
+
+        // Get submitted jobs if needed
+        // const submitted = await getSubmittedJobs();
+        // console.log('[SmileID] Submitted jobs:', submitted);
+
+        // Get unsubmitted jobs if needed
+        // const unsubmitted = await getUnsubmittedJobs();
+        // console.log('[SmileID] Unsubmitted jobs:', unsubmitted);
+
+        // Clean up a job if needed
+        // await cleanup(jobId);
+        console.log('[SmileID] Job cleaned up');
+      } catch (error) {
+        console.error('[SmileID] Job operation failed:', error);
+      }
+    };
+    handleJobs();
   }, []);
 
   const handleProductPress = (productKey: string) => {
@@ -138,7 +256,7 @@ export default function HomeScreen() {
             <View style={styles.nativeContainer}>
               <SmileIDDocumentVerificationView
                   style={styles.nativeView}
-                  config={documentVerificationConfig}
+                  params={documentVerificationParams}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />
@@ -149,7 +267,7 @@ export default function HomeScreen() {
             <View style={styles.nativeContainer}>
               <SmileIDDocumentVerificationEnhancedView
                   style={styles.nativeView}
-                  config={enhancedDocumentVerificationConfig}
+                  params={enhancedDocumentVerificationParams}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />
@@ -160,7 +278,7 @@ export default function HomeScreen() {
             <View style={styles.nativeContainer}>
               <SmileIDSmartSelfieEnrollmentView
                   style={styles.nativeView}
-                  config={smartSelfieEnrollmentConfig}
+                  params={smartSelfieParams}
                   onResult={handleSuccessResult}
                   onError={handleError}/>
             </View>
@@ -170,7 +288,7 @@ export default function HomeScreen() {
             <View style={styles.nativeContainer}>
               <SmileIDSmartSelfieEnrollmentEnhancedView
                   style={styles.nativeView}
-                  config={smartSelfieEnrollmentConfig}
+                  params={smartSelfieParams}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />
@@ -181,7 +299,7 @@ export default function HomeScreen() {
             <View style={styles.nativeContainer}>
               <SmileIDSmartSelfieAuthenticationView
                   style={styles.nativeView}
-                  config={smartSelfieEnrollmentConfig}
+                  params={smartSelfieParams}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />
@@ -192,7 +310,7 @@ export default function HomeScreen() {
             <View style={styles.nativeContainer}>
               <SmileIDSmartSelfieAuthenticationEnhancedView
                   style={styles.nativeView}
-                  config={smartSelfieEnrollmentConfig}
+                  params={smartSelfieParams}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />
@@ -203,7 +321,7 @@ export default function HomeScreen() {
             <View style={styles.nativeContainer}>
               <SmileIDBiometricKYCView
                   style={styles.nativeView}
-                  config={biometricKYCConfig}
+                  params={biometricKYCParams}
                   onResult={handleSuccessResult}
                   onError={handleError}
               />

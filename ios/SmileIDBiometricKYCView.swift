@@ -8,7 +8,7 @@ final class SmileIDBiometricKYCView: ExpoView {
     let onError = EventDispatcher()
     private let delegate: BiometricKYCDelegate
     private let hostingController: UIHostingController<BiometricKYCView>
-    private var config: BiometricKYCRequest?
+    private var config: BiometricKYCParams?
 
     required init(appContext: AppContext? = nil) {
         delegate = BiometricKYCDelegate()
@@ -18,6 +18,9 @@ final class SmileIDBiometricKYCView: ExpoView {
                 config: nil
             )
         )
+        // Force light mode
+        hostingController.overrideUserInterfaceStyle = .light
+
         super.init(appContext: appContext)
 
         // Set up delegate callbacks
@@ -34,7 +37,7 @@ final class SmileIDBiometricKYCView: ExpoView {
         hostingController.view.fillSuperview()
     }
 
-    func updateConfig(_ config: BiometricKYCRequest) {
+    func updateConfig(_ config: BiometricKYCParams) {
         self.config = config
         hostingController.rootView = BiometricKYCView(
             delegate: delegate,
@@ -46,7 +49,7 @@ final class SmileIDBiometricKYCView: ExpoView {
 // SwiftUI view that wraps the SmileID biometric kyc screen
 struct BiometricKYCView: View {
     let delegate: BiometricKYCDelegate
-    let config: BiometricKYCRequest?
+    let config: BiometricKYCParams?
 
     var body: some View {
         if let config = config {

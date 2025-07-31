@@ -25,7 +25,7 @@ class SmileIDSmartSelfieAuthenticationEnhancedView(context: Context, appContext:
         appContext = appContext,
         shouldHostComposeContent = true
     ) {
-    private var props = mutableStateOf(SmartSelfieEnrollmentProps())
+    private var props = mutableStateOf(SmartSelfieProps())
     private val onResult by EventDispatcher()
     private val onError by EventDispatcher()
 
@@ -51,8 +51,8 @@ class SmileIDSmartSelfieAuthenticationEnhancedView(context: Context, appContext:
         )
     }
 
-    fun updateConfig(config: SmartSelfieEnrollmentRequest) {
-        props.value = config.toSmartSelfieEnrollmentProps()
+    fun updateConfig(config: SmartSelfieParams) {
+        props.value = config.toSmartSelfieProps()
     }
 }
 
@@ -61,7 +61,7 @@ class SmileIDSmartSelfieAuthenticationEnhancedView(context: Context, appContext:
  **/
 @Composable
 private fun EnhancedSmartSelfieAuthenticationView(
-    props: SmartSelfieEnrollmentProps,
+    props: SmartSelfieProps,
     onResult: (SmartSelfieResult) -> Unit,
     onError: (Throwable) -> Unit
 ) {

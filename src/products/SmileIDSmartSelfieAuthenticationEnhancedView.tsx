@@ -1,10 +1,10 @@
 import {ViewProps} from "react-native";
 import * as React from "react";
 import {requireNativeViewManager} from "expo-modules-core";
-import {ExpoSmartSelfieEnrollmentRequest} from "../types/SmileIDExpo.types";
+import {SmartSelfieParams} from "../types/SmileIDExpo.types";
 
 interface SmileIDSmartSelfieAuthenticationEnhancedViewProps extends ViewProps {
-    config: ExpoSmartSelfieEnrollmentRequest;
+    params: SmartSelfieParams;
     onResult?: (result: any) => void;
     onError?: (error: any) => void;
 }

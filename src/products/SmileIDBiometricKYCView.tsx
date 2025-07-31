@@ -1,10 +1,10 @@
 import { requireNativeViewManager } from 'expo-modules-core';
 import * as React from 'react';
 import { ViewProps } from "react-native";
-import { ExpoBiometricKYCRequest } from "../types/SmileIDExpo.types";
+import { BiometricKYCParams } from "../types/SmileIDExpo.types";
 
 interface SmileIDBiometricKYCViewProps extends ViewProps {
-    config: ExpoBiometricKYCRequest;
+    params: BiometricKYCParams;
     onResult?: (result: any) => void;
     onError?: (error: any) => void;
 }
