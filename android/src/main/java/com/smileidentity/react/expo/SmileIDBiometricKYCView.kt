@@ -109,14 +109,7 @@ data class BiometricKYCProps(
     val skipApiSubmission: Boolean = false,
     val useStrictMode: Boolean = false,
     val extraParams: ImmutableMap<String, String> = persistentMapOf(),
-    val consentInformation: ConsentInformation = ConsentInformation(
-        consented = ConsentedInformation (
-            consentGrantedDate = getCurrentIsoTimestamp(),
-            personalDetails = false,
-            contactInformation = false,
-            documentInformation = false
-        )
-    ),
+    val consentInformation: ConsentInformation ? = null,
     val idInfo: IdInfo = IdInfo(
         country = ""
     )

@@ -1,42 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Alert,
-  FlatList,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
 
 import {
-  initialize,
-  setCallbackUrl,
-  setAllowOfflineMode,
-  submitJob,
-  getSubmittedJobs,
-  getUnsubmittedJobs,
-  cleanup,
-  SmileIDDocumentVerificationView,
-  SmileIDSmartSelfieEnrollmentView,
-  SmileIDDocumentVerificationEnhancedView,
-  SmileConfig,
+  AutoCapture,
+  BiometricKYCParams,
+  ConsentInformationParams,
   DocumentVerificationParams,
   EnhancedDocumentVerificationParams,
+  IdInfoParams,
+  initialize,
   SmartSelfieParams,
-  SmileIDSmartSelfieAuthenticationEnhancedView,
-  SmileIDSmartSelfieEnrollmentEnhancedView,
-  SmileIDSmartSelfieAuthenticationView,
+  SmileConfig,
   SmileIDBiometricKYCView,
-  BiometricKYCParams,
-  IdInfoParams, ConsentInformationParams,
+  SmileIDDocumentVerificationEnhancedView,
+  SmileIDDocumentVerificationView,
+  SmileIDSmartSelfieAuthenticationEnhancedView,
+  SmileIDSmartSelfieAuthenticationView,
+  SmileIDSmartSelfieEnrollmentEnhancedView,
+  SmileIDSmartSelfieEnrollmentView,
 } from 'react-native-expo';
 
-import DocumentVerificationEnhancedSvgIcon from './icons/DocumentVerificationEnhancedSvgIcon';
-import BiometricKYCSvgIcon from './icons/BiometricKYCSvgIcon';
-import DocumentVerificationSvgIcon from './icons/DocumentVerificationSvgIcon';
-import SmartSelfieEnrollmentSvgIcon from './icons/SmartSelfieEnrollmentSvgIcon';
-import SmartSelfieAuthenticationSvgIcon from './icons/SmartSelfieAuthenticationSvgIcon';
+import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
+import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
+import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
+import SmartSelfieEnrollmentSvgIcon from "./icons/SmartSelfieEnrollmentSvgIcon";
+import SmartSelfieAuthenticationSvgIcon from "./icons/SmartSelfieAuthenticationSvgIcon";
 
 const PRODUCTS = [
   {
@@ -73,7 +61,7 @@ const PRODUCTS = [
     title: 'Enhanced Document Verification',
     key: 'enhancedDocumentVerification',
     icon: <DocumentVerificationEnhancedSvgIcon width={48} height={48} />,
-  },
+  }
 ];
 
 const config = new SmileConfig(
@@ -92,9 +80,10 @@ const documentVerificationParams: DocumentVerificationParams = {
   countryCode: 'NG',
   allowNewEnroll: false,
   documentType: 'PASSPORT',
-  // idAspectRatio: 1.414, // Optional aspect ratio for document capture
+  // idAspectRatio: 1.0, // Optional aspect ratio for document capture
   // bypassSelfieCaptureWithFile: '', // Optional file path to bypass selfie capture
-  enableAutoCapture: true,
+  autoCaptureTimeout: 10, // this is in seconds,
+  autoCapture: AutoCapture.AutoCapture,
   captureBothSides: false,
   allowAgentMode: true,
   showInstructions: true,
@@ -104,8 +93,8 @@ const documentVerificationParams: DocumentVerificationParams = {
   useStrictMode: false,
   extraPartnerParams: {
     'custom_param_1': 'value1',
-    'custom_param_2': 'value2',
-  },
+    'custom_param_2': 'value2'
+  }
 };
 
 const smartSelfieParams: SmartSelfieParams = {
@@ -119,15 +108,15 @@ const smartSelfieParams: SmartSelfieParams = {
   useStrictMode: false,
   extraPartnerParams: {
     'custom_param_1': 'value1',
-    'custom_param_2': 'value2',
-  },
+    'custom_param_2': 'value2'
+  }
 };
 
 const consentInformationParams: ConsentInformationParams = {
   consentGrantedDate: '2025-07-25T09:20:25.362Z',
   personalDetails: true,
   contactInformation: true,
-  documentInformation: true,
+  documentInformation: true
 };
 
 const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
@@ -136,9 +125,10 @@ const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
   countryCode: 'NG',
   allowNewEnroll: false,
   documentType: 'PASSPORT',
-  // idAspectRatio: 1.414, // Optional aspect ratio for document capture
+  // idAspectRatio: 1.0, // Optional aspect ratio for document capture
   // bypassSelfieCaptureWithFile: '', // Optional file path to bypass selfie capture
-  enableAutoCapture: false,
+  autoCaptureTimeout: 10, // this is in seconds,
+  autoCapture: AutoCapture.AutoCapture,
   captureBothSides: false,
   allowGalleryUpload: true,
   showInstructions: true,
@@ -147,9 +137,9 @@ const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
   useStrictMode: false,
   extraPartnerParams: {
     'custom_param_1': 'value1',
-    'custom_param_2': 'value2',
+    'custom_param_2': 'value2'
   },
-  consentInformation: consentInformationParams,
+  consentInformation: consentInformationParams
 };
 
 
@@ -162,7 +152,7 @@ const idInfoParams: IdInfoParams = {
   lastName: 'Doe',
   dob: '1990-01-01',
   bankCode: '1234567890',
-  entered: false,
+  entered: false
 };
 
 const biometricKYCParams: BiometricKYCParams = {
@@ -176,10 +166,10 @@ const biometricKYCParams: BiometricKYCParams = {
   useStrictMode: false,
   extraPartnerParams: {
     'custom_param_1': 'value1',
-    'custom_param_2': 'value2',
+    'custom_param_2': 'value2'
   },
   consentInformation: consentInformationParams,
-  idInfo: idInfoParams,
+  idInfo: idInfoParams
 };
 
 

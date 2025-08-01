@@ -80,7 +80,7 @@ const documentVerificationParams: DocumentVerificationParams = {
   countryCode: 'NG',
   allowNewEnroll: false,
   documentType: 'PASSPORT',
-  // idAspectRatio: 1.414, // Optional aspect ratio for document capture
+  // idAspectRatio: 1.0, // Optional aspect ratio for document capture
   // bypassSelfieCaptureWithFile: '', // Optional file path to bypass selfie capture
   autoCaptureTimeout: 10, // this is in seconds,
   autoCapture: AutoCapture.AutoCapture,
@@ -125,7 +125,7 @@ const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
   countryCode: 'NG',
   allowNewEnroll: false,
   documentType: 'PASSPORT',
-  // idAspectRatio: 1.414, // Optional aspect ratio for document capture
+  // idAspectRatio: 1.0, // Optional aspect ratio for document capture
   // bypassSelfieCaptureWithFile: '', // Optional file path to bypass selfie capture
   autoCaptureTimeout: 10, // this is in seconds,
   autoCapture: AutoCapture.AutoCapture,

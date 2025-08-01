@@ -188,7 +188,7 @@ class EnhancedDocumentVerificationParams : Record {
  */
 class ConsentInformationParams : Record {
     @Field
-    var consentGrantedDate: String? = null
+    var consentGrantedDate: String =  getCurrentIsoTimestamp()
     @Field
     var personalDetails: Boolean = false
     @Field
@@ -219,7 +219,7 @@ internal fun EnhancedDocumentVerificationParams.toDocumentVerificationProps(): D
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
         extraParams = this.extraParams,
-        consentInformation = this.consentInformation.toConsentInformation()
+        consentInformation = this.consentInformation?.toConsentInformation()
     )
 }
 
@@ -227,13 +227,13 @@ internal fun EnhancedDocumentVerificationParams.toDocumentVerificationProps(): D
  * Map ConsentInformationParams to ConsentInformation
  */
 
-internal fun ConsentInformationParams?.toConsentInformation(): ConsentInformation {
+internal fun ConsentInformationParams.toConsentInformation(): ConsentInformation {
     return ConsentInformation(
         consented = ConsentedInformation(
-            consentGrantedDate = this?.consentGrantedDate ?: getCurrentIsoTimestamp(),
-            personalDetails = this?.personalDetails ?: false,
-            contactInformation = this?.contactInformation ?: false,
-            documentInformation = this?.documentInformation ?: false
+            consentGrantedDate = this.consentGrantedDate,
+            personalDetails = this.personalDetails,
+            contactInformation = this.contactInformation,
+            documentInformation = this.documentInformation
         )
     )
 }
@@ -363,7 +363,7 @@ internal fun BiometricKYCParams.toBiometricKYCProps(): BiometricKYCProps {
         showInstructions = this.showInstructions,
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
-        consentInformation = this.consentInformation.toConsentInformation(),
+        consentInformation = this.consentInformation?.toConsentInformation(),
         extraParams = this.extraParams,
         idInfo = this.idInfo.toIdInfo()
     )
