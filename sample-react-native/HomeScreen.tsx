@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
+import {Alert, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {
   AutoCapture,
@@ -20,11 +20,11 @@ import {
   SmileIDSmartSelfieEnrollmentView,
 } from 'react-native-expo';
 
-import DocumentVerificationEnhancedSvgIcon from "./icons/DocumentVerificationEnhancedSvgIcon";
-import BiometricKYCSvgIcon from "./icons/BiometricKYCSvgIcon";
-import DocumentVerificationSvgIcon from "./icons/DocumentVerificationSvgIcon";
-import SmartSelfieEnrollmentSvgIcon from "./icons/SmartSelfieEnrollmentSvgIcon";
-import SmartSelfieAuthenticationSvgIcon from "./icons/SmartSelfieAuthenticationSvgIcon";
+import DocumentVerificationEnhancedSvgIcon from './icons/DocumentVerificationEnhancedSvgIcon';
+import BiometricKYCSvgIcon from './icons/BiometricKYCSvgIcon';
+import DocumentVerificationSvgIcon from './icons/DocumentVerificationSvgIcon';
+import SmartSelfieEnrollmentSvgIcon from './icons/SmartSelfieEnrollmentSvgIcon';
+import SmartSelfieAuthenticationSvgIcon from './icons/SmartSelfieAuthenticationSvgIcon';
 
 const PRODUCTS = [
   {
@@ -61,7 +61,7 @@ const PRODUCTS = [
     title: 'Enhanced Document Verification',
     key: 'enhancedDocumentVerification',
     icon: <DocumentVerificationEnhancedSvgIcon width={48} height={48} />,
-  }
+  },
 ];
 
 const config = new SmileConfig(
@@ -93,8 +93,8 @@ const documentVerificationParams: DocumentVerificationParams = {
   useStrictMode: false,
   extraPartnerParams: {
     'custom_param_1': 'value1',
-    'custom_param_2': 'value2'
-  }
+    'custom_param_2': 'value2',
+  },
 };
 
 const smartSelfieParams: SmartSelfieParams = {
@@ -108,15 +108,15 @@ const smartSelfieParams: SmartSelfieParams = {
   useStrictMode: false,
   extraPartnerParams: {
     'custom_param_1': 'value1',
-    'custom_param_2': 'value2'
-  }
+    'custom_param_2': 'value2',
+  },
 };
 
 const consentInformationParams: ConsentInformationParams = {
   consentGrantedDate: '2025-07-25T09:20:25.362Z',
   personalDetails: true,
   contactInformation: true,
-  documentInformation: true
+  documentInformation: true,
 };
 
 const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
@@ -137,9 +137,9 @@ const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
   useStrictMode: false,
   extraPartnerParams: {
     'custom_param_1': 'value1',
-    'custom_param_2': 'value2'
+    'custom_param_2': 'value2',
   },
-  consentInformation: consentInformationParams
+  consentInformation: consentInformationParams, // Optional consent information
 };
 
 
@@ -152,7 +152,7 @@ const idInfoParams: IdInfoParams = {
   lastName: 'Doe',
   dob: '1990-01-01',
   bankCode: '1234567890',
-  entered: false
+  entered: false,
 };
 
 const biometricKYCParams: BiometricKYCParams = {
@@ -166,10 +166,10 @@ const biometricKYCParams: BiometricKYCParams = {
   useStrictMode: false,
   extraPartnerParams: {
     'custom_param_1': 'value1',
-    'custom_param_2': 'value2'
+    'custom_param_2': 'value2',
   },
-  consentInformation: consentInformationParams,
-  idInfo: idInfoParams
+  consentInformation: consentInformationParams, // Optional consent information
+  idInfo: idInfoParams,
 };
 
 

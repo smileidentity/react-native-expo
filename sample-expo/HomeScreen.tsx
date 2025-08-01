@@ -139,7 +139,7 @@ const enhancedDocumentVerificationParams: EnhancedDocumentVerificationParams = {
     'custom_param_1': 'value1',
     'custom_param_2': 'value2'
   },
-  consentInformation: consentInformationParams
+  consentInformation: consentInformationParams // Optional consent information
 };
 
 
@@ -168,7 +168,7 @@ const biometricKYCParams: BiometricKYCParams = {
     'custom_param_1': 'value1',
     'custom_param_2': 'value2'
     },
-  consentInformation: consentInformationParams,
+  consentInformation: consentInformationParams, // Optional consent information
   idInfo: idInfoParams
 };
 
