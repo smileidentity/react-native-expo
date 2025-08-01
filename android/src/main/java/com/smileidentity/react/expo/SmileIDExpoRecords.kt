@@ -112,7 +112,7 @@ internal fun DocumentVerificationParams.toDocumentVerificationProps(): DocumentV
         idAspectRatio = this.idAspectRatio,
         bypassSelfieCaptureWithFile = this.bypassSelfieCaptureWithFile,
         autoCaptureTimeout = this.autoCaptureTimeout,
-        autoCapture = this.autoCapture?.toAutoCapture(),
+        autoCapture = this.autoCapture.toAutoCapture(),
         captureBothSides = this.captureBothSides,
         allowAgentMode = this.allowAgentMode,
         allowGalleryUpload = this.allowGalleryUpload,
