@@ -1,14 +1,18 @@
 package com.smileidentity.react.expo
 
+import com.smileidentity.models.AutoCapture
 import com.smileidentity.models.Config
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.IdInfo
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Field
+import expo.modules.kotlin.types.Enumerable
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import java.io.File
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Type‑safe bridge for the JS `SmileConfig` object coming from JavaScript.
@@ -53,7 +57,10 @@ class DocumentVerificationParams : Record {
     var bypassSelfieCaptureWithFile: File? = null
 
     @Field
-    var enableAutoCapture: Boolean = true
+    var autoCaptureTimeout: Int = 10
+
+    @Field
+    var autoCapture: AutoCaptureParams  = AutoCaptureParams.AutoCapture
 
     @Field
     var captureBothSides: Boolean = true
@@ -104,7 +111,8 @@ internal fun DocumentVerificationParams.toDocumentVerificationProps(): DocumentV
         documentType = this.documentType,
         idAspectRatio = this.idAspectRatio,
         bypassSelfieCaptureWithFile = this.bypassSelfieCaptureWithFile,
-        enableAutoCapture = this.enableAutoCapture,
+        autoCaptureTimeout = this.autoCaptureTimeout,
+        autoCapture = this.autoCapture.toAutoCapture(),
         captureBothSides = this.captureBothSides,
         allowAgentMode = this.allowAgentMode,
         allowGalleryUpload = this.allowGalleryUpload,
@@ -142,7 +150,10 @@ class EnhancedDocumentVerificationParams : Record {
     var bypassSelfieCaptureWithFile: File? = null
 
     @Field
-    var enableAutoCapture: Boolean = true
+    var autoCaptureTimeout: Int = 10
+
+    @Field
+    var autoCapture: AutoCaptureParams = AutoCaptureParams.AutoCapture
 
     @Field
     var captureBothSides: Boolean = true
@@ -178,7 +189,7 @@ class EnhancedDocumentVerificationParams : Record {
  */
 class ConsentInformationParams : Record {
     @Field
-    var consentGrantedDate: String? = null
+    var consentGrantedDate: String =  getCurrentIsoTimestamp()
     @Field
     var personalDetails: Boolean = false
     @Field
@@ -199,7 +210,8 @@ internal fun EnhancedDocumentVerificationParams.toDocumentVerificationProps(): D
         documentType = this.documentType,
         idAspectRatio = this.idAspectRatio,
         bypassSelfieCaptureWithFile = this.bypassSelfieCaptureWithFile,
-        enableAutoCapture = this.enableAutoCapture,
+        autoCaptureTimeout = this.autoCaptureTimeout,
+        autoCapture = this.autoCapture.toAutoCapture(),
         captureBothSides = this.captureBothSides,
         allowAgentMode = this.allowAgentMode,
         allowGalleryUpload = this.allowGalleryUpload,
@@ -208,7 +220,7 @@ internal fun EnhancedDocumentVerificationParams.toDocumentVerificationProps(): D
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
         extraParams = this.extraParams,
-        consentInformation = this.consentInformation.toConsentInformation()
+        consentInformation = this.consentInformation?.toConsentInformation()
     )
 }
 
@@ -216,13 +228,13 @@ internal fun EnhancedDocumentVerificationParams.toDocumentVerificationProps(): D
  * Map ConsentInformationParams to ConsentInformation
  */
 
-internal fun ConsentInformationParams?.toConsentInformation(): ConsentInformation {
+internal fun ConsentInformationParams.toConsentInformation(): ConsentInformation {
     return ConsentInformation(
         consented = ConsentedInformation(
-            consentGrantedDate = this?.consentGrantedDate ?: getCurrentIsoTimestamp(),
-            personalDetails = this?.personalDetails ?: false,
-            contactInformation = this?.contactInformation ?: false,
-            documentInformation = this?.documentInformation ?: false
+            consentGrantedDate = this.consentGrantedDate,
+            personalDetails = this.personalDetails,
+            contactInformation = this.contactInformation,
+            documentInformation = this.documentInformation
         )
     )
 }
@@ -352,7 +364,7 @@ internal fun BiometricKYCParams.toBiometricKYCProps(): BiometricKYCProps {
         showInstructions = this.showInstructions,
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
-        consentInformation = this.consentInformation.toConsentInformation(),
+        consentInformation = this.consentInformation?.toConsentInformation(),
         extraParams = this.extraParams,
         idInfo = this.idInfo.toIdInfo()
     )
@@ -374,3 +386,23 @@ internal fun IdInfoParams?.toIdInfo(): IdInfo {
         entered = this?.entered ?: false
     )
 }
+
+/*
+ * Enum class to represent the auto capture parameters
+ */
+enum class AutoCaptureParams(val value: String): Enumerable {
+    AutoCapture("AutoCapture"),
+    AutoCaptureOnly("AutoCaptureOnly"),
+    ManualCaptureOnly("ManualCaptureOnly")
+}
+
+/**
+ * Extension function to convert AutoCaptureParams to AutoCapture
+ */
+fun AutoCaptureParams.toAutoCapture(): AutoCapture =
+    when (this) {
+        AutoCaptureParams.AutoCapture -> AutoCapture.AutoCapture
+        AutoCaptureParams.AutoCaptureOnly -> AutoCapture.AutoCaptureOnly
+        AutoCaptureParams.ManualCaptureOnly -> AutoCapture.ManualCaptureOnly
+    }
+

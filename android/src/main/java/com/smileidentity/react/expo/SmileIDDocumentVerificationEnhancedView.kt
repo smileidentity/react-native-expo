@@ -10,12 +10,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import com.smileidentity.SmileID
 import com.smileidentity.compose.EnhancedDocumentVerificationScreen
+import com.smileidentity.models.AutoCapture
 import com.smileidentity.results.EnhancedDocumentVerificationResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Document Verification Enhanced View using ExpoView
@@ -81,7 +83,8 @@ private fun EnhancedDocumentVerificationView(
             documentType = props.documentType,
             idAspectRatio = props.idAspectRatio,
             bypassSelfieCaptureWithFile = props.bypassSelfieCaptureWithFile,
-            enableAutoCapture = props.enableAutoCapture,
+            autoCaptureTimeout = props.autoCaptureTimeout?.seconds ?: 10.seconds,
+            autoCapture = props.autoCapture ?: AutoCapture.AutoCapture,
             captureBothSides = props.captureBothSides,
             allowAgentMode = props.allowAgentMode,
             allowGalleryUpload = props.allowGalleryUpload,

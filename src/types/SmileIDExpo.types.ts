@@ -39,7 +39,8 @@ export type DocumentVerificationParams = {
   documentType?: string;
   idAspectRatio?: number;
   bypassSelfieCaptureWithFile?: string;
-  enableAutoCapture?: boolean;
+  autoCaptureTimeout?: number;
+  autoCapture?: AutoCapture;
   captureBothSides?: boolean;
   allowAgentMode?: boolean;
   allowGalleryUpload?: boolean;
@@ -61,7 +62,8 @@ export type EnhancedDocumentVerificationParams = {
   documentType?: string;
   idAspectRatio?: number;
   bypassSelfieCaptureWithFile?: string;
-  enableAutoCapture?: boolean;
+  autoCaptureTimeout?: number;
+  autoCapture?: AutoCapture;
   captureBothSides?: boolean;
   allowAgentMode?: boolean;
   allowGalleryUpload?: boolean;
@@ -140,4 +142,14 @@ export type ConsentParams = {
   partnerPrivacyPolicy: string;
   productName: string,
   userId?: string
+}
+
+
+/**
+ * AutoCapture request parameters
+ */
+export enum AutoCapture {
+  AutoCapture = 'AutoCapture',
+  AutoCaptureOnly = 'AutoCaptureOnly',
+  ManualCaptureOnly = 'ManualCaptureOnly'
 }
