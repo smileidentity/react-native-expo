@@ -17,6 +17,7 @@ import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Document Verification Enhanced View using ExpoView
@@ -82,8 +83,8 @@ private fun EnhancedDocumentVerificationView(
             documentType = props.documentType,
             idAspectRatio = props.idAspectRatio,
             bypassSelfieCaptureWithFile = props.bypassSelfieCaptureWithFile,
-            autoCaptureTimeout = props.autoCaptureTimeout,
-            autoCapture = AutoCapture.AutoCapture,
+            autoCaptureTimeout = props.autoCaptureTimeout?.seconds ?: 10.seconds,
+            autoCapture = props.autoCapture ?: AutoCapture.AutoCapture,
             captureBothSides = props.captureBothSides,
             allowAgentMode = props.allowAgentMode,
             allowGalleryUpload = props.allowGalleryUpload,

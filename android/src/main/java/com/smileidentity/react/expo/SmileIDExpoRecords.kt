@@ -7,6 +7,7 @@ import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.IdInfo
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Field
+import expo.modules.kotlin.types.Enumerable
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import java.io.File
@@ -59,7 +60,7 @@ class DocumentVerificationParams : Record {
     var autoCaptureTimeout: Int = 10
 
     @Field
-    var autoCapture: AutoCaptureParams = AutoCaptureParams.AutoCapture
+    var autoCapture: AutoCaptureParams  = AutoCaptureParams.AutoCapture
 
     @Field
     var captureBothSides: Boolean = true
@@ -110,8 +111,8 @@ internal fun DocumentVerificationParams.toDocumentVerificationProps(): DocumentV
         documentType = this.documentType,
         idAspectRatio = this.idAspectRatio,
         bypassSelfieCaptureWithFile = this.bypassSelfieCaptureWithFile,
-        autoCaptureTimeout = this.autoCaptureTimeout.seconds,
-        autoCapture = this.autoCapture.toAutoCapture(),
+        autoCaptureTimeout = this.autoCaptureTimeout,
+        autoCapture = this.autoCapture?.toAutoCapture(),
         captureBothSides = this.captureBothSides,
         allowAgentMode = this.allowAgentMode,
         allowGalleryUpload = this.allowGalleryUpload,
@@ -209,7 +210,7 @@ internal fun EnhancedDocumentVerificationParams.toDocumentVerificationProps(): D
         documentType = this.documentType,
         idAspectRatio = this.idAspectRatio,
         bypassSelfieCaptureWithFile = this.bypassSelfieCaptureWithFile,
-        autoCaptureTimeout = this.autoCaptureTimeout.seconds,
+        autoCaptureTimeout = this.autoCaptureTimeout,
         autoCapture = this.autoCapture.toAutoCapture(),
         captureBothSides = this.captureBothSides,
         allowAgentMode = this.allowAgentMode,
@@ -389,10 +390,10 @@ internal fun IdInfoParams?.toIdInfo(): IdInfo {
 /*
  * Enum class to represent the auto capture parameters
  */
-enum class AutoCaptureParams {
-    AutoCapture,
-    AutoCaptureOnly,
-    ManualCaptureOnly
+enum class AutoCaptureParams(val value: String): Enumerable {
+    AutoCapture("AutoCapture"),
+    AutoCaptureOnly("AutoCaptureOnly"),
+    ManualCaptureOnly("ManualCaptureOnly")
 }
 
 /**

@@ -39,8 +39,8 @@ export type DocumentVerificationParams = {
   documentType?: string;
   idAspectRatio?: number;
   bypassSelfieCaptureWithFile?: string;
-  autoCaptureTimeout: number;
-  autoCapture: AutoCapture.AutoCapture;
+  autoCaptureTimeout?: number;
+  autoCapture?: AutoCapture;
   captureBothSides?: boolean;
   allowAgentMode?: boolean;
   allowGalleryUpload?: boolean;
@@ -62,8 +62,8 @@ export type EnhancedDocumentVerificationParams = {
   documentType?: string;
   idAspectRatio?: number;
   bypassSelfieCaptureWithFile?: string;
-  autoCaptureTimeout: number;
-  autoCapture: AutoCapture.AutoCapture;
+  autoCaptureTimeout?: number;
+  autoCapture?: AutoCapture;
   captureBothSides?: boolean;
   allowAgentMode?: boolean;
   allowGalleryUpload?: boolean;
@@ -149,7 +149,7 @@ export type ConsentParams = {
  * AutoCapture request parameters
  */
 export enum AutoCapture {
-  AutoCapture,
-  AutoCaptureOnly,
-  ManualCaptureOnly
+  AutoCapture = 'AutoCapture',
+  AutoCaptureOnly = 'AutoCaptureOnly',
+  ManualCaptureOnly = 'ManualCaptureOnly'
 }
