@@ -61,7 +61,8 @@ struct EnhancedDocumentVerificationView: View {
                 documentType: config.documentType,
                 idAspectRatio: config.idAspectRatio,
                 bypassSelfieCaptureWithFile: config.bypassSelfieCaptureWithFile.flatMap(URL.init),
-                enableAutoCapture: config.enableAutoCapture,
+                autoCaptureTimeout: TimeInterval(config.autoCaptureTimeout),
+                autoCapture: AutoCapture(from: config.autoCapture),
                 captureBothSides: config.captureBothSides,
                 allowAgentMode: config.allowAgentMode,
                 allowGalleryUpload: config.allowGalleryUpload,
@@ -70,14 +71,7 @@ struct EnhancedDocumentVerificationView: View {
                 showAttribution: config.showAttribution,
                 useStrictMode: config.useStrictMode,
                 extraPartnerParams: config.extraPartnerParams,
-                consentInformation: ConsentInformation(
-                    consented: ConsentedInformation(
-                        consentGrantedDate: config.consentInformation?.consentGrantedDate ?? Date().toISO8601WithMilliseconds(),
-                        personalDetails: config.consentInformation?.personalDetails ?? false,
-                        contactInformation: config.consentInformation?.contactInformation ?? false,
-                        documentInformation: config.consentInformation?.documentInformation ?? false
-                    )
-                ),
+                consentInformation: config.consentInformation?.toConsentInformation(),
                 delegate: delegate
             )
         } else {

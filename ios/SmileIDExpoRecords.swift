@@ -1,5 +1,5 @@
 import ExpoModulesCore
-
+import SmileID
 /// Type‑safe bridge for the JS `SmileConfig` object
 struct SmileConfig: Record {
     @Field public var partnerId: String
@@ -17,7 +17,8 @@ struct DocumentVerificationParams: Record {
     @Field public var documentType: String?
     @Field public var idAspectRatio: Double?
     @Field public var bypassSelfieCaptureWithFile: String?
-    @Field public var enableAutoCapture: Bool = true
+    @Field public var autoCaptureTimeout: Int = 10
+    @Field public var autoCapture: AutoCaptureParams = AutoCaptureParams.autoCapture
     @Field public var captureBothSides: Bool = true
     @Field public var allowAgentMode: Bool = false
     @Field public var allowGalleryUpload: Bool = false
@@ -37,7 +38,8 @@ struct EnhancedDocumentVerificationParams: Record {
     @Field public var documentType: String?
     @Field public var idAspectRatio: Double?
     @Field public var bypassSelfieCaptureWithFile: String?
-    @Field public var enableAutoCapture: Bool = true
+    @Field public var autoCaptureTimeout: Int = 10
+    @Field public var autoCapture: AutoCaptureParams = AutoCaptureParams.autoCapture
     @Field public var captureBothSides: Bool = true
     @Field public var allowAgentMode: Bool = false
     @Field public var allowGalleryUpload: Bool = false
@@ -55,6 +57,20 @@ struct ConsentInformationRecord: Record {
     @Field public var personalDetails: Bool
     @Field public var contactInformation: Bool
     @Field public var documentInformation: Bool
+}
+
+/// Map `ConsentInformationRecord` to `ConsentInformation`
+extension ConsentInformationRecord {
+    func toConsentInformation() -> ConsentInformation {
+        ConsentInformation(
+            consented: ConsentedInformation(
+                consentGrantedDate: consentGrantedDate,
+                personalDetails: personalDetails,
+                contactInformation: contactInformation,
+                documentInformation: documentInformation
+            )
+        )
+    }
 }
 
 /// Type‑safe bridge for the JS `SmartSelfieParams` object
@@ -96,4 +112,27 @@ struct IdInfoParams: Record {
     @Field public var dob: String?
     @Field public var bankCode: String?
     @Field public var entered: Bool = false
+}
+
+/// Map `IdInfoParams` to `IdInfo`
+extension IdInfoParams {
+    func toIdInfo() -> IdInfo {
+        IdInfo(
+            country: country,
+            idType: idType,
+            idNumber: idNumber,
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
+            dob: dob,
+            entered: entered
+        )
+    }
+}
+
+/// Enum for auto-capture parameters
+enum AutoCaptureParams: String, Enumerable {
+    case autoCapture
+    case autoCaptureOnly
+    case manualCaptureOnly
 }

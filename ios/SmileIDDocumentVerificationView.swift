@@ -61,7 +61,8 @@ struct DocumentVerificationView: View {
                 documentType: config.documentType,
                 idAspectRatio: config.idAspectRatio,
                 bypassSelfieCaptureWithFile: config.bypassSelfieCaptureWithFile.flatMap(URL.init),
-                enableAutoCapture: config.enableAutoCapture,
+                autoCaptureTimeout: TimeInterval(config.autoCaptureTimeout),
+                autoCapture: AutoCapture(from: config.autoCapture),
                 captureBothSides: config.captureBothSides,
                 allowAgentMode: config.allowAgentMode,
                 allowGalleryUpload: config.allowGalleryUpload,
@@ -102,5 +103,18 @@ class DocumentVerificationDelegate: DocumentVerificationResultDelegate {
 
     func didError(error: Error) {
         onError?(error)
+    }
+}
+
+extension AutoCapture {
+    init(from param: AutoCaptureParams) {
+        switch param {
+        case .autoCapture:
+            self = .autoCapture
+        case .autoCaptureOnly:
+            self = .autoCaptureOnly
+        case .manualCaptureOnly:
+            self = .manualCaptureOnly
+        }
     }
 }
