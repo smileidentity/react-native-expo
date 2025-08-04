@@ -132,9 +132,9 @@ extension IdInfoParams {
 
 /// Enum for auto-capture parameters
 enum AutoCaptureParams: String, Enumerable {
-    case autoCapture
-    case autoCaptureOnly
-    case manualCaptureOnly
+    case autoCapture = "AutoCapture"
+    case autoCaptureOnly = "AutoCaptureOnly"
+    case manualCaptureOnly = "ManualCaptureOnly"
 }
 
 /// Map `AutoCaptureParams` to `AutoCapture`
