@@ -105,16 +105,3 @@ class DocumentVerificationDelegate: DocumentVerificationResultDelegate {
         onError?(error)
     }
 }
-
-extension AutoCapture {
-    init(from param: AutoCaptureParams) {
-        switch param {
-        case .autoCapture:
-            self = .autoCapture
-        case .autoCaptureOnly:
-            self = .autoCaptureOnly
-        case .manualCaptureOnly:
-            self = .manualCaptureOnly
-        }
-    }
-}

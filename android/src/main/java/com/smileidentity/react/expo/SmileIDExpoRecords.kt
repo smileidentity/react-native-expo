@@ -388,7 +388,7 @@ internal fun IdInfoParams?.toIdInfo(): IdInfo {
 }
 
 /*
- * Enum class to represent the auto capture parameters
+ * Enum for auto capture parameters
  */
 enum class AutoCaptureParams(val value: String): Enumerable {
     AutoCapture("AutoCapture"),

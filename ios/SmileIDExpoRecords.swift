@@ -18,7 +18,7 @@ struct DocumentVerificationParams: Record {
     @Field public var idAspectRatio: Double?
     @Field public var bypassSelfieCaptureWithFile: String?
     @Field public var autoCaptureTimeout: Int = 10
-    @Field public var autoCapture: AutoCaptureParams = AutoCaptureParams.autoCapture
+    @Field public var autoCapture: AutoCaptureParams = .autoCapture
     @Field public var captureBothSides: Bool = true
     @Field public var allowAgentMode: Bool = false
     @Field public var allowGalleryUpload: Bool = false
@@ -39,7 +39,7 @@ struct EnhancedDocumentVerificationParams: Record {
     @Field public var idAspectRatio: Double?
     @Field public var bypassSelfieCaptureWithFile: String?
     @Field public var autoCaptureTimeout: Int = 10
-    @Field public var autoCapture: AutoCaptureParams = AutoCaptureParams.autoCapture
+    @Field public var autoCapture: AutoCaptureParams = .autoCapture
     @Field public var captureBothSides: Bool = true
     @Field public var allowAgentMode: Bool = false
     @Field public var allowGalleryUpload: Bool = false
@@ -135,4 +135,18 @@ enum AutoCaptureParams: String, Enumerable {
     case autoCapture
     case autoCaptureOnly
     case manualCaptureOnly
+}
+
+/// Map `AutoCaptureParams` to `AutoCapture`
+extension AutoCapture {
+    init(from param: AutoCaptureParams) {
+        switch param {
+        case .autoCapture:
+            self = .autoCapture
+        case .autoCaptureOnly:
+            self = .autoCaptureOnly
+        case .manualCaptureOnly:
+            self = .manualCaptureOnly
+        }
+    }
 }
