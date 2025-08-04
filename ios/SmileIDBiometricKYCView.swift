@@ -50,20 +50,11 @@ final class SmileIDBiometricKYCView: ExpoView {
 struct BiometricKYCView: View {
     let delegate: BiometricKYCDelegate
     let config: BiometricKYCParams?
-
+    
     var body: some View {
         if let config = config {
             SmileID.biometricKycScreen(
-                idInfo: IdInfo(
-                    country: config.idInfo.country,
-                    idType: config.idInfo.idType,
-                    idNumber: config.idInfo.idNumber,
-                    firstName: config.idInfo.firstName,
-                    middleName: config.idInfo.middleName,
-                    lastName: config.idInfo.lastName,
-                    dob: config.idInfo.dob,
-                    entered: config.idInfo.entered
-                ),
+                idInfo: config.idInfo.toIdInfo(),
                 userId: config.userId ?? generateUserId(),
                 jobId: config.jobId ?? generateJobId(),
                 allowNewEnroll: config.allowNewEnroll,
@@ -72,6 +63,7 @@ struct BiometricKYCView: View {
                 showInstructions: config.showInstructions,
                 useStrictMode: config.useStrictMode,
                 extraPartnerParams: config.extraPartnerParams,
+                consentInformation: config.consentInformation?.toConsentInformation(),
                 delegate: delegate
             )
         } else {
