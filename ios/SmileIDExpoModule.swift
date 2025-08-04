@@ -6,7 +6,7 @@ import UIKit
 public class SmileIDExpoModule: Module {
 
     public func definition() -> ModuleDefinition {
-    
+
         Name("SmileIDExpo")
 
        AsyncFunction("initialize") {
@@ -16,8 +16,8 @@ public class SmileIDExpoModule: Module {
                config: SmileConfig?,
                apiKey: String?
            ) async throws -> Void in
-				 SmileID.setWrapperInfo(name: .reactNativeExpo, version: "11.0.0")
-           
+				 SmileID.setWrapperInfo(name: .reactNativeExpo, version: "11.1.0")
+
            if let apiKey = apiKey, let config = config {
                // Case 1: Initialize with API key and config
               SmileID.initialize(
@@ -46,7 +46,7 @@ public class SmileIDExpoModule: Module {
                SmileID.initialize(useSandbox: useSandBox)
            }
        }
-        
+
         // Set callback url
         AsyncFunction("setCallbackUrl") { (callbackUrl: String) async throws -> Void in
             guard let url = URL(string: callbackUrl) else {
@@ -54,12 +54,12 @@ public class SmileIDExpoModule: Module {
                  }
                  SmileID.setCallbackUrl(url: url)
         }
-        
+
         // Set offline mode
         AsyncFunction("setAllowOfflineMode") { (allowOfflineMode: Bool) async throws -> Void in
             SmileID.setAllowOfflineMode(allowOfflineMode: allowOfflineMode)
         }
-        
+
         // Submit a job
         AsyncFunction("submitJob") { (jobId: String) async throws -> Void in
             do {
@@ -68,19 +68,19 @@ public class SmileIDExpoModule: Module {
                 throw error
             }
         }
-        
+
         // Get submitted jobs
         AsyncFunction("getSubmittedJobs") { () async throws -> [String] in
             let submittedJobs: [String] =  SmileID.getSubmittedJobs()
             return submittedJobs
         }
-        
+
         // Get unsubmitted jobs
         AsyncFunction("getUnsubmittedJobs") { () async throws -> [String] in
             let unsubmittedJobs: [String] = SmileID.getUnsubmittedJobs()
                 return unsubmittedJobs
         }
-        
+
         //  Cleanup job data
         AsyncFunction("cleanup") { (jobId: String) async throws -> Void in
             do {
@@ -93,7 +93,7 @@ public class SmileIDExpoModule: Module {
         // Document Verification View
         View(SmileIDDocumentVerificationView.self) {
             Events("onResult", "onError")
-            
+
             Prop("params") { (
                 view: SmileIDDocumentVerificationView,
                 config: DocumentVerificationParams
@@ -125,7 +125,7 @@ public class SmileIDExpoModule: Module {
                 view.updateConfig(config)
             }
         }
-        
+
         // Enhanced SmartSelfie Enrollment View
         View(SmileIDSmartSelfieEnrollmentEnhancedView.self) {
             Events("onResult", "onError")
@@ -137,11 +137,11 @@ public class SmileIDExpoModule: Module {
                 view.updateConfig(config)
             }
         }
-        
+
         // SmartSelfie Authentication View
         View(SmileIDSmartSelfieAuthenticationView.self) {
             Events("onResult", "onError")
-            
+
             Prop("params") { (
                 view: SmileIDSmartSelfieAuthenticationView,
                 config: SmartSelfieParams
@@ -149,11 +149,11 @@ public class SmileIDExpoModule: Module {
                 view.updateConfig(config)
             }
         }
-        
+
         // Enhanced SmartSelfie Authentication View
         View(SmileIDSmartSelfieAuthenticationEnhancedView.self) {
             Events("onResult", "onError")
-            
+
             Prop("params") { (
                 view: SmileIDSmartSelfieAuthenticationEnhancedView,
                 config: SmartSelfieParams
@@ -161,11 +161,11 @@ public class SmileIDExpoModule: Module {
                 view.updateConfig(config)
             }
         }
-        
+
         // Biometric KYC View
         View(SmileIDBiometricKYCView.self) {
             Events("onResult", "onError")
-            
+
             Prop("params") { (
                 view: SmileIDBiometricKYCView,
                 config: BiometricKYCParams
@@ -173,6 +173,6 @@ public class SmileIDExpoModule: Module {
                 view.updateConfig(config)
             }
         }
-        
+
     }
 }

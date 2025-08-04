@@ -29,7 +29,7 @@ Install the Smile ID Expo SDK:
    npm install @smile_identity/react-native-expo
 
    # Using yarn
-   yarn install @smile_identity/react-native-expo
+   yarn add @smile_identity/react-native-expo
    ```
 
 #### **For Bare React Native Projects**
@@ -49,7 +49,7 @@ Install the Smile ID Expo SDK:
    npm install @smile_identity/react-native-expo
    
     # Using yarn
-    yarn install @smile_identity/react-native-expo
+   yarn add @smile_identity/react-native-expo
    ```
 
 3. **Rebuild Your Project:**
