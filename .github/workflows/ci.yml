@@ -105,34 +105,30 @@ jobs:
           path: |
             sample-expo/ios/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('sample-expo/ios/Podfile.lock') }}
+      - name: Cache sample-expo node_modules
+        uses: actions/cache@v4
+        with:
+          path: sample-expo/node_modules
+          key: ${{ runner.os }}-sample-expo-node_modules-${{ hashFiles('sample-expo/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-sample-expo-node_modules-
       - name: Install sample dependencies
         run: |
           cd sample-expo
           if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
+      - name: Expo Doctor (autolinking check)
+        run: |
+          cd sample-expo
+          npx --yes expo doctor --fix --ci
       - name: Prebuild sample app (iOS)
         run: |
           cd sample-expo
           npx --yes expo prebuild --platform ios --no-install --clean
       - name: Install pods
-            - name: Cache sample-expo node_modules
-              uses: actions/cache@v4
-              with:
-                path: sample-expo/node_modules
-                key: ${{ runner.os }}-sample-expo-node_modules-${{ hashFiles('sample-expo/yarn.lock') }}
-                restore-keys: |
-                  ${{ runner.os }}-sample-expo-node_modules-
-            - name: Install sample dependencies
-              run: |
-                cd sample-expo
-                if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
         run: |
           cd sample-expo/ios
           pod install --repo-update
       - name: Xcode build
-            - name: Expo Doctor (autolinking check)
-              run: |
-                cd sample-expo
-                npx --yes expo doctor --fix --ci
         run: |
           set -euo pipefail
           cd sample-expo/ios
