@@ -12,8 +12,11 @@ runs:
 
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
-      run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
       shell: bash
+      run: |
+        # Try Yarn v1 first, then Yarn Berry setting, fallback to default location
+        DIR=$(yarn cache dir 2>/dev/null || yarn config get cacheFolder 2>/dev/null || echo "$HOME/.cache/yarn")
+        echo "dir=$DIR" >> $GITHUB_OUTPUT
 
     - name: Cache dependencies
       uses: actions/cache@v4

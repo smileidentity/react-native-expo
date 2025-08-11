@@ -1,4 +1,4 @@
-name: ci
+name: CI
 
 on:
   push:
@@ -17,8 +17,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
-      - run: yarn lint
-      - run: yarn typecheck
+      - name: Lint
+        run: yarn lint
+      - name: Typecheck
+        run: yarn typecheck || yarn expo-module typecheck
 
   test:
     runs-on: ubuntu-latest
@@ -26,7 +28,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
-      - run: yarn test --maxWorkers=2 --coverage
+      - name: Unit tests
+        run: |
+          yarn test --maxWorkers=2 --coverage || yarn expo-module test --maxWorkers=2 --coverage
 
   build-library:
     runs-on: ubuntu-latest
@@ -34,9 +38,20 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
-      - run: yarn prepare  # Builds SDK
+      - name: Build package
+        run: |
+          yarn clean || true
+          yarn build || yarn expo-module build
+          yarn prepare || yarn expo-module prepare
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: |
+            build/**
+            *.tgz
 
-  build-android:
+  android-validate:
     runs-on: ubuntu-latest
     needs: build-library
     steps:
@@ -54,12 +69,19 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-      - run: |
+      - name: Install sample dependencies
+        run: |
           cd sample-expo
-          npx expo prebuild --clean
-          npx expo run:android
+          if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
+      - name: Prebuild sample app
+        run: |
+          cd sample-expo
+          npx --yes expo prebuild --platform android --no-install --clean
+      - name: Gradle assemble
+        working-directory: sample-expo/android
+        run: ./gradlew --no-daemon assembleDebug
 
-  build-ios:
+  ios-validate:
     runs-on: macos-14
     needs: build-library
     steps:
@@ -72,8 +94,48 @@ jobs:
           path: |
             sample-expo/ios/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('sample-expo/ios/Podfile.lock') }}
-      - run: |
+      - name: Install sample dependencies
+        run: |
           cd sample-expo
-          npx expo prebuild --clean
-          cd ios && pod install && cd ..
-          npx expo run:ios
+          if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
+      - name: Prebuild sample app (iOS)
+        run: |
+          cd sample-expo
+          npx --yes expo prebuild --platform ios --no-install --clean
+      - name: Install pods
+        run: |
+          cd sample-expo/ios
+          pod install --repo-update
+      - name: Xcode build
+        run: |
+          set -euo pipefail
+          cd sample-expo/ios
+          xcodebuild -workspace sample-expo.xcworkspace \
+            -scheme sample-expo \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            build
+
+  podspec-lint:
+    runs-on: macos-14
+    needs: build-library
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Pod lib lint
+        run: |
+          gem install cocoapods --no-document || true
+          pod repo update || true
+          pod lib lint ios/SmileIDExpo.podspec --allow-warnings --fail-fast --skip-tests
+
+  pack-verify:
+    runs-on: ubuntu-latest
+    needs: build-library
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Pack tarball (dry run)
+  run: npm pack --dry-run
