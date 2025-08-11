@@ -83,7 +83,7 @@ jobs:
       - name: Expo Doctor (autolinking check)
         run: |
           cd sample-expo
-          npx --yes expo doctor --fix --ci
+          npx --yes expo-doctor --fix --ci
       - name: Prebuild sample app
         run: |
           cd sample-expo
@@ -119,7 +119,7 @@ jobs:
       - name: Expo Doctor (autolinking check)
         run: |
           cd sample-expo
-          npx --yes expo doctor --fix --ci
+          npx --yes expo-doctor --fix --ci
       - name: Prebuild sample app (iOS)
         run: |
           cd sample-expo
@@ -132,8 +132,13 @@ jobs:
         run: |
           set -euo pipefail
           cd sample-expo/ios
-          xcodebuild -workspace sample-expo.xcworkspace \
-            -scheme sample-expo \
+          WORKSPACE=$(ls *.xcworkspace | head -n1)
+          if [ -z "$WORKSPACE" ]; then echo "No .xcworkspace found"; exit 1; fi
+          # Detect first scheme from workspace
+          SCHEME=$(xcodebuild -list -json -workspace "$WORKSPACE" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""')
+          if [ -z "$SCHEME" ]; then echo "No scheme found in $WORKSPACE"; exit 1; fi
+          xcodebuild -workspace "$WORKSPACE" \
+            -scheme "$SCHEME" \
             -configuration Debug \
             -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' \
@@ -150,7 +155,7 @@ jobs:
         run: |
           gem install cocoapods --no-document || true
           pod repo update || true
-          pod lib lint ios/SmileIDExpo.podspec --allow-warnings --fail-fast --skip-tests
+          pod lib lint ios/SmileIDExpo.podspec --allow-warnings --fail-fast --skip-tests --sources='https://cdn.cocoapods.org/'
 
   pack-verify:
     runs-on: ubuntu-latest
@@ -162,4 +167,5 @@ jobs:
       - name: Pack tarball (dry run)
         run: npm pack --dry-run
       - name: Verify pack contents (types and entry)
-        run: npm pack --dry-run | tee pack.txt && grep -E 'build/index\.js' pack.txt && grep -E 'build/index\.d\.ts' pack.txt
+        run: |
+          npm pack --dry-run --json | node -e "const fs=require('fs');const data=JSON.parse(fs.readFileSync(0,'utf8'))[0];const files=(data.files||[]).map(f=>f.path);const req=['build/index.js','build/index.d.ts'];const missing=req.filter(p=>!files.includes(p));if(missing.length){console.error('Missing in tarball:',missing.join(','));process.exit(1)}else{console.log('All required files present:',req.join(', '));}"
