@@ -69,10 +69,21 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      - name: Cache sample-expo node_modules
+        uses: actions/cache@v4
+        with:
+          path: sample-expo/node_modules
+          key: ${{ runner.os }}-sample-expo-node_modules-${{ hashFiles('sample-expo/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-sample-expo-node_modules-
       - name: Install sample dependencies
         run: |
           cd sample-expo
           if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
+      - name: Expo Doctor (autolinking check)
+        run: |
+          cd sample-expo
+          npx --yes expo doctor --fix --ci
       - name: Prebuild sample app
         run: |
           cd sample-expo
@@ -103,10 +114,25 @@ jobs:
           cd sample-expo
           npx --yes expo prebuild --platform ios --no-install --clean
       - name: Install pods
+            - name: Cache sample-expo node_modules
+              uses: actions/cache@v4
+              with:
+                path: sample-expo/node_modules
+                key: ${{ runner.os }}-sample-expo-node_modules-${{ hashFiles('sample-expo/yarn.lock') }}
+                restore-keys: |
+                  ${{ runner.os }}-sample-expo-node_modules-
+            - name: Install sample dependencies
+              run: |
+                cd sample-expo
+                if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
         run: |
           cd sample-expo/ios
           pod install --repo-update
       - name: Xcode build
+            - name: Expo Doctor (autolinking check)
+              run: |
+                cd sample-expo
+                npx --yes expo doctor --fix --ci
         run: |
           set -euo pipefail
           cd sample-expo/ios
@@ -139,3 +165,9 @@ jobs:
         uses: ./.github/actions/setup
       - name: Pack tarball (dry run)
   run: npm pack --dry-run
+      - name: Verify pack contents (types and entry)
+        run: |
+          npm pack --dry-run > pack.txt
+          echo "Checking for build/index.js and build/index.d.ts in tarball listing"
+          grep -E "build/index\\.js" pack.txt
+          grep -E "build/index\\.d\\.ts" pack.txt
