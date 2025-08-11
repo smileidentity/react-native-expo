@@ -7,7 +7,7 @@
   "scripts": {
     "build": "expo-module build",
     "clean": "expo-module clean",
-    "lint": "expo-module lint",
+  "lint": "eslint --cache --cache-location .eslintcache --ext .ts,.tsx ./src",
     "test": "expo-module test",
     "prepare": "expo-module prepare",
     "prepublishOnly": "expo-module prepublishOnly",

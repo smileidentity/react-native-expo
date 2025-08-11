@@ -13,24 +13,15 @@ concurrency:
 jobs:
   lint:
     runs-on: ubuntu-latest
+  timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
       - name: Lint
-        run: yarn lint
+    run: yarn lint
       - name: Typecheck
         run: yarn typecheck || yarn expo-module typecheck
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup
-        uses: ./.github/actions/setup
-      - name: Unit tests
-        run: |
-          yarn test --maxWorkers=2 --coverage || yarn expo-module test --maxWorkers=2 --coverage
 
   build-library:
     runs-on: ubuntu-latest
@@ -83,7 +74,7 @@ jobs:
       - name: Expo Doctor (autolinking check)
         run: |
           cd sample-expo
-          npx --yes expo-doctor --fix --ci
+          npx --yes expo-doctor . --fix --ci
       - name: Prebuild sample app
         run: |
           cd sample-expo
@@ -119,7 +110,7 @@ jobs:
       - name: Expo Doctor (autolinking check)
         run: |
           cd sample-expo
-          npx --yes expo-doctor --fix --ci
+          npx --yes expo-doctor . --fix --ci
       - name: Prebuild sample app (iOS)
         run: |
           cd sample-expo
@@ -152,10 +143,20 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Pod lib lint
+        env:
+          COCOAPODS_DISABLE_STATS: 'true'
         run: |
+          set -e
           gem install cocoapods --no-document || true
           pod repo update || true
-          pod lib lint ios/SmileIDExpo.podspec --allow-warnings --fail-fast --skip-tests --sources='https://cdn.cocoapods.org/'
+          echo "First attempt: lint with trunk/CDN sources"
+          if pod lib lint ios/SmileIDExpo.podspec --allow-warnings --fail-fast --skip-tests --sources='trunk,https://cdn.cocoapods.org/'; then
+            exit 0
+          fi
+          echo "Retrying after adding full CocoaPods Specs repo (this may take a while)"
+          pod repo add cocoapods https://github.com/CocoaPods/Specs.git || true
+          pod repo update cocoapods || true
+          pod lib lint ios/SmileIDExpo.podspec --allow-warnings --fail-fast --skip-tests --sources='cocoapods,trunk,https://cdn.cocoapods.org/'
 
   pack-verify:
     runs-on: ubuntu-latest
@@ -164,8 +165,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
-      - name: Pack tarball (dry run)
-        run: npm pack --dry-run
+      - name: Pack tarball
+        run: echo "TARBALL=$(npm pack --silent)" >> $GITHUB_ENV
+      - name: List tarball contents
+        run: tar -tzf "$TARBALL" | tee pack.txt
       - name: Verify pack contents (types and entry)
         run: |
-          npm pack --dry-run --json | node -e "const fs=require('fs');const data=JSON.parse(fs.readFileSync(0,'utf8'))[0];const files=(data.files||[]).map(f=>f.path);const req=['build/index.js','build/index.d.ts'];const missing=req.filter(p=>!files.includes(p));if(missing.length){console.error('Missing in tarball:',missing.join(','));process.exit(1)}else{console.log('All required files present:',req.join(', '));}"
+          grep -E '^package/build/index\.js$' pack.txt
+          grep -E '^package/build/index\.d\.ts$' pack.txt

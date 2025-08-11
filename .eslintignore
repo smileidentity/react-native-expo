@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+.yarn/
+
+# Build outputs
+build/
+dist/
+
+# Native and sample apps (lint only library sources)
+android/
+ios/
+sample-expo/
+sample-react-native/
+
+# Misc
+**/*.min.js
+*.log

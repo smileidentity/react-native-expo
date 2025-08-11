@@ -1,5 +1,5 @@
 module.exports = {
   root: true,
   extends: ['universe/native', 'universe/web'],
-  ignorePatterns: ['build'],
+  ignorePatterns: ['build', 'android', 'ios', 'sample-expo', 'sample-react-native', 'node_modules', '.yarn'],
 };
