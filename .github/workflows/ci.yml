@@ -162,8 +162,4 @@ jobs:
       - name: Pack tarball (dry run)
   run: npm pack --dry-run
       - name: Verify pack contents (types and entry)
-        run: |
-          npm pack --dry-run > pack.txt
-          echo "Checking for build/index.js and build/index.d.ts in tarball listing"
-          grep -E "build/index\\.js" pack.txt
-          grep -E "build/index\\.d\\.ts" pack.txt
+        run: npm pack --dry-run | tee pack.txt && grep -E 'build/index\.js' pack.txt && grep -E 'build/index\.d\.ts' pack.txt
