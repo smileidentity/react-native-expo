@@ -13,13 +13,13 @@ concurrency:
 jobs:
   lint:
     runs-on: ubuntu-latest
-  timeout-minutes: 10
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
       - name: Lint
-    run: yarn lint
+        run: yarn lint
       - name: Typecheck
         run: yarn typecheck || yarn expo-module typecheck
 
