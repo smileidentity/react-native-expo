@@ -1780,7 +1780,7 @@ PODS:
     - Sentry (= 8.53.2)
     - SmileIDSecurity (= 11.1.0)
     - ZIPFoundation (= 0.9.19)
-  - SmileIDExpo (11.0.0):
+  - SmileIDExpo (11.1.0):
     - ExpoModulesCore
     - SmileID (= 11.1.0)
   - SmileIDSecurity (11.1.0)
@@ -2124,7 +2124,7 @@ SPEC CHECKSUMS:
   RNSVG: 8a1054afe490b5d63b9792d7ae3c1fde8c05cdd0
   Sentry: 59993bffde4a1ac297ba6d268dc4bbce068d7c1b
   SmileID: 8af7cd0190245e561ec2496dda08eeb3ecb61f7d
-  SmileIDExpo: 538d9192c4166099a5dc90d136e337e876e0c29c
+  SmileIDExpo: e3010b99baced1bab901b59f76019083155c3660
   SmileIDSecurity: 9bf50182c931074316892e929ddcfc34f74368c5
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: adb397651e1c00672c12e9495babca70777e411e
