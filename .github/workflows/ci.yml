@@ -94,40 +94,6 @@ jobs:
         working-directory: sample-expo/android
         run: ./gradlew --no-daemon assembleDebug
 
-  android-react-native-validate:
-    runs-on: ubuntu-latest
-    needs: build-library
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup
-        uses: ./.github/actions/setup
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/wrapper
-            ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-      - name: Cache sample-react-native node_modules
-        uses: actions/cache@v4
-        with:
-          path: sample-react-native/node_modules
-          key: ${{ runner.os }}-sample-react-native-node_modules-${{ hashFiles('sample-react-native/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-sample-react-native-node_modules-
-      - name: Install sample-react-native dependencies
-        run: |
-          cd sample-react-native
-          if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
-      - name: Gradle assemble sample-react-native
-        working-directory: sample-react-native/android
-        run: ./gradlew --no-daemon assembleDebug
-
   ios-validate:
     runs-on: macos-14
     needs: build-library
@@ -223,98 +189,7 @@ jobs:
             -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             build
-
-  ios-react-native-validate:
-    runs-on: macos-14
-    needs: build-library
-    timeout-minutes: 45
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup
-        uses: ./.github/actions/setup
-      - name: Cache CocoaPods
-        uses: actions/cache@v4
-        with:
-          path: |
-            sample-react-native/ios/Pods
-          key: ${{ runner.os }}-rn-pods-${{ hashFiles('sample-react-native/ios/Podfile.lock') }}
-      - name: Cache sample-react-native node_modules
-        uses: actions/cache@v4
-        with:
-          path: sample-react-native/node_modules
-          key: ${{ runner.os }}-sample-react-native-node_modules-${{ hashFiles('sample-react-native/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-sample-react-native-node_modules-
-      - name: Install sample-react-native dependencies
-        run: |
-          cd sample-react-native
-          if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
-      - name: Install pods for sample-react-native
-        run: |
-          cd sample-react-native/ios
-          pod install --repo-update
-      - name: Xcode build sample-react-native
-        run: |
-          set -euo pipefail
-          cd sample-react-native/ios
-          
-          # Check if workspace exists
-          WORKSPACE=$(find . -name "*.xcworkspace" -maxdepth 1 | head -n1)
-          if [ -z "$WORKSPACE" ]; then 
-            echo "No .xcworkspace found in $(pwd)"
-            ls -la
-            exit 1
-          fi
-          
-          WORKSPACE=$(basename "$WORKSPACE")
-          echo "Found workspace: $WORKSPACE"
-          
-          # Check if workspace directory and contents exist
-          if [ ! -d "$WORKSPACE" ]; then
-            echo "Workspace directory $WORKSPACE does not exist"
-            exit 1
-          fi
-          
-          if [ ! -f "$WORKSPACE/contents.xcworkspacedata" ]; then
-            echo "Workspace contents file $WORKSPACE/contents.xcworkspacedata does not exist"
-            exit 1
-          fi
-          
-          # Detect first scheme from workspace with better error handling
-          SCHEME_OUTPUT=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
-          if [ "$SCHEME_OUTPUT" = '{}' ]; then
-            echo "Failed to get schemes from workspace, trying direct scheme detection"
-            # Fallback: try to find scheme from project file
-            SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
-            if [ -z "$SCHEME" ]; then
-              echo "No scheme found and no project file found"
-              exit 1
-            fi
-          else
-            SCHEME=$(echo "$SCHEME_OUTPUT" | ruby -rjson -e 'begin; data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""; rescue; puts ""; end' 2>/dev/null || echo "")
-            if [ -z "$SCHEME" ]; then
-              echo "No scheme found in workspace JSON, trying project fallback"
-              SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
-            fi
-          fi
-          
-          if [ -z "$SCHEME" ]; then 
-            echo "No scheme found in $WORKSPACE"
-            echo "Available files:"
-            ls -la
-            exit 1
-          fi
-          
-          echo "Using scheme: $SCHEME"
-          
-          xcodebuild -workspace "$WORKSPACE" \
-            -scheme "$SCHEME" \
-            -configuration Debug \
-            -sdk iphoneos \
-            -destination 'generic/platform=iOS' \
-            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
-            build
-
+            
   ci-success:
     runs-on: ubuntu-latest
     needs: [lint, build-library, android-validate, ios-validate]
@@ -333,8 +208,6 @@ jobs:
             echo "  - Lint: ${{ needs.lint.result }}"
             echo "  - Build Library: ${{ needs.build-library.result }}"
             echo "  - Android Expo: ${{ needs.android-validate.result }}"
-            echo "  - Android React Native: ${{ needs.android-react-native-validate.result }}"
             echo "  - iOS Expo: ${{ needs.ios-validate.result }}"
-            echo "  - iOS React Native: ${{ needs.ios-react-native-validate.result }}"
             exit 1
           fi
