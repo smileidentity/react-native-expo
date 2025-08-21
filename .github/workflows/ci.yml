@@ -158,72 +158,25 @@ jobs:
         run: |
           cd sample-expo
           npx --yes expo prebuild --platform ios --no-install --clean
-          # Verify prebuild was successful
-          if [ ! -d "ios" ]; then
-            echo "❌ iOS directory was not created by expo prebuild"
-            exit 1
-          fi
-          echo "✅ Expo prebuild completed successfully"
       - name: Install pods for sample-expo
         run: |
           cd sample-expo/ios
           pod install --repo-update
-          # Verify workspace was created
-          if [ ! -f *.xcworkspace/contents.xcworkspacedata ]; then
-            echo "❌ No valid .xcworkspace found after pod install"
-            ls -la
-            exit 1
-          fi
-          echo "✅ CocoaPods installation completed successfully"
       - name: Xcode build sample-expo
         run: |
           set -euo pipefail
           cd sample-expo/ios
-          
-          # List all available files for debugging
-          echo "📁 Contents of ios directory:"
-          ls -la
-          
-          # Find workspace file
-          WORKSPACE=$(find . -name "*.xcworkspace" -type d | head -n1)
-          if [ -z "$WORKSPACE" ]; then 
-            echo "❌ No .xcworkspace found"
-            exit 1
-          fi
-          
-          # Remove leading ./
-          WORKSPACE=${WORKSPACE#./}
-          echo "🔍 Found workspace: $WORKSPACE"
-          
-          # Verify workspace has contents
-          if [ ! -f "$WORKSPACE/contents.xcworkspacedata" ]; then
-            echo "❌ Workspace $WORKSPACE does not contain contents.xcworkspacedata"
-            exit 1
-          fi
-          
-          # Get schemes
-          SCHEMES_JSON=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
-          if [ "$SCHEMES_JSON" = "{}" ]; then
-            echo "❌ Failed to get schemes from workspace"
-            exit 1
-          fi
-          
-          # Extract first scheme
-          SCHEME=$(echo "$SCHEMES_JSON" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""' 2>/dev/null || echo "")
-          if [ -z "$SCHEME" ]; then 
-            echo "❌ No scheme found in $WORKSPACE"
-            echo "Available schemes:"
-            echo "$SCHEMES_JSON" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts w["schemes"] if w && w["schemes"]' 2>/dev/null || echo "Failed to parse schemes"
-            exit 1
-          fi
-          
-          echo "🎯 Using scheme: $SCHEME"
-          
+          WORKSPACE=$(ls *.xcworkspace | head -n1)
+          if [ -z "$WORKSPACE" ]; then echo "No .xcworkspace found"; exit 1; fi
+          # Detect first scheme from workspace
+          SCHEME=$(xcodebuild -list -json -workspace "$WORKSPACE" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""')
+          if [ -z "$SCHEME" ]; then echo "No scheme found in $WORKSPACE"; exit 1; fi
           xcodebuild -workspace "$WORKSPACE" \
             -scheme "$SCHEME" \
             -configuration Debug \
-            -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             build
 
   ios-react-native-validate:
@@ -255,62 +208,21 @@ jobs:
         run: |
           cd sample-react-native/ios
           pod install --repo-update
-          # Verify workspace was created
-          if [ ! -f *.xcworkspace/contents.xcworkspacedata ]; then
-            echo "❌ No valid .xcworkspace found after pod install"
-            ls -la
-            exit 1
-          fi
-          echo "✅ CocoaPods installation completed successfully"
       - name: Xcode build sample-react-native
         run: |
           set -euo pipefail
           cd sample-react-native/ios
-          
-          # List all available files for debugging
-          echo "📁 Contents of ios directory:"
-          ls -la
-          
-          # Find workspace file
-          WORKSPACE=$(find . -name "*.xcworkspace" -type d | head -n1)
-          if [ -z "$WORKSPACE" ]; then 
-            echo "❌ No .xcworkspace found"
-            exit 1
-          fi
-          
-          # Remove leading ./
-          WORKSPACE=${WORKSPACE#./}
-          echo "🔍 Found workspace: $WORKSPACE"
-          
-          # Verify workspace has contents
-          if [ ! -f "$WORKSPACE/contents.xcworkspacedata" ]; then
-            echo "❌ Workspace $WORKSPACE does not contain contents.xcworkspacedata"
-            exit 1
-          fi
-          
-          # Get schemes
-          SCHEMES_JSON=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
-          if [ "$SCHEMES_JSON" = "{}" ]; then
-            echo "❌ Failed to get schemes from workspace"
-            exit 1
-          fi
-          
-          # Extract first scheme
-          SCHEME=$(echo "$SCHEMES_JSON" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""' 2>/dev/null || echo "")
-          if [ -z "$SCHEME" ]; then 
-            echo "❌ No scheme found in $WORKSPACE"
-            echo "Available schemes:"
-            echo "$SCHEMES_JSON" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts w["schemes"] if w && w["schemes"]' 2>/dev/null || echo "Failed to parse schemes"
-            exit 1
-          fi
-          
-          echo "🎯 Using scheme: $SCHEME"
-          
+          WORKSPACE=$(ls *.xcworkspace | head -n1)
+          if [ -z "$WORKSPACE" ]; then echo "No .xcworkspace found"; exit 1; fi
+          # Detect first scheme from workspace
+          SCHEME=$(xcodebuild -list -json -workspace "$WORKSPACE" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""')
+          if [ -z "$SCHEME" ]; then echo "No scheme found in $WORKSPACE"; exit 1; fi
           xcodebuild -workspace "$WORKSPACE" \
             -scheme "$SCHEME" \
             -configuration Debug \
-            -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             build
 
   ci-success:
