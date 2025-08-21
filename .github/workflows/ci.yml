@@ -166,11 +166,56 @@ jobs:
         run: |
           set -euo pipefail
           cd sample-expo/ios
-          WORKSPACE=$(ls *.xcworkspace | head -n1)
-          if [ -z "$WORKSPACE" ]; then echo "No .xcworkspace found"; exit 1; fi
-          # Detect first scheme from workspace
-          SCHEME=$(xcodebuild -list -json -workspace "$WORKSPACE" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""')
-          if [ -z "$SCHEME" ]; then echo "No scheme found in $WORKSPACE"; exit 1; fi
+          
+          # Check if workspace exists
+          WORKSPACE=$(find . -name "*.xcworkspace" -maxdepth 1 | head -n1)
+          if [ -z "$WORKSPACE" ]; then 
+            echo "No .xcworkspace found in $(pwd)"
+            ls -la
+            exit 1
+          fi
+          
+          WORKSPACE=$(basename "$WORKSPACE")
+          echo "Found workspace: $WORKSPACE"
+          
+          # Check if workspace directory and contents exist
+          if [ ! -d "$WORKSPACE" ]; then
+            echo "Workspace directory $WORKSPACE does not exist"
+            exit 1
+          fi
+          
+          if [ ! -f "$WORKSPACE/contents.xcworkspacedata" ]; then
+            echo "Workspace contents file $WORKSPACE/contents.xcworkspacedata does not exist"
+            exit 1
+          fi
+          
+          # Detect first scheme from workspace with better error handling
+          SCHEME_OUTPUT=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
+          if [ "$SCHEME_OUTPUT" = '{}' ]; then
+            echo "Failed to get schemes from workspace, trying direct scheme detection"
+            # Fallback: try to find scheme from project file
+            SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
+            if [ -z "$SCHEME" ]; then
+              echo "No scheme found and no project file found"
+              exit 1
+            fi
+          else
+            SCHEME=$(echo "$SCHEME_OUTPUT" | ruby -rjson -e 'begin; data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""; rescue; puts ""; end' 2>/dev/null || echo "")
+            if [ -z "$SCHEME" ]; then
+              echo "No scheme found in workspace JSON, trying project fallback"
+              SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
+            fi
+          fi
+          
+          if [ -z "$SCHEME" ]; then 
+            echo "No scheme found in $WORKSPACE"
+            echo "Available files:"
+            ls -la
+            exit 1
+          fi
+          
+          echo "Using scheme: $SCHEME"
+          
           xcodebuild -workspace "$WORKSPACE" \
             -scheme "$SCHEME" \
             -configuration Debug \
@@ -212,11 +257,56 @@ jobs:
         run: |
           set -euo pipefail
           cd sample-react-native/ios
-          WORKSPACE=$(ls *.xcworkspace | head -n1)
-          if [ -z "$WORKSPACE" ]; then echo "No .xcworkspace found"; exit 1; fi
-          # Detect first scheme from workspace
-          SCHEME=$(xcodebuild -list -json -workspace "$WORKSPACE" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""')
-          if [ -z "$SCHEME" ]; then echo "No scheme found in $WORKSPACE"; exit 1; fi
+          
+          # Check if workspace exists
+          WORKSPACE=$(find . -name "*.xcworkspace" -maxdepth 1 | head -n1)
+          if [ -z "$WORKSPACE" ]; then 
+            echo "No .xcworkspace found in $(pwd)"
+            ls -la
+            exit 1
+          fi
+          
+          WORKSPACE=$(basename "$WORKSPACE")
+          echo "Found workspace: $WORKSPACE"
+          
+          # Check if workspace directory and contents exist
+          if [ ! -d "$WORKSPACE" ]; then
+            echo "Workspace directory $WORKSPACE does not exist"
+            exit 1
+          fi
+          
+          if [ ! -f "$WORKSPACE/contents.xcworkspacedata" ]; then
+            echo "Workspace contents file $WORKSPACE/contents.xcworkspacedata does not exist"
+            exit 1
+          fi
+          
+          # Detect first scheme from workspace with better error handling
+          SCHEME_OUTPUT=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
+          if [ "$SCHEME_OUTPUT" = '{}' ]; then
+            echo "Failed to get schemes from workspace, trying direct scheme detection"
+            # Fallback: try to find scheme from project file
+            SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
+            if [ -z "$SCHEME" ]; then
+              echo "No scheme found and no project file found"
+              exit 1
+            fi
+          else
+            SCHEME=$(echo "$SCHEME_OUTPUT" | ruby -rjson -e 'begin; data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""; rescue; puts ""; end' 2>/dev/null || echo "")
+            if [ -z "$SCHEME" ]; then
+              echo "No scheme found in workspace JSON, trying project fallback"
+              SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
+            fi
+          fi
+          
+          if [ -z "$SCHEME" ]; then 
+            echo "No scheme found in $WORKSPACE"
+            echo "Available files:"
+            ls -la
+            exit 1
+          fi
+          
+          echo "Using scheme: $SCHEME"
+          
           xcodebuild -workspace "$WORKSPACE" \
             -scheme "$SCHEME" \
             -configuration Debug \
