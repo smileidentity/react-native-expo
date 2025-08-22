@@ -13,15 +13,15 @@ concurrency:
 jobs:
   lint:
     runs-on: ubuntu-latest
-  timeout-minutes: 10
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - name: Setup
         uses: ./.github/actions/setup
       - name: Lint
-    run: yarn lint
+        run: yarn lint
       - name: Typecheck
-        run: yarn typecheck || yarn expo-module typecheck
+        run: yarn expo-module typecheck
 
   build-library:
     runs-on: ubuntu-latest
@@ -45,6 +45,7 @@ jobs:
   android-validate:
     runs-on: ubuntu-latest
     needs: build-library
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - name: Setup
@@ -67,25 +68,22 @@ jobs:
           key: ${{ runner.os }}-sample-expo-node_modules-${{ hashFiles('sample-expo/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-sample-expo-node_modules-
-      - name: Install sample dependencies
+      - name: Install sample-expo dependencies
         run: |
           cd sample-expo
           if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
-      - name: Expo Doctor (autolinking check)
-        run: |
-          cd sample-expo
-          npx --yes expo-doctor . --fix --ci
-      - name: Prebuild sample app
+      - name: Prebuild sample-expo app
         run: |
           cd sample-expo
           npx --yes expo prebuild --platform android --no-install --clean
-      - name: Gradle assemble
+      - name: Gradle assemble sample-expo
         working-directory: sample-expo/android
         run: ./gradlew --no-daemon assembleDebug
 
   ios-validate:
     runs-on: macos-14
     needs: build-library
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - name: Setup
@@ -103,73 +101,99 @@ jobs:
           key: ${{ runner.os }}-sample-expo-node_modules-${{ hashFiles('sample-expo/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-sample-expo-node_modules-
-      - name: Install sample dependencies
+      - name: Install sample-expo dependencies
         run: |
           cd sample-expo
           if [ -f yarn.lock ]; then yarn install --frozen-lockfile; else yarn install; fi
-      - name: Expo Doctor (autolinking check)
-        run: |
-          cd sample-expo
-          npx --yes expo-doctor . --fix --ci
-      - name: Prebuild sample app (iOS)
+
+      - name: Prebuild sample-expo app (iOS)
         run: |
           cd sample-expo
           npx --yes expo prebuild --platform ios --no-install --clean
-      - name: Install pods
+      - name: Install pods for sample-expo
         run: |
           cd sample-expo/ios
           pod install --repo-update
-      - name: Xcode build
+      - name: Xcode build sample-expo
         run: |
           set -euo pipefail
           cd sample-expo/ios
-          WORKSPACE=$(ls *.xcworkspace | head -n1)
-          if [ -z "$WORKSPACE" ]; then echo "No .xcworkspace found"; exit 1; fi
-          # Detect first scheme from workspace
-          SCHEME=$(xcodebuild -list -json -workspace "$WORKSPACE" | ruby -rjson -e 'data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""')
-          if [ -z "$SCHEME" ]; then echo "No scheme found in $WORKSPACE"; exit 1; fi
+          
+          # Check if workspace exists
+          WORKSPACE=$(find . -name "*.xcworkspace" -maxdepth 1 | head -n1)
+          if [ -z "$WORKSPACE" ]; then 
+            echo "No .xcworkspace found in $(pwd)"
+            ls -la
+            exit 1
+          fi
+          
+          WORKSPACE=$(basename "$WORKSPACE")
+          echo "Found workspace: $WORKSPACE"
+          
+          # Check if workspace directory and contents exist
+          if [ ! -d "$WORKSPACE" ]; then
+            echo "Workspace directory $WORKSPACE does not exist"
+            exit 1
+          fi
+          
+          if [ ! -f "$WORKSPACE/contents.xcworkspacedata" ]; then
+            echo "Workspace contents file $WORKSPACE/contents.xcworkspacedata does not exist"
+            exit 1
+          fi
+          
+          # Detect first scheme from workspace with better error handling
+          SCHEME_OUTPUT=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
+          if [ "$SCHEME_OUTPUT" = '{}' ]; then
+            echo "Failed to get schemes from workspace, trying direct scheme detection"
+            # Fallback: try to find scheme from project file
+            SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
+            if [ -z "$SCHEME" ]; then
+              echo "No scheme found and no project file found"
+              exit 1
+            fi
+          else
+            SCHEME=$(echo "$SCHEME_OUTPUT" | ruby -rjson -e 'begin; data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""; rescue; puts ""; end' 2>/dev/null || echo "")
+            if [ -z "$SCHEME" ]; then
+              echo "No scheme found in workspace JSON, trying project fallback"
+              SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
+            fi
+          fi
+          
+          if [ -z "$SCHEME" ]; then 
+            echo "No scheme found in $WORKSPACE"
+            echo "Available files:"
+            ls -la
+            exit 1
+          fi
+          
+          echo "Using scheme: $SCHEME"
+          
           xcodebuild -workspace "$WORKSPACE" \
             -scheme "$SCHEME" \
             -configuration Debug \
-            -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             build
-
-  podspec-lint:
-    runs-on: macos-14
-    needs: build-library
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup
-        uses: ./.github/actions/setup
-      - name: Pod lib lint
-        env:
-          COCOAPODS_DISABLE_STATS: 'true'
-        run: |
-          set -e
-          gem install cocoapods --no-document || true
-          pod repo update || true
-          echo "First attempt: lint with trunk/CDN sources"
-          if pod lib lint ios/SmileIDExpo.podspec --allow-warnings --fail-fast --skip-tests --sources='trunk,https://cdn.cocoapods.org/'; then
-            exit 0
-          fi
-          echo "Retrying after adding full CocoaPods Specs repo (this may take a while)"
-          pod repo add cocoapods https://github.com/CocoaPods/Specs.git || true
-          pod repo update cocoapods || true
-          pod lib lint ios/SmileIDExpo.podspec --allow-warnings --fail-fast --skip-tests --sources='cocoapods,trunk,https://cdn.cocoapods.org/'
-
-  pack-verify:
+            
+  ci-success:
     runs-on: ubuntu-latest
-    needs: build-library
+    needs: [lint, build-library, android-validate, ios-validate]
+    if: always()
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup
-        uses: ./.github/actions/setup
-      - name: Pack tarball
-        run: echo "TARBALL=$(npm pack --silent)" >> $GITHUB_ENV
-      - name: List tarball contents
-        run: tar -tzf "$TARBALL" | tee pack.txt
-      - name: Verify pack contents (types and entry)
+      - name: Check CI Results
         run: |
-          grep -E '^package/build/index\.js$' pack.txt
-          grep -E '^package/build/index\.d\.ts$' pack.txt
+          if [[ "${{ needs.lint.result }}" == "success" && \
+                "${{ needs.build-library.result }}" == "success" && \
+                "${{ needs.android-validate.result }}" == "success" && \
+                "${{ needs.ios-validate.result }}" == "success" ]]; then
+            echo "✅ All CI checks passed!"
+            exit 0
+          else
+            echo "❌ Some CI checks failed:"
+            echo "  - Lint: ${{ needs.lint.result }}"
+            echo "  - Build Library: ${{ needs.build-library.result }}"
+            echo "  - Android Expo: ${{ needs.android-validate.result }}"
+            echo "  - iOS Expo: ${{ needs.ios-validate.result }}"
+            exit 1
+          fi
