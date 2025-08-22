@@ -22,7 +22,10 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.smileidentity.react.expo.sample"
+      "package": "com.smileidentity.react.expo.sample",
+      "compileSdkVersion": 36,
+      "targetSdkVersion": 36,
+      "buildToolsVersion": "36.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
