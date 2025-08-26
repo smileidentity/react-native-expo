@@ -1,6 +1,6 @@
 # Release Notes
 
-## Unreleased
+## 11.1.1 - August 26, 2025
 
 ### Changed
 * Bump iOS to 11.1.1 (https://github.com/smileidentity/ios/releases/tag/v11.1.1)
