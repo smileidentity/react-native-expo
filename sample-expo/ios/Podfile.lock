@@ -1771,19 +1771,19 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - Sentry (8.53.2):
-    - Sentry/Core (= 8.53.2)
-  - Sentry/Core (8.53.2)
-  - SmileID (11.1.0):
+  - Sentry (8.55.0):
+    - Sentry/Core (= 8.55.0)
+  - Sentry/Core (8.55.0)
+  - SmileID (11.1.1):
     - FingerprintJS (= 1.6.0)
     - lottie-ios (= 4.5.2)
-    - Sentry (= 8.53.2)
-    - SmileIDSecurity (= 11.1.0)
+    - Sentry (= 8.55.0)
+    - SmileIDSecurity (= 11.1.1)
     - ZIPFoundation (= 0.9.19)
   - SmileIDExpo (11.1.0):
     - ExpoModulesCore
-    - SmileID (= 11.1.0)
-  - SmileIDSecurity (11.1.0)
+    - SmileID (= 11.1.1)
+  - SmileIDSecurity (11.1.1)
   - SocketRocket (0.7.1)
   - Yoga (0.0.0)
   - ZIPFoundation (0.9.19)
@@ -2122,10 +2122,10 @@ SPEC CHECKSUMS:
   ReactCodegen: 6cb6e0d0b52471abc883541c76589d1c367c64c7
   ReactCommon: 1ab5451fc5da87c4cc4c3046e19a8054624ca763
   RNSVG: 8a1054afe490b5d63b9792d7ae3c1fde8c05cdd0
-  Sentry: 59993bffde4a1ac297ba6d268dc4bbce068d7c1b
-  SmileID: 8af7cd0190245e561ec2496dda08eeb3ecb61f7d
-  SmileIDExpo: e3010b99baced1bab901b59f76019083155c3660
-  SmileIDSecurity: 9bf50182c931074316892e929ddcfc34f74368c5
+  Sentry: f7dddfabe691274d6d630f04621e1345f9d6b9e0
+  SmileID: 814fac7c88593349680276789688496f1a948403
+  SmileIDExpo: 7bf67904c9a76f6089fd47e9ef2a5b63e4d51650
+  SmileIDSecurity: 2849074a33fa738cb7478f90b32b7f7333a14630
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: adb397651e1c00672c12e9495babca70777e411e
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
