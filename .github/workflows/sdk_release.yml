@@ -30,23 +30,18 @@ jobs:
       - name: Bump version
         id: bump_version
         run: |
-          # Define function to parse and bump version number
-          bump_version() {
-            if [[ "$1" == "beta" || "$1" == "alpha" ]]; then
-              main_version="${current_version%-*}"
-              prerelease_version="${current_version#*-}"
-              prerelease_identifier="${prerelease_version%[0-9]*}"
-              numeric_part="${prerelease_version#$prerelease_identifier}"
-              numeric_part=$(printf "%01d" $((10#$numeric_part + 1)))
-              echo "${main_version}-${prerelease_identifier}${numeric_part}"
-            else
-              echo "$1"
-            fi
-          }
-
           # Fetch current version and determine new version
           current_version=$(node -p "require('./package.json').version")
-          new_version=$(bump_version "${{ github.event.inputs.release_version }}")
+    
+          # Use npm version to handle all version bumping
+          if [[ "${{ github.event.inputs.release_version }}" == "beta" || "${{ github.event.inputs.release_version }}" == "alpha" ]]; then
+            new_version=$(npm version pre${{ github.event.inputs.release_version }} --no-git-tag-version --preid=${{ github.event.inputs.release_version }})
+          else
+            new_version=$(npm version ${{ github.event.inputs.release_version }} --no-git-tag-version)
+          fi
+    
+          # Remove 'v' prefix from npm version output
+          new_version=${new_version#v}
 
           # Bump package version and output new version
           npm version "$new_version" --no-git-tag-version
