@@ -69,10 +69,12 @@ jobs:
 
       - name: Create Tag and Release
         run: |
-          new_tag="v$new_version"
+          new_tag="v${{ env.new_version }}"
           git tag $new_tag
           git push origin $new_tag
           gh release create $new_tag --title "Release $new_tag" --notes "Release notes for $new_tag"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Package
         run: |
