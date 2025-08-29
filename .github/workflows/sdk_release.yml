@@ -52,10 +52,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+    
       - name: Create Release Branch
         run: |
-          new_branch=$new_version
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          new_branch="release/${{ env.new_version }}"
           git checkout -b $new_branch
+          git add package.json
+          git commit -m "Bump version to ${{ env.new_version }}"
           git push origin $new_branch
 
       - name: Create Tag and Release
