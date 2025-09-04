@@ -71,7 +71,7 @@ Version alignment: This SDK expects React Native and Metro versions that match (
 
 Quick verification: After launching the dev build, navigate to a screen that uses a Smile ID component. If it renders without the native module error, the dev build is set up correctly.
 
-###### Android target / compile SDK 36 requirement
+###### Android target / compile SDK version requirement
 
 If `npx expo run:android` fails with an error similar to:
 
