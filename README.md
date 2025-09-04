@@ -41,6 +41,36 @@ Install the Smile ID Expo SDK:
    yarn add @smile_identity/react-native-expo
    ```
 
+##### Avoid "Cannot find native module 'SmileIDExpo'" in Expo projects
+
+Expo Go does not bundle third‑party native modules. If you attempt to render any `SmileID*` native view inside Expo Go you'll see an error like:
+
+```
+Invariant Violation: TurboModuleRegistry.getEnforcing(...): 'SmileIDExpo' could not be found. Verify that a module by this name is registered in the native binary.
+```
+
+To fix this you must run a Development Build (a custom client) or a full release build that actually contains the native code.
+
+In short: stop using Expo Go for any screen that renders Smile ID components; create a development build with `expo run:ios` or `expo run:android`; start (or let the run command start) the bundler using `expo start --dev-client`; and rebuild whenever you add, remove, or upgrade native dependencies (including `@smile_identity/react-native-expo`).
+
+Step‑by‑step:
+
+1. iOS Dev Build
+   ```bash
+   npx expo run:ios
+   ```
+   This prebuilds `ios/`, installs Pods, compiles a custom client and launches it.
+
+2. Android Dev Build
+   ```bash
+   npx expo run:android
+   ```
+
+
+Version alignment: This SDK expects React Native and Metro versions that match (e.g. Expo SDK 53 ships RN 0.79.x + aligned Metro). If you override versions in `package.json`, ensure React Native and Metro remain compatible or you may see native view render failures.
+
+Quick verification: After launching the dev build, navigate to a screen that uses a Smile ID component. If it renders without the native module error, the dev build is set up correctly.
+
 #### **For Bare React Native Projects**
 
 1. **Install Expo Modules Support (if not already set up):**
