@@ -18,7 +18,7 @@ import {
   SmileIDSmartSelfieAuthenticationView,
   SmileIDSmartSelfieEnrollmentEnhancedView,
   SmileIDSmartSelfieEnrollmentView,
-} from 'react-native-expo';
+} from '@smile_identity/react-native-expo';
 
 import DocumentVerificationEnhancedSvgIcon from './icons/DocumentVerificationEnhancedSvgIcon';
 import BiometricKYCSvgIcon from './icons/BiometricKYCSvgIcon';
