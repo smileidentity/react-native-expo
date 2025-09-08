@@ -41,6 +41,82 @@ Install the Smile ID Expo SDK:
    yarn add @smile_identity/react-native-expo
    ```
 
+##### Avoid "Cannot find native module 'SmileIDExpo'" in Expo projects
+
+Expo Go does not bundle third‑party native modules. If you attempt to render any `SmileID*` native view inside Expo Go you'll see an error like:
+
+```
+ Cannot find native module 'SmileIDExpo', js engine: hermes
+```
+
+To fix this you must run a Development Build (a custom client) or a full release build that actually contains the native code.
+
+In short: stop using Expo Go for any screen that renders Smile ID components; create a development build with `expo run:ios` or `expo run:android`; start (or let the run command start) the bundler using `expo start --dev-client`; and rebuild whenever you add, remove, or upgrade native dependencies (including `@smile_identity/react-native-expo`).
+
+Step‑by‑step:
+
+1. iOS Dev Build
+   ```bash
+   npx expo run:ios
+   ```
+   This prebuilds `ios/`, installs Pods, compiles a custom client and launches it.
+
+2. Android Dev Build
+   ```bash
+   npx expo run:android
+   ```
+
+
+Version alignment: This SDK expects React Native and Metro versions that match (e.g. Expo SDK 53 ships RN 0.79.x + aligned Metro). If you override versions in `package.json`, ensure React Native and Metro remain compatible or you may see native view render failures.
+
+Quick verification: After launching the dev build, navigate to a screen that uses a Smile ID component. If it renders without the native module error, the dev build is set up correctly.
+
+###### Android target / compile SDK version requirement
+
+If `npx expo run:android` fails with an error similar to:
+
+```
+Execution failed for task ':app:processDebugResources'.
+Android resource linking failed
+... AndroidManifest.xml: AAPT: error: attribute android:pageSizeCompat not found.
+```
+
+Your app is still building with the default Expo `compileSdkVersion/targetSdkVersion` (35), while the Smile ID Expo SDK requires 36. Update your Android build properties using the Expo Build Properties plugin:
+
+1. Install the plugin (adds the compatible native Android versions):
+    ```bash
+    npx expo install expo-build-properties
+    ```
+2. Add (or update) the plugin entry in `app.json` / `app.config.js`:
+    ```json
+    {
+       "expo": {
+          "plugins": [
+             [
+                "expo-build-properties",
+                {
+                   "android": {
+                      "compileSdkVersion": 36,
+                      "targetSdkVersion": 36,
+                      "buildToolsVersion": "36.0.0"
+                   }
+                }
+             ]
+          ]
+       }
+    }
+    ```
+3. Regenerate native Android project with a clean prebuild (ensures Gradle + manifest are recreated):
+    ```bash
+    npx expo prebuild -p android --clean
+    ```
+4. Run the Android dev build again:
+    ```bash
+    npx expo run:android
+    ```
+
+Whenever you adjust these Android version settings, repeat the clean prebuild + run sequence. This aligns the Expo managed workflow with the SDK's required Android API level and resolves the missing `android:pageSizeCompat` attribute error.
+
 #### **For Bare React Native Projects**
 
 1. **Install Expo Modules Support (if not already set up):**
