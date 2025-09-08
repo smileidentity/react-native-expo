@@ -1,4 +1,9 @@
 # Release Notes
+## Unreleased
+
+### Changed
+* sample-react-native: Updated Metro + package setup to use local SDK source, fixed iOS entry, and resolved TypeScript 
+ type/path issues.
 
 ## 11.1.1 - August 26, 2025
 
