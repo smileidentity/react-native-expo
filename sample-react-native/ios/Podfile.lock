@@ -1771,16 +1771,19 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - SmileID (11.0.2):
-    - FingerprintJS
-    - lottie-ios (~> 4.5.0)
-    - SmileIDSecurity (~> 1.0.3)
-    - ZIPFoundation (~> 0.9)
-  - SmileIDExpo (0.1.0):
+  - Sentry (8.55.0):
+    - Sentry/Core (= 8.55.0)
+  - Sentry/Core (8.55.0)
+  - SmileID (11.1.1):
+    - FingerprintJS (= 1.6.0)
+    - lottie-ios (= 4.5.2)
+    - Sentry (= 8.55.0)
+    - SmileIDSecurity (= 11.1.1)
+    - ZIPFoundation (= 0.9.19)
+  - SmileIDExpo (11.1.1):
     - ExpoModulesCore
-    - SmileID (= 11.0.2)
-    - SmileIDSecurity (= 1.0.3)
-  - SmileIDSecurity (1.0.3)
+    - SmileID (= 11.1.1)
+  - SmileIDSecurity (11.1.1)
   - SocketRocket (0.7.1)
   - Yoga (0.0.0)
   - ZIPFoundation (0.9.19)
@@ -1865,13 +1868,14 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - SmileIDExpo (from `../node_modules/react-native-expo/ios`)
+  - SmileIDExpo (from `../../ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - FingerprintJS
     - lottie-ios
+    - Sentry
     - SmileID
     - SmileIDSecurity
     - SocketRocket
@@ -2034,7 +2038,7 @@ EXTERNAL SOURCES:
   RNSVG:
     :path: "../node_modules/react-native-svg"
   SmileIDExpo:
-    :path: "../node_modules/react-native-expo/ios"
+    :path: "../../ios"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -2118,9 +2122,10 @@ SPEC CHECKSUMS:
   ReactCodegen: 86758c0e13c6b245ff0cd7123cc5e8910d67546a
   ReactCommon: aa48e4fddbc6a0afa19dca39a1b6016c150b5db4
   RNSVG: 8a1054afe490b5d63b9792d7ae3c1fde8c05cdd0
-  SmileID: 907d71f709a12b6dbd951205b70b8eeba89d2cfd
-  SmileIDExpo: a4ee416afcd8195b2f0599ca9baa478e201c7a16
-  SmileIDSecurity: e721b4a2ccc403ab61e2e14a4c7dd15fa4e4e55d
+  Sentry: f7dddfabe691274d6d630f04621e1345f9d6b9e0
+  SmileID: 814fac7c88593349680276789688496f1a948403
+  SmileIDExpo: 9a287d1b6b564cff16cb968f39dfb85f008cf7bd
+  SmileIDSecurity: 2849074a33fa738cb7478f90b32b7f7333a14630
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: d15f5aa644c466e917569ac43b19cbf17975239a
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
