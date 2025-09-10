@@ -38,7 +38,6 @@ updates:
       day: "monday"
       time: "11:20"
       timezone: "UTC"
-
     groups:
       major-only:
         patterns:
