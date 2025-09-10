@@ -9,11 +9,13 @@ updates:
       time: "11:00"
       timezone: "UTC"
     groups:
-      major-only:
+      all-updates:
         patterns:
           - "*"
         update-types:
           - "major"
+          - "minor"
+          - "patch"
 
   # Sample Expo app
   - package-ecosystem: "npm"
