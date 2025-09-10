@@ -54,6 +54,10 @@ updates:
       time: "11:40"
       timezone: "UTC"
     open-pull-requests-limit: 5
+    groups:
+      all-updates:
+        patterns:
+          - "*"
     commit-message:
       prefix: "chore"
       include: "scope"
