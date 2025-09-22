@@ -76,6 +76,19 @@ jobs:
         run: |
           cd sample-expo
           npx --yes expo prebuild --platform android --no-install --clean
+      - name: Verify Gradle context
+        working-directory: sample-expo/android
+        run: |
+          echo "Gradle wrapper distribution:" && \
+          grep distributionUrl gradle/wrapper/gradle-wrapper.properties || true
+          echo
+          echo "Android Gradle Plugin declared in build.gradle:" && \
+          grep "com.android.tools.build:gradle" build.gradle || true
+          echo
+          echo "Root dir (Gradle property):" && \
+          ./gradlew -q properties | grep "^rootDir" || true
+          echo
+          ./gradlew --version
       - name: Gradle assemble sample-expo
         working-directory: sample-expo/android
         run: ./gradlew --no-daemon clean assembleDebug
