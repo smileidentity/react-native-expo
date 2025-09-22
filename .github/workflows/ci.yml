@@ -79,16 +79,19 @@ jobs:
       - name: Verify Gradle context
         working-directory: sample-expo/android
         run: |
-          echo "Gradle wrapper distribution:" && \
-          grep distributionUrl gradle/wrapper/gradle-wrapper.properties || true
-          echo
-          echo "Android Gradle Plugin declared in build.gradle:" && \
-          grep "com.android.tools.build:gradle" build.gradle || true
-          echo
-          echo "Root dir (Gradle property):" && \
-          ./gradlew -q properties | grep "^rootDir" || true
-          echo
-          ./gradlew --version
+         echo "Gradle wrapper distribution:"
+         grep distributionUrl gradle/wrapper/gradle-wrapper.properties || true
+         echo
+         echo "Android Gradle Plugin line in build.gradle:"
+         grep -n \"com.android.tools.build:gradle\" build.gradle || true
+         echo
+         echo \"Resolved buildscript classpath (should list :8.13.0):\"
+         ./gradlew -q buildEnvironment | grep -F \"com.android.tools.build:gradle\" || true
+         echo
+         echo \"Root dir (Gradle property):\"
+         ./gradlew -q properties | grep \"^rootDir\" || true
+         echo
+         ./gradlew --version
       - name: Gradle assemble sample-expo
         working-directory: sample-expo/android
         run: ./gradlew --no-daemon clean assembleDebug
