@@ -19,15 +19,16 @@ Please see [CHANGELOG.md](CHANGELOG.md) or [Releases](https://github.com/smileid
 
 Full documentation is available at [Smile ID Documentation](https://docs.usesmileid.com/integration-options/mobile/getting-started)
 
-### 0. Requirements
+### 1. Requirements
 
 * Node.js >=18.0
+* Expo 53
 * React Native >=0.79
 * A `smile_config.json` file from [Smile ID Portal](https://portal.usesmileid.com/sdk)
 * See: [Android Requirements](https://github.com/smileidentity/android) for Android specific requirements.
 * See: [iOS Requirements](https://github.com/smileidentity/ios) for iOS specific requirements.
 
-### 1. Dependency
+### 2. Dependency
 
 #### **For Expo Managed Projects**
 
@@ -153,7 +154,7 @@ Ensure that your React Native and Metro versions match the versions used by **sm
 You can override them to use different versions, but make sure both React Native and Metro are on the same version.
 Mismatches can cause native views from **smile_identity/react-native-expo** to fail to render and throw runtime errors.
 
-## 2. SDK Initialization
+## 3. SDK Initialization
 
 The Smile ID Expo SDK offers three flexible initialization methods to suit different development needs.
 
@@ -204,7 +205,7 @@ const config = new SmileConfig(
 initialize(true, true, config, 'YOUR_API_KEY');
 ```
 
-## 3. Products
+## 4. Products
 
 The SDK supports all [Smile ID products](https://docs.usesmileid.com/integration-options/mobile/products) with a simple, 
 integrated component approach.**This implementation works the same way for both Expo projects and bare React Native 
