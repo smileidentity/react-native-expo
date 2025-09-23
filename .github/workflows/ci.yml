@@ -57,17 +57,18 @@ jobs:
       - name: Verify Gradle context
         working-directory: sample-expo/android
         run: |
+          set -e
           echo "Gradle wrapper distribution:"
-          grep distributionUrl gradle/wrapper/gradle-wrapper.properties || true
+          grep 'distributionUrl' gradle/wrapper/gradle-wrapper.properties || true
           echo
           echo "Android Gradle Plugin line in build.gradle:"
-          grep -n \"com.android.tools.build:gradle\" build.gradle || true
+          grep -n "com.android.tools.build:gradle" build.gradle || true
           echo
-          echo \"Resolved buildscript classpath (should list :8.13.0):\"
-          ./gradlew -q buildEnvironment | grep -F \"com.android.tools.build:gradle\" || true
+          echo "Resolved buildscript classpath (should list :8.13.0):"
+          ./gradlew -q buildEnvironment | grep -F "com.android.tools.build:gradle" || true
           echo
-          echo \"Root dir (Gradle property):\"
-          ./gradlew -q properties | grep \"^rootDir\" || true
+          echo "Root dir (Gradle property):"
+          ./gradlew -q properties | grep "^rootDir" || true
           echo
           ./gradlew --version
       - name: Cache Gradle
