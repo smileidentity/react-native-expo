@@ -68,6 +68,9 @@ jobs:
           key: ${{ runner.os }}-sample-expo-node_modules-${{ hashFiles('sample-expo/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-sample-expo-node_modules-
+      - name: Gradle assemble sample-expo
+        working-directory: sample-expo/android
+        run: ./gradlew --no-daemon assembleDebug
       - name: Install sample-expo dependencies
         run: |
           cd sample-expo
@@ -76,9 +79,6 @@ jobs:
         run: |
           cd sample-expo
           npx --yes expo prebuild --platform android --no-install --clean
-      - name: Gradle assemble sample-expo
-        working-directory: sample-expo/android
-        run: ./gradlew --no-daemon assembleDebug
 
   ios-validate:
     runs-on: macos-14
@@ -175,7 +175,7 @@ jobs:
             -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             build
-            
+
   ci-success:
     runs-on: ubuntu-latest
     needs: [lint, build-library, android-validate, ios-validate]
