@@ -6,7 +6,7 @@
 * sample-react-native: Updated Metro + package setup to use local SDK source, fixed iOS entry, and resolved TypeScript 
  type/path issues.
 * Bump Android SDK to [v11.1.2](https://github.com/smileidentity/android/releases/tag/v11.1.2)
-* Bump up AGP version to 8.9.1
+* Bump up AGP version to 8.13
 
 ### Added
 * Added Dependabot for automatic dependency updates.
