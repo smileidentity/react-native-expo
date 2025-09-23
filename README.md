@@ -22,7 +22,7 @@ Full documentation is available at [Smile ID Documentation](https://docs.usesmil
 ### 1. Requirements
 
 * Node.js >=18.0
-* Expo 53
+* Expo SDK 53
 * React Native >=0.79
 * A `smile_config.json` file from [Smile ID Portal](https://portal.usesmileid.com/sdk)
 * See: [Android Requirements](https://github.com/smileidentity/android) for Android specific requirements.
