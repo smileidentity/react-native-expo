@@ -81,13 +81,18 @@ jobs:
         run: ./gradlew --no-daemon assembleDebug
 
   ios-validate:
-    runs-on: macos-14
+    # React Native 0.81 (Expo SDK 54) requires Xcode >= 16.1, which is available on macos-15 runners
+    runs-on: macos-15
     needs: build-library
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
       - name: Setup
         uses: ./.github/actions/setup
+      - name: Select Xcode 16.1
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.1'
       - name: Cache CocoaPods
         uses: actions/cache@v4
         with:
