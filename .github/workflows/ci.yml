@@ -146,22 +146,32 @@ jobs:
             exit 1
           fi
           
-          # Explicitly set the app scheme instead of picking the first (which was EXConstants)
-          APP_SCHEME="reactnativeexpoexample"
-          echo "Intended app scheme: $APP_SCHEME"
-          
-          # Verify the scheme exists in the workspace
-          echo "Listing available schemes for debug:"
-          if command -v jq >/dev/null 2>&1; then
-            xcodebuild -list -json -workspace "$WORKSPACE" | tee /tmp/xcworkspace_schemes.json
-            if ! grep -q "\"$APP_SCHEME\"" /tmp/xcworkspace_schemes.json; then
-              echo "ERROR: Scheme $APP_SCHEME not found in workspace schemes:" >&2
-              cat /tmp/xcworkspace_schemes.json
-              exit 1
+          # Determine app scheme. Expo prebuild may rename the native project to the slug (sampleexpo)
+          echo "Resolving app scheme..."
+          SCHEMES_JSON=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
+          echo "$SCHEMES_JSON" > /tmp/xcworkspace_schemes.json || true
+          # Candidate scheme names in priority order
+          CANDIDATES=("sampleexpo" "reactnativeexpoexample" "sample-expo")
+          APP_SCHEME=""
+          for C in "${CANDIDATES[@]}"; do
+            if grep -q "\"$C\"" /tmp/xcworkspace_schemes.json; then
+              APP_SCHEME="$C"
+              break
             fi
-          else
-            xcodebuild -list -workspace "$WORKSPACE"
+          done
+          if [ -z "$APP_SCHEME" ]; then
+            # Fallback: try to pick a scheme matching the workspace name (without extension)
+            WS_NAME="${WORKSPACE%.xcworkspace}"
+            if grep -q "\"$WS_NAME\"" /tmp/xcworkspace_schemes.json; then
+              APP_SCHEME="$WS_NAME"
+            fi
           fi
+          if [ -z "$APP_SCHEME" ]; then
+            echo "ERROR: Could not determine app scheme. Available schemes:" >&2
+            cat /tmp/xcworkspace_schemes.json >&2 || true
+            exit 1
+          fi
+          echo "Selected app scheme: $APP_SCHEME"
           
           # Use simulator SDK to avoid physical device destination issues / missing iOS SDK complaints
           # Generic simulator destination avoids needing a specific runtime device name.
