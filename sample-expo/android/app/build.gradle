@@ -89,13 +89,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
-        freeCompilerArgs = freeCompilerArgs.findAll {
-            !(it.startsWith("-P") && it.contains("androidx.compose.compiler.plugins.kotlin:sourceInformation"))
-        }
-        freeCompilerArgs += [
-                "-P", "plugin:androidx.compose.compiler.plugins.kotlin:sourceInformation=true",
-                "-Xskip-metadata-version-check"
-        ]
+        freeCompilerArgs += ['-Xskip-metadata-version-check']
     }
 
     compileOptions {
