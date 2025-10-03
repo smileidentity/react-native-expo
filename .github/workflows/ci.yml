@@ -146,38 +146,32 @@ jobs:
             exit 1
           fi
           
-          # Detect first scheme from workspace with better error handling
-          SCHEME_OUTPUT=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
-          if [ "$SCHEME_OUTPUT" = '{}' ]; then
-            echo "Failed to get schemes from workspace, trying direct scheme detection"
-            # Fallback: try to find scheme from project file
-            SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
-            if [ -z "$SCHEME" ]; then
-              echo "No scheme found and no project file found"
+          # Explicitly set the app scheme instead of picking the first (which was EXConstants)
+          APP_SCHEME="reactnativeexpoexample"
+          echo "Intended app scheme: $APP_SCHEME"
+          
+          # Verify the scheme exists in the workspace
+          echo "Listing available schemes for debug:"
+          if command -v jq >/dev/null 2>&1; then
+            xcodebuild -list -json -workspace "$WORKSPACE" | tee /tmp/xcworkspace_schemes.json
+            if ! grep -q "\"$APP_SCHEME\"" /tmp/xcworkspace_schemes.json; then
+              echo "ERROR: Scheme $APP_SCHEME not found in workspace schemes:" >&2
+              cat /tmp/xcworkspace_schemes.json
               exit 1
             fi
           else
-            SCHEME=$(echo "$SCHEME_OUTPUT" | ruby -rjson -e 'begin; data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""; rescue; puts ""; end' 2>/dev/null || echo "")
-            if [ -z "$SCHEME" ]; then
-              echo "No scheme found in workspace JSON, trying project fallback"
-              SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
-            fi
+            xcodebuild -list -workspace "$WORKSPACE"
           fi
           
-          if [ -z "$SCHEME" ]; then 
-            echo "No scheme found in $WORKSPACE"
-            echo "Available files:"
-            ls -la
-            exit 1
-          fi
-          
-          echo "Using scheme: $SCHEME"
-          
-          xcodebuild -workspace "$WORKSPACE" \
-            -scheme "$SCHEME" \
+          # Use simulator SDK to avoid physical device destination issues / missing iOS SDK complaints
+          # Generic simulator destination avoids needing a specific runtime device name.
+          set -x
+          xcodebuild \
+            -workspace "$WORKSPACE" \
+            -scheme "$APP_SCHEME" \
             -configuration Debug \
-            -sdk iphoneos \
-            -destination 'generic/platform=iOS' \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             build
 
