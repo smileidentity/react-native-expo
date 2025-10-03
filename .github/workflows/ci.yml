@@ -68,9 +68,6 @@ jobs:
           key: ${{ runner.os }}-sample-expo-node_modules-${{ hashFiles('sample-expo/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-sample-expo-node_modules-
-      - name: Gradle assemble sample-expo
-        working-directory: sample-expo/android
-        run: ./gradlew --no-daemon assembleDebug
       - name: Install sample-expo dependencies
         run: |
           cd sample-expo
@@ -79,9 +76,13 @@ jobs:
         run: |
           cd sample-expo
           npx --yes expo prebuild --platform android --no-install --clean
+      - name: Gradle assemble sample-expo
+        working-directory: sample-expo/android
+        run: ./gradlew --no-daemon assembleDebug
 
   ios-validate:
-    runs-on: macos-14
+    # React Native 0.81 (Expo SDK 54) requires Xcode >= 16.1, which is available on macos-15 runners
+    runs-on: macos-15
     needs: build-library
     timeout-minutes: 45
     steps:
@@ -114,6 +115,20 @@ jobs:
         run: |
           cd sample-expo/ios
           pod install --repo-update
+      - name: Xcode environment diagnostics
+        run: |
+          echo 'Xcode Version:'
+          xcodebuild -version
+          echo '\nAvailable SDKs:'
+          xcodebuild -showsdks || true
+          echo '\nList Simulators:'
+          xcrun simctl list devices | head -n 200 || true
+          echo '\nShow destinations for scheme (if workspace present):'
+          cd sample-expo/ios
+          WORKSPACE=$(find . -name "*.xcworkspace" -maxdepth 1 | head -n1)
+          if [ -n "$WORKSPACE" ]; then
+            xcodebuild -workspace "$WORKSPACE" -scheme sampleexpo -showdestinations || true
+          fi
       - name: Xcode build sample-expo
         run: |
           set -euo pipefail
@@ -141,40 +156,63 @@ jobs:
             exit 1
           fi
           
-          # Detect first scheme from workspace with better error handling
-          SCHEME_OUTPUT=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
-          if [ "$SCHEME_OUTPUT" = '{}' ]; then
-            echo "Failed to get schemes from workspace, trying direct scheme detection"
-            # Fallback: try to find scheme from project file
-            SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
-            if [ -z "$SCHEME" ]; then
-              echo "No scheme found and no project file found"
-              exit 1
+          # Determine app scheme. Expo prebuild may rename the native project to the slug (sampleexpo)
+          echo "Resolving app scheme..."
+          SCHEMES_JSON=$(xcodebuild -list -json -workspace "$WORKSPACE" 2>/dev/null || echo '{}')
+          echo "$SCHEMES_JSON" > /tmp/xcworkspace_schemes.json || true
+          # Candidate scheme names in priority order
+          CANDIDATES=("sampleexpo" "reactnativeexpoexample" "sample-expo")
+          APP_SCHEME=""
+          for C in "${CANDIDATES[@]}"; do
+            if grep -q "\"$C\"" /tmp/xcworkspace_schemes.json; then
+              APP_SCHEME="$C"
+              break
             fi
-          else
-            SCHEME=$(echo "$SCHEME_OUTPUT" | ruby -rjson -e 'begin; data=JSON.parse(STDIN.read); w=data["workspace"]; puts (w && w["schemes"] && w["schemes"][0]) || ""; rescue; puts ""; end' 2>/dev/null || echo "")
-            if [ -z "$SCHEME" ]; then
-              echo "No scheme found in workspace JSON, trying project fallback"
-              SCHEME=$(find . -name "*.xcodeproj" | head -n1 | xargs basename -s .xcodeproj)
+          done
+          if [ -z "$APP_SCHEME" ]; then
+            # Fallback: try to pick a scheme matching the workspace name (without extension)
+            WS_NAME="${WORKSPACE%.xcworkspace}"
+            if grep -q "\"$WS_NAME\"" /tmp/xcworkspace_schemes.json; then
+              APP_SCHEME="$WS_NAME"
             fi
           fi
-          
-          if [ -z "$SCHEME" ]; then 
-            echo "No scheme found in $WORKSPACE"
-            echo "Available files:"
-            ls -la
+          if [ -z "$APP_SCHEME" ]; then
+            echo "ERROR: Could not determine app scheme. Available schemes:" >&2
+            cat /tmp/xcworkspace_schemes.json >&2 || true
             exit 1
           fi
+          echo "Selected app scheme: $APP_SCHEME"
           
-          echo "Using scheme: $SCHEME"
-          
-          xcodebuild -workspace "$WORKSPACE" \
-            -scheme "$SCHEME" \
+          echo "Attempting build (iphonesimulator) minimal compile)..."
+          BUILD_LOG=/tmp/build_attempt.log
+          set +e
+          xcodebuild \
+            -workspace "$WORKSPACE" \
+            -scheme "$APP_SCHEME" \
             -configuration Debug \
-            -sdk iphoneos \
-            -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
-            build
+            build-for-testing 2>&1 | tee "$BUILD_LOG"
+          XC_STATUS=${PIPESTATUS[0]}
+          set +x
+          if [ $XC_STATUS -ne 0 ]; then
+            echo "Primary build-for-testing failed (status $XC_STATUS). Trying Catalyst build (Mac) as fallback..." >&2
+            set -x
+            xcodebuild \
+              -workspace "$WORKSPACE" \
+              -scheme "$APP_SCHEME" \
+              -configuration Debug \
+              -destination 'platform=macOS,arch=arm64,variant=Mac Catalyst' \
+              CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
+              build 2>&1 | tee "$BUILD_LOG"
+            XC_STATUS=${PIPESTATUS[0]}
+            set +x
+          fi
+          if [ $XC_STATUS -ne 0 ]; then
+            echo "All build attempts failed. Tail of log:" >&2
+            tail -n 100 "$BUILD_LOG" || true
+            exit $XC_STATUS
+          fi
+          echo "iOS/Catalyst build succeeded with scheme $APP_SCHEME"
 
   ci-success:
     runs-on: ubuntu-latest
