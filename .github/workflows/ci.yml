@@ -173,17 +173,61 @@ jobs:
           fi
           echo "Selected app scheme: $APP_SCHEME"
           
-          # Use simulator SDK to avoid physical device destination issues / missing iOS SDK complaints
-          # Generic simulator destination avoids needing a specific runtime device name.
+          echo "Attempting build on iOS Simulator..."
+          BUILD_LOG=/tmp/build_attempt.log
+          set +e
+          # Try to find an available simulator device (prefer newest iPhone). If none, use generic.
+          DEVICE_DEST=$(xcrun simctl list devices available 2>/dev/null | awk -F'[()]' '/iPhone/{gsub(/^ *\*/,"",$1); print "platform=iOS Simulator,name=" $1; exit}')
+          if [ -z "$DEVICE_DEST" ]; then
+            echo "No specific iPhone simulator found; using generic destination." >&2
+            DEVICE_DEST='generic/platform=iOS Simulator'
+          fi
+          echo "Using destination: $DEVICE_DEST"
           set -x
           xcodebuild \
             -workspace "$WORKSPACE" \
             -scheme "$APP_SCHEME" \
             -configuration Debug \
             -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
+            -destination "$DEVICE_DEST" \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
-            build
+            build 2>&1 | tee "$BUILD_LOG"
+          XC_STATUS=${PIPESTATUS[0]}
+          set +x
+          if [ $XC_STATUS -ne 0 ]; then
+            echo "Simulator build failed (status $XC_STATUS). Falling back to generic destination explicitly..." >&2
+            set -x
+            xcodebuild \
+              -workspace "$WORKSPACE" \
+              -scheme "$APP_SCHEME" \
+              -configuration Debug \
+              -sdk iphonesimulator \
+              -destination 'generic/platform=iOS Simulator' \
+              CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
+              build 2>&1 | tee "$BUILD_LOG"
+            XC_STATUS=${PIPESTATUS[0]}
+            set +x
+          fi
+          if [ $XC_STATUS -ne 0 ]; then
+            echo "Both simulator attempts failed. Trying iphoneos (device) build as last resort..." >&2
+            set -x
+            xcodebuild \
+              -workspace "$WORKSPACE" \
+              -scheme "$APP_SCHEME" \
+              -configuration Debug \
+              -sdk iphoneos \
+              -destination 'generic/platform=iOS' \
+              CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
+              build 2>&1 | tee "$BUILD_LOG"
+            XC_STATUS=${PIPESTATUS[0]}
+            set +x
+          fi
+          if [ $XC_STATUS -ne 0 ]; then
+            echo "All build attempts failed. Tail of log:" >&2
+            tail -n 80 "$BUILD_LOG" || true
+            exit $XC_STATUS
+          fi
+          echo "iOS build succeeded with scheme $APP_SCHEME"
 
   ci-success:
     runs-on: ubuntu-latest
