@@ -1,15 +1,16 @@
 # Release Notes
 
-## 11.2.0 - October 4, 2025
+## 11.2.0 - October 7, 2025
+
+### 🚀 Major Updates
+* **Upgraded Expo SDK from 53 to 54** - Full compatibility with the latest Expo release
+    * Updated React and React Native to latest compatible versions
+    * Updated Kotlin to version 2.1.20 and removed dependencies pinned to Kotlin 2.0.21 for Expo SDK 54 compatibility
+    * Upgraded Android Gradle Plugin (AGP) to version 8.13
 
 ### Changed
-* sample-react-native: Updated Metro + package setup to use local SDK source, fixed iOS entry, and resolved TypeScript 
- type/path issues.
-* Bump Android SDK to [v11.1.2](https://github.com/smileidentity/android/releases/tag/v11.1.2)
-* Bump up AGP version to 8.13
-* Upgrade Expo SDK from 53 to 54 
-* Update React and React Native versions
-* Update Kotlin version to 2.1.20 and removed dependencies pinned to Kotlin 2.0.21 for compatibility with Expo SDK 54.
+* **Android SDK**: Bumped to [v11.1.2](https://github.com/smileidentity/android/releases/tag/v11.1.2)
+* **sample-react-native**: Updated Metro and package configuration to use local SDK source, fixed iOS entry point, and resolved TypeScript type and path issues
 
 ### Added
 * Added Dependabot for automatic dependency updates.
