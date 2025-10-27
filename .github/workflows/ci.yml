@@ -35,7 +35,7 @@ jobs:
           yarn build || yarn expo-module build
           yarn prepare || yarn expo-module prepare
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dist
           path: |
