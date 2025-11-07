@@ -68,6 +68,9 @@ jobs:
           key: ${{ runner.os }}-sample-expo-node_modules-${{ hashFiles('sample-expo/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-sample-expo-node_modules-
+      - name: Gradle assemble sample-expo
+        working-directory: sample-expo/android
+        run: ./gradlew --no-daemon assembleDebug
       - name: Install sample-expo dependencies
         run: |
           cd sample-expo
@@ -76,9 +79,6 @@ jobs:
         run: |
           cd sample-expo
           npx --yes expo prebuild --platform android --no-install --clean
-      - name: Gradle assemble sample-expo
-        working-directory: sample-expo/android
-        run: ./gradlew --no-daemon assembleDebug
 
   ios-validate:
     # React Native 0.81 (Expo SDK 54) requires Xcode >= 16.1, which is available on macos-15 runners
