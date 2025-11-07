@@ -61,6 +61,9 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      - name: Gradle assemble sample-expo
+        working-directory: sample-expo/android
+        run: ./gradlew --no-daemon assembleDebug
       - name: Cache sample-expo node_modules
         uses: actions/cache@v4
         with:
@@ -76,9 +79,6 @@ jobs:
         run: |
           cd sample-expo
           npx --yes expo prebuild --platform android --no-install --clean
-      - name: Gradle assemble sample-expo
-        working-directory: sample-expo/android
-        run: ./gradlew --no-daemon assembleDebug
 
   ios-validate:
     # React Native 0.81 (Expo SDK 54) requires Xcode >= 16.1, which is available on macos-15 runners
