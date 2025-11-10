@@ -4,7 +4,7 @@
 
 ### Changed
 * Bump Android SDK to [v11.1.4](https://github.com/smileidentity/android/releases/tag/v11.1.4)
-* Bump Android iOS to [v11.1.3](https://github.com/smileidentity/ios/releases/tag/v11.1.3)
+* Bump iOS SDK to [v11.1.3](https://github.com/smileidentity/ios/releases/tag/v11.1.3)
 
 ## 11.2.0 - October 7, 2025
 
