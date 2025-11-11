@@ -183,39 +183,23 @@ jobs:
           fi
           echo "Selected app scheme: $APP_SCHEME"
           
-          echo "Attempting build (iphonesimulator)..."
+          echo "Attempting build (generic iOS Simulator, minimal compile)..."
           BUILD_LOG=/tmp/build_attempt.log
-          set +e
-          
-          # Try iOS Simulator build first
+          # Prefer simulator to avoid device-only Swift module interface verification quirks.
           xcodebuild \
             -workspace "$WORKSPACE" \
             -scheme "$APP_SCHEME" \
             -configuration Debug \
-            -destination "platform=iOS Simulator,name=iPhone 16" \
+            -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
-            SWIFT_EMIT_LOC_STRINGS=NO \
-            build 2>&1 | tee "$BUILD_LOG"
-          XC_STATUS=${PIPESTATUS[0]}
-          
+            build-for-testing 2>&1 | tee "$BUILD_LOG" || XC_STATUS=$?
+          XC_STATUS=${XC_STATUS:-0}
           if [ $XC_STATUS -ne 0 ]; then
-            echo "iOS Simulator build failed (status $XC_STATUS). Trying macOS build as fallback..." >&2
-            xcodebuild \
-              -workspace "$WORKSPACE" \
-              -scheme "$APP_SCHEME" \
-              -configuration Debug \
-              -destination "platform=macOS,arch=arm64" \
-              CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
-              SWIFT_EMIT_LOC_STRINGS=NO \
-              build 2>&1 | tee "$BUILD_LOG"
-            XC_STATUS=${PIPESTATUS[0]}
-          fi
-          if [ $XC_STATUS -ne 0 ]; then
-            echo "All build attempts failed. Tail of log:" >&2
+            echo "Simulator build failed (status $XC_STATUS). Tail of log:" >&2
             tail -n 100 "$BUILD_LOG" || true
             exit $XC_STATUS
           fi
-          echo "iOS build succeeded with scheme $APP_SCHEME"
+          echo "iOS Simulator build succeeded with scheme $APP_SCHEME"
 
   ci-success:
     runs-on: ubuntu-latest

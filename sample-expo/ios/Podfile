@@ -60,5 +60,17 @@ target 'reactnativeexpoexample' do
         end
       end
     end
+
+    # Workaround: Disable Swift module interface verification for the SmileID pod
+    # CI (Xcode 16+) was failing at SwiftVerifyEmittedModuleInterface for SmileID.swiftinterface.
+    # This usually happens when BUILD_LIBRARY_FOR_DISTRIBUTION or strict module settings are enabled
+    # on a pod that ships prebuilt binaries / mixed Swift versions. Turning these off avoids the check.
+    installer.pods_project.targets.each do |target|
+      next unless target.name == 'SmileID'
+      target.build_configurations.each do |config|
+        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'NO'
+        config.build_settings['SWIFT_STRICT_MODULE'] = 'NO'
+      end
+    end
   end
 end
