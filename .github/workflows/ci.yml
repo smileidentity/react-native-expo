@@ -194,6 +194,7 @@ jobs:
             -workspace "$WORKSPACE" \
             -scheme "$APP_SCHEME" \
             -configuration Debug \
+            -destination "generic/platform=iOS Simulator" \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             build-for-testing 2>&1 | tee "$BUILD_LOG"
           XC_STATUS=${PIPESTATUS[0]}
