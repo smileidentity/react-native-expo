@@ -193,6 +193,7 @@ jobs:
           # Build for iOS Simulator
           # Disable Swift module interface verification to work around SmileID SDK build issues
           # The SDK has BUILD_LIBRARY_FOR_DISTRIBUTION enabled which triggers swiftinterface verification
+          # We use SWIFT_EMIT_MODULE_INTERFACE=NO to skip the verification step entirely
           xcodebuild \
             -workspace "$WORKSPACE" \
             -scheme "$APP_SCHEME" \
@@ -205,6 +206,8 @@ jobs:
             COMPILER_INDEX_STORE_ENABLE=NO \
             SWIFT_TREAT_WARNINGS_AS_ERRORS=NO \
             GCC_TREAT_WARNINGS_AS_ERRORS=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=NO \
+            SWIFT_EMIT_MODULE_INTERFACE=NO \
             build 2>&1 | tee "$BUILD_LOG"
           
           echo "iOS Simulator build succeeded with scheme $APP_SCHEME"
