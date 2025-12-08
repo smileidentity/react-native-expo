@@ -3,9 +3,11 @@
 ## Unreleased
 
 ### Changed
-* Bump Android SDK to [v11.1.3](https://github.com/smileidentity/android/releases/tag/v11.1.3)
 * Bump Android SDK to [v11.1.4](https://github.com/smileidentity/android/releases/tag/v11.1.4)
 * Bump iOS SDK to [v11.1.3](https://github.com/smileidentity/ios/releases/tag/v11.1.3)
+
+### Fixed
+* Added workaround for iOS Swift module interface verification error (`SwiftVerifyEmittedModuleInterface`) that may occur with certain Xcode versions
 
 ## 11.2.1 - November 4, 2025
 

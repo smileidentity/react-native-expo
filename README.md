@@ -285,6 +285,41 @@ const handleError = (error: DocumentVerificationError) => {
 This implementation provides a complete document verification flow with comprehensive error handling and result processing capabilities.
 Other Smile ID products can be integrated in a similar way using the provided components and configuration objects.
 
+## Troubleshooting
+
+### iOS: Swift Module Interface Verification Error
+
+If you encounter a build error like:
+
+```
+SwiftVerifyEmittedModuleInterface failed with a nonzero exit code
+```
+
+or
+
+```
+Verifying emitted module interface SmileID.swiftinterface failed
+```
+
+This is caused by Swift module interface verification with the SmileID iOS SDK. To resolve this, add the following to your `ios/Podfile` inside the `post_install` block:
+
+```ruby
+post_install do |installer|
+  # ... existing post_install code ...
+
+  # Fix SmileID Swift module interface verification error
+  installer.pods_project.targets.each do |target|
+    if target.name == 'SmileID'
+      target.build_configurations.each do |config|
+        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'NO'
+      end
+    end
+  end
+end
+```
+
+Then run `pod install` again and rebuild your project.
+
 ## Getting Help
 
 For detailed documentation, please visit [Smile ID Documentation](https://docs.usesmileid.com/integration-options/mobile)
