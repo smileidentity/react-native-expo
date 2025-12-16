@@ -46,6 +46,7 @@ class SmileIDDocumentVerificationEnhancedView(context: Context, appContext: AppC
                         "documentFrontFile" to result.documentFrontFile.toString(),
                         "documentBackFile" to result.documentBackFile.toString(),
                         "selfieFile" to result.selfieFile.toString(),
+                        "didSubmitEnhancedDocVJob" to result.didSubmitEnhancedDocVJob,
                     )
                 )
             },
