@@ -3,13 +3,9 @@
 ## Unreleased
 
 ### Changed
-- Rename `selfie` return type on `SmileIDDocumentVerificationView` and  `SmileIDDocumentVerificationEnhancedView` to
+* Renamed `selfie` return type on `SmileIDDocumentVerificationView` and  `SmileIDDocumentVerificationEnhancedView` to
  `selfieFile` to match Android and the docs. 
-- Extracted result mapping logic on Android to separate extension functions.
-
-## 11.2.1 - November 4, 2025
-
-### Changed
+* Extracted result mapping logic on Android to separate extension functions.
 * Bump Android SDK to [v11.1.4](https://github.com/smileidentity/android/releases/tag/v11.1.4)
 * Bump iOS SDK to [v11.1.3](https://github.com/smileidentity/ios/releases/tag/v11.1.3)
 
