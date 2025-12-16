@@ -27,10 +27,6 @@ fun DocumentVerificationResult.toMap(): Map<String, Any> = buildMap {
     put("selfieFile", selfieFile.toString())
     put("didSubmitDocumentVerificationJob", didSubmitDocumentVerificationJob)
     documentBackFile?.let { put("documentBackFile", it.toString()) }
-    livenessFiles
-        ?.takeIf { it.isNotEmpty() }
-        ?.map { it.toString() }
-        ?.let { put("livenessFiles", it) }
 }
 
 /**
@@ -42,8 +38,4 @@ fun EnhancedDocumentVerificationResult.toMap(): Map<String, Any> = buildMap {
     put("selfieFile", selfieFile.toString())
     put("didSubmitEnhancedDocVJob", didSubmitEnhancedDocVJob)
     documentBackFile?.let { put("documentBackFile", it.toString()) }
-    livenessFiles
-        ?.takeIf { it.isNotEmpty() }
-        ?.map { it.toString() }
-        ?.let { put("livenessFiles", it) }
 }
