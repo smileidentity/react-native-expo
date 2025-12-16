@@ -93,7 +93,7 @@ class EnhancedDocumentVerificationDelegate: EnhancedDocumentVerificationResultDe
         didSubmitEnhancedDocVJob: Bool
     ) {
         var params: [String: Any] = [
-            "selfie": selfie.absoluteString,
+            "selfieFile": selfie.absoluteString,
             "documentFrontFile": documentFrontImage.absoluteString,
             "didSubmitEnhancedDocVJob": didSubmitEnhancedDocVJob,
         ]

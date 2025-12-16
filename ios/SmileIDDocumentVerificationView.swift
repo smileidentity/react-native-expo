@@ -91,7 +91,7 @@ class DocumentVerificationDelegate: DocumentVerificationResultDelegate {
         didSubmitDocumentVerificationJob: Bool
     ) {
         var params: [String: Any] = [
-            "selfie": selfie.absoluteString,
+            "selfieFile": selfie.absoluteString,
             "documentFrontFile": documentFrontImage.absoluteString,
             "didSubmitDocumentVerificationJob": didSubmitDocumentVerificationJob,
         ]
