@@ -40,18 +40,7 @@ class SmileIDDocumentVerificationEnhancedView(context: Context, appContext: AppC
     override fun Content() {
         EnhancedDocumentVerificationView(
             props = props.value,
-            onResult = { result ->
-                val map = mutableMapOf(
-                    "documentFrontFile" to result.documentFrontFile.toString(),
-                    "selfieFile" to result.selfieFile.toString(),
-                    "didSubmitEnhancedDocVJob" to result.didSubmitEnhancedDocVJob,
-                )
-
-                result.documentBackFile?.let {
-                    map["documentBackFile"] = it.toString()
-                }
-                onResult(map)
-            },
+            onResult = { result -> onResult(result.toMap()) },
             onError = { error ->
                 onError(
                     mapOf(

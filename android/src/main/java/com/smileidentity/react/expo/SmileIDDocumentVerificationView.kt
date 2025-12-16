@@ -46,17 +46,7 @@ class SmileIDDocumentVerificationView(context: Context, appContext: AppContext) 
     override fun Content() {
         DocumentVerificationView(
             props = props.value,
-            onResult = { result ->
-                val map = mutableMapOf(
-                    "documentFrontFile" to result.documentFrontFile.toString(),
-                    "selfieFile" to result.selfieFile.toString(),
-                    "didSubmitDocumentVerificationJob" to result.didSubmitDocumentVerificationJob,
-                )
-                result.documentBackFile?.let {
-                    map["documentBackFile"] = it.toString()
-                }
-                onResult(map)
-            },
+            onResult = { result ->  onResult(result.toMap()) },
             onError = { error ->
                 onError(
                     mapOf(
