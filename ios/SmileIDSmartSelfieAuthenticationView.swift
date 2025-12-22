@@ -61,6 +61,7 @@ struct SmartSelfieAuthenticationView: View {
                 showAttribution: config.showAttribution,
                 showInstructions: config.showInstructions,
                 useStrictMode: config.useStrictMode,
+                smileSensitivity: SmileSensitivity(from: config.smileSensitivity),
                 skipApiSubmission: config.skipApiSubmission,
                 extraPartnerParams: config.extraPartnerParams,
                 delegate: delegate

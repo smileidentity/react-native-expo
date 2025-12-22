@@ -18,6 +18,7 @@ import {
   SmileIDSmartSelfieAuthenticationView,
   SmileIDSmartSelfieEnrollmentEnhancedView,
   SmileIDSmartSelfieEnrollmentView,
+  SmileSensitivity,
 } from '@smile_identity/react-native-expo';
 
 import DocumentVerificationEnhancedSvgIcon from './icons/DocumentVerificationEnhancedSvgIcon';
@@ -106,6 +107,7 @@ const smartSelfieParams: SmartSelfieParams = {
   showInstructions: true,
   skipApiSubmission: false,
   useStrictMode: false,
+  smileSensitivity: SmileSensitivity.Normal,
   extraPartnerParams: {
     'custom_param_1': 'value1',
     'custom_param_2': 'value2',

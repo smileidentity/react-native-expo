@@ -6,8 +6,11 @@
 * Renamed `selfie` return type on `SmileIDDocumentVerificationView` and  `SmileIDDocumentVerificationEnhancedView` to
  `selfieFile` to match Android and the docs. 
 * Extracted result mapping logic on Android to separate extension functions.
-* Bump Android SDK to [v11.1.4](https://github.com/smileidentity/android/releases/tag/v11.1.4)
-* Bump iOS SDK to [v11.1.3](https://github.com/smileidentity/ios/releases/tag/v11.1.3)
+* Bump Android SDK to [v11.1.5](https://github.com/smileidentity/android/releases/tag/v11.1.5)
+* Bump iOS SDK to [v11.1.4](https://github.com/smileidentity/ios/releases/tag/v11.1.4)
+
+### Added
+* Added smile sensitivity parameter for customizable selfie capture thresholds.
 
 ### Fixed
 * Added workaround for iOS Swift module interface verification error (`SwiftVerifyEmittedModuleInterface`) that may occur with certain Xcode versions

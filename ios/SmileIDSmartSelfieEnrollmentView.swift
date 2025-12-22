@@ -60,6 +60,7 @@ struct SmartSelfieEnrollmentView: View {
                 allowAgentMode: config.allowAgentMode,
                 showAttribution: config.showAttribution,
                 showInstructions: config.showInstructions,
+                smileSensitivity: SmileSensitivity(from: config.smileSensitivity),
                 skipApiSubmission: config.skipApiSubmission,
                 extraPartnerParams: config.extraPartnerParams,
                 delegate: delegate

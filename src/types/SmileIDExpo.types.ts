@@ -98,6 +98,7 @@ export type SmartSelfieParams = {
   showInstructions?: boolean;
   skipApiSubmission?: boolean;
   useStrictMode?: boolean;
+  smileSensitivity?: SmileSensitivity;
   extraPartnerParams?: Record<string, string>;
 }
 
@@ -146,10 +147,18 @@ export type ConsentParams = {
 
 
 /**
- * AutoCapture request parameters
+ * AutoCapture request parameter
  */
 export enum AutoCapture {
   AutoCapture = 'AutoCapture',
   AutoCaptureOnly = 'AutoCaptureOnly',
   ManualCaptureOnly = 'ManualCaptureOnly'
+}
+
+/**
+ * Smile Sensitivity request parameter
+ */
+export enum SmileSensitivity {
+  Normal = 'Normal',
+  Relaxed = 'Relaxed',
 }

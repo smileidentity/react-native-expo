@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import com.smileidentity.SmileID
 import com.smileidentity.compose.SmartSelfieEnrollment
+import com.smileidentity.models.SmileSensitivity
 import com.smileidentity.results.SmartSelfieResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -82,6 +83,7 @@ private fun SmartSelfieEnrollmentView(
             showAttribution = props.showAttribution,
             showInstructions = props.showInstructions,
             skipApiSubmission = props.skipApiSubmission,
+            smileSensitivity = props.smileSensitivity,
             extraPartnerParams = props.extraParams,
         ) { result ->
            when(result) {
@@ -105,5 +107,6 @@ data class SmartSelfieProps(
     val showInstructions: Boolean = true,
     val skipApiSubmission: Boolean = false,
     val useStrictMode: Boolean = false,
+    val smileSensitivity: SmileSensitivity  = SmileSensitivity.NORMAL,
     val extraParams: ImmutableMap<String, String> = persistentMapOf()
 )

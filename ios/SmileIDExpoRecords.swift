@@ -83,6 +83,7 @@ struct SmartSelfieParams: Record {
     @Field public var showInstructions: Bool = true
     @Field public var skipApiSubmission: Bool = false
     @Field public var useStrictMode: Bool = false
+    @Field public var smileSensitivity: SmileSensitivityParams = .normal
     @Field public var extraPartnerParams: [String: String] = [:]
 }
 
@@ -130,7 +131,7 @@ extension IdInfoParams {
     }
 }
 
-/// Enum for auto-capture parameters
+/// Enum for auto-capture parameter
 enum AutoCaptureParams: String, Enumerable {
     case autoCapture = "AutoCapture"
     case autoCaptureOnly = "AutoCaptureOnly"
@@ -147,6 +148,24 @@ extension AutoCapture {
             self = .autoCaptureOnly
         case .manualCaptureOnly:
             self = .manualCaptureOnly
+        }
+    }
+}
+
+/// Enum for SmileSensitivity parameter
+enum SmileSensitivityParams: String, Enumerable {
+    case normal = "Normal"
+    case relaxed = "Relaxed"
+}
+
+/// Map `SmileSensitivityParams` to `SmileSensitivity`
+extension SmileSensitivity {
+    init(from param: SmileSensitivityParams) {
+        switch param {
+        case .normal:
+            self = .normal
+        case .relaxed:
+            self = .relaxed
         }
     }
 }

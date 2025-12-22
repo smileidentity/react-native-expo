@@ -5,6 +5,7 @@ import com.smileidentity.models.Config
 import com.smileidentity.models.ConsentInformation
 import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.IdInfo
+import com.smileidentity.models.SmileSensitivity
 import expo.modules.kotlin.records.Record
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.types.Enumerable
@@ -268,6 +269,9 @@ class SmartSelfieParams: Record {
     var useStrictMode: Boolean = false
 
     @Field
+    var smileSensitivity: SmileSensitivityParams = SmileSensitivityParams.Normal
+
+    @Field
     var extraParams: ImmutableMap<String, String> = persistentMapOf()
 }
 
@@ -284,6 +288,7 @@ internal fun SmartSelfieParams.toSmartSelfieProps(): SmartSelfieProps {
         showInstructions = this.showInstructions,
         skipApiSubmission = this.skipApiSubmission,
         useStrictMode = this.useStrictMode,
+        smileSensitivity = this.smileSensitivity.toSmileSensitivity(),
         extraParams = this.extraParams
     )
 }
@@ -388,7 +393,7 @@ internal fun IdInfoParams?.toIdInfo(): IdInfo {
 }
 
 /*
- * Enum for auto capture parameters
+ * Enum for auto capture parameter
  */
 enum class AutoCaptureParams(val value: String): Enumerable {
     AutoCapture("AutoCapture"),
@@ -406,3 +411,20 @@ fun AutoCaptureParams.toAutoCapture(): AutoCapture =
         AutoCaptureParams.ManualCaptureOnly -> AutoCapture.ManualCaptureOnly
     }
 
+/*
+ * Enum for smile sensitivity parameter
+ */
+enum class SmileSensitivityParams(val value: String): Enumerable {
+    Normal("Normal"),
+    Relaxed("Relaxed"),
+}
+
+
+/**
+ * Extension function to convert SmileSensitivityParams to SmileSensitivity
+ */
+fun SmileSensitivityParams.toSmileSensitivity(): SmileSensitivity =
+    when (this) {
+        SmileSensitivityParams.Normal -> SmileSensitivity.NORMAL
+        SmileSensitivityParams.Relaxed -> SmileSensitivity.RELAXED
+    }
