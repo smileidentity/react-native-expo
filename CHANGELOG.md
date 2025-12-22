@@ -1,6 +1,6 @@
 # Release Notes
 
-## Unreleased
+## 11.2.1 - December 22, 2025
 
 ### Changed
 * Renamed `selfie` return type on `SmileIDDocumentVerificationView` and  `SmileIDDocumentVerificationEnhancedView` to
