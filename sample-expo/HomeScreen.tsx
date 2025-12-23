@@ -90,6 +90,7 @@ const documentVerificationParams: DocumentVerificationParams = {
   showInstructions: true,
   showAttribution: true,
   allowGalleryUpload: true,
+  smileSensitivity: SmileSensitivity.Normal,
   skipApiSubmission: false,
   useStrictMode: false,
   extraPartnerParams: {
@@ -164,6 +165,7 @@ const biometricKYCParams: BiometricKYCParams = {
   allowAgentMode: true,
   showAttribution: true,
   showInstructions: true,
+  smileSensitivity: SmileSensitivity.Normal,
   skipApiSubmission: false,
   useStrictMode: false,
   extraPartnerParams: {

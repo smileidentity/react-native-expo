@@ -24,6 +24,7 @@ struct DocumentVerificationParams: Record {
     @Field public var allowGalleryUpload: Bool = false
     @Field public var showInstructions: Bool = true
     @Field public var showAttribution: Bool = true
+    @Field public var smileSensitivity: SmileSensitivityParams = .normal
     @Field public var skipApiSubmission: Bool = false
     @Field public var useStrictMode: Bool = false
     @Field public var extraPartnerParams: [String: String] = [:]
@@ -95,6 +96,7 @@ struct BiometricKYCParams: Record {
     @Field public var allowAgentMode: Bool = false
     @Field public var showAttribution: Bool = true
     @Field public var showInstructions: Bool = true
+    @Field public var smileSensitivity: SmileSensitivityParams = .normal
     @Field public var skipApiSubmission: Bool = false
     @Field public var useStrictMode: Bool = false
     @Field public var extraPartnerParams: [String: String] = [:]

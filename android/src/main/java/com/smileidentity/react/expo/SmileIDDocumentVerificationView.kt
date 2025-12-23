@@ -12,7 +12,7 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.models.AutoCapture
 import com.smileidentity.models.ConsentInformation
-import com.smileidentity.models.ConsentedInformation
+import com.smileidentity.models.SmileSensitivity
 import com.smileidentity.results.DocumentVerificationResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -22,7 +22,6 @@ import expo.modules.kotlin.viewevent.EventDispatcher
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import java.io.File
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 /**
@@ -88,6 +87,7 @@ private fun DocumentVerificationView(
             allowGalleryUpload = props.allowGalleryUpload,
             showInstructions = props.showInstructions,
             showAttribution = props.showAttribution,
+            smileSensitivity = props.smileSensitivity,
             useStrictMode = props.useStrictMode,
             extraPartnerParams = props.extraParams
         ) { result ->
@@ -120,6 +120,7 @@ data class DocumentVerificationProps(
     val showInstructions: Boolean = true,
     val showAttribution: Boolean = true,
     val skipApiSubmission: Boolean = false,
+    val smileSensitivity: SmileSensitivity = SmileSensitivity.NORMAL,
     val useStrictMode: Boolean = false,
     val extraParams: ImmutableMap<String, String> = persistentMapOf(),
     val consentInformation: ConsentInformation? = null

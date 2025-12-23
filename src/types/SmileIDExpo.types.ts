@@ -46,6 +46,7 @@ export type DocumentVerificationParams = {
   allowGalleryUpload?: boolean;
   showInstructions?: boolean;
   showAttribution?: boolean;
+  smileSensitivity?: SmileSensitivity;
   skipApiSubmission?: boolean;
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
@@ -113,6 +114,7 @@ export type BiometricKYCParams = {
   showAttribution?: boolean;
   showInstructions?: boolean;
   skipApiSubmission?: boolean;
+  smileSensitivity?: SmileSensitivity;
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
   consentInformation?: ConsentInformationParams;

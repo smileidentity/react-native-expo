@@ -68,6 +68,7 @@ struct DocumentVerificationView: View {
                 allowGalleryUpload: config.allowGalleryUpload,
                 showInstructions: config.showInstructions,
                 showAttribution: config.showAttribution,
+                smileSensitivity: SmileSensitivity(from: config.smileSensitivity),
                 skipApiSubmission: config.skipApiSubmission,
                 useStrictMode: config.useStrictMode,
                 extraPartnerParams: config.extraPartnerParams,

@@ -79,6 +79,9 @@ class DocumentVerificationParams : Record {
     var showAttribution: Boolean = true
 
     @Field
+    var smileSensitivity: SmileSensitivityParams = SmileSensitivityParams.Normal
+
+    @Field
     var skipApiSubmission: Boolean = false
 
     @Field
@@ -120,6 +123,7 @@ internal fun DocumentVerificationParams.toDocumentVerificationProps(): DocumentV
         showInstructions = this.showInstructions,
         showAttribution = this.showAttribution,
         skipApiSubmission = this.skipApiSubmission,
+        smileSensitivity = this.smileSensitivity.toSmileSensitivity(),
         useStrictMode = this.useStrictMode,
         extraParams = this.extraParams
     )
@@ -319,6 +323,9 @@ class BiometricKYCParams: Record {
     var skipApiSubmission: Boolean = false
 
     @Field
+    var smileSensitivity: SmileSensitivityParams = SmileSensitivityParams.Normal
+
+    @Field
     var useStrictMode: Boolean = false
 
     @Field
@@ -368,6 +375,7 @@ internal fun BiometricKYCParams.toBiometricKYCProps(): BiometricKYCProps {
         showAttribution = this.showAttribution,
         showInstructions = this.showInstructions,
         skipApiSubmission = this.skipApiSubmission,
+        smileSensitivity = this.smileSensitivity.toSmileSensitivity(),
         useStrictMode = this.useStrictMode,
         consentInformation = this.consentInformation?.toConsentInformation(),
         extraParams = this.extraParams,
