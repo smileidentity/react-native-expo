@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import com.smileidentity.SmileID
 import com.smileidentity.compose.BiometricKYC
 import com.smileidentity.models.ConsentInformation
-import com.smileidentity.models.ConsentedInformation
 import com.smileidentity.models.IdInfo
+import com.smileidentity.models.SmileSensitivity
 import com.smileidentity.results.BiometricKycResult
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
@@ -83,6 +83,7 @@ private fun BiometricKYCView(
             allowAgentMode = props.allowAgentMode,
             showAttribution = props.showAttribution,
             showInstructions = props.showInstructions,
+            smileSensitivity = props.smileSensitivity,
             extraPartnerParams = props.extraParams,
             consentInformation = props.consentInformation,
             idInfo = props.idInfo
@@ -107,6 +108,7 @@ data class BiometricKYCProps(
     val showAttribution: Boolean = true,
     val showInstructions: Boolean = true,
     val skipApiSubmission: Boolean = false,
+    val smileSensitivity: SmileSensitivity = SmileSensitivity.NORMAL,
     val useStrictMode: Boolean = false,
     val extraParams: ImmutableMap<String, String> = persistentMapOf(),
     val consentInformation: ConsentInformation ? = null,

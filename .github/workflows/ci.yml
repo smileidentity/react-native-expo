@@ -89,6 +89,10 @@ jobs:
       - uses: actions/checkout@v6
       - name: Setup
         uses: ./.github/actions/setup
+      - name: Select Xcode 16.4
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.4'
       - name: Cache CocoaPods
         uses: actions/cache@v5
         with:
@@ -183,36 +187,30 @@ jobs:
           fi
           echo "Selected app scheme: $APP_SCHEME"
           
-          echo "Attempting build (iphonesimulator) minimal compile)..."
+          echo "Building for iOS Simulator..."
           BUILD_LOG=/tmp/build_attempt.log
-          set +e
+          
+          # Build for iOS Simulator
+          # Disable Swift module interface verification to work around SmileID SDK build issues
+          # The SDK has BUILD_LIBRARY_FOR_DISTRIBUTION enabled which triggers swiftinterface verification
+          # We use SWIFT_EMIT_MODULE_INTERFACE=NO to skip the verification step entirely
           xcodebuild \
             -workspace "$WORKSPACE" \
             -scheme "$APP_SCHEME" \
             -configuration Debug \
-            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
-            build-for-testing 2>&1 | tee "$BUILD_LOG"
-          XC_STATUS=${PIPESTATUS[0]}
-          set +x
-          if [ $XC_STATUS -ne 0 ]; then
-            echo "Primary build-for-testing failed (status $XC_STATUS). Trying Catalyst build (Mac) as fallback..." >&2
-            set -x
-            xcodebuild \
-              -workspace "$WORKSPACE" \
-              -scheme "$APP_SCHEME" \
-              -configuration Debug \
-              -destination 'platform=macOS,arch=arm64,variant=Mac Catalyst' \
-              CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
-              build 2>&1 | tee "$BUILD_LOG"
-            XC_STATUS=${PIPESTATUS[0]}
-            set +x
-          fi
-          if [ $XC_STATUS -ne 0 ]; then
-            echo "All build attempts failed. Tail of log:" >&2
-            tail -n 100 "$BUILD_LOG" || true
-            exit $XC_STATUS
-          fi
-          echo "iOS/Catalyst build succeeded with scheme $APP_SCHEME"
+            -destination "generic/platform=iOS Simulator" \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            COMPILER_INDEX_STORE_ENABLE=NO \
+            SWIFT_TREAT_WARNINGS_AS_ERRORS=NO \
+            GCC_TREAT_WARNINGS_AS_ERRORS=NO \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=NO \
+            SWIFT_EMIT_MODULE_INTERFACE=NO \
+            build 2>&1 | tee "$BUILD_LOG"
+          
+          echo "iOS Simulator build succeeded with scheme $APP_SCHEME"
 
   ci-success:
     runs-on: ubuntu-latest

@@ -46,6 +46,7 @@ export type DocumentVerificationParams = {
   allowGalleryUpload?: boolean;
   showInstructions?: boolean;
   showAttribution?: boolean;
+  smileSensitivity?: SmileSensitivity;
   skipApiSubmission?: boolean;
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
@@ -98,6 +99,7 @@ export type SmartSelfieParams = {
   showInstructions?: boolean;
   skipApiSubmission?: boolean;
   useStrictMode?: boolean;
+  smileSensitivity?: SmileSensitivity;
   extraPartnerParams?: Record<string, string>;
 }
 
@@ -112,6 +114,7 @@ export type BiometricKYCParams = {
   showAttribution?: boolean;
   showInstructions?: boolean;
   skipApiSubmission?: boolean;
+  smileSensitivity?: SmileSensitivity;
   useStrictMode?: boolean;
   extraPartnerParams?: Record<string, string>;
   consentInformation?: ConsentInformationParams;
@@ -146,10 +149,18 @@ export type ConsentParams = {
 
 
 /**
- * AutoCapture request parameters
+ * AutoCapture request parameter
  */
 export enum AutoCapture {
   AutoCapture = 'AutoCapture',
   AutoCaptureOnly = 'AutoCaptureOnly',
   ManualCaptureOnly = 'ManualCaptureOnly'
+}
+
+/**
+ * Smile Sensitivity request parameter
+ */
+export enum SmileSensitivity {
+  Normal = 'Normal',
+  Relaxed = 'Relaxed',
 }

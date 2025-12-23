@@ -61,6 +61,7 @@ struct BiometricKYCView: View {
                 allowAgentMode: config.allowAgentMode,
                 showAttribution: config.showAttribution,
                 showInstructions: config.showInstructions,
+                smileSensitivity: SmileSensitivity(from: config.smileSensitivity),
                 useStrictMode: config.useStrictMode,
                 extraPartnerParams: config.extraPartnerParams,
                 consentInformation: config.consentInformation?.toConsentInformation(),

@@ -80,6 +80,7 @@ private fun SmartSelfieAuthenticationView(
             showAttribution = props.showAttribution,
             showInstructions = props.showInstructions,
             skipApiSubmission = props.skipApiSubmission,
+            smileSensitivity = props.smileSensitivity,
             extraPartnerParams = props.extraParams,
         ) { result ->
             when (result) {
